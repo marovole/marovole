@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<Layout title="marovole | AIfirst 产品经理 & Vibecoder">
+  <Header />
+  <main class="flex-grow">
+    <Hero />
+    <ProjectGrid projects={featuredProjects} />
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 bg-[var(--color-bg-card)]">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[var(--color-text)] mb-8 text-center">关于我</h2>
+        <div class="prose prose-lg mx-auto text-[var(--color-text-muted)]">
+          <p class="mb-6">
+            我是一名专注于 AI 领域的产品经理，同时也是一位热爱代码的 Vibecoder。
+            在 AI 产品设计和开发之间，我找到了独特的平衡点。
+          </p>
+          <p class="mb-6">
+            我相信 AI 正在改变我们工作和生活的方式，而好的 AI 产品需要兼具技术深度和人文关怀。
+            作为产品经理，我致力于打造真正有用的 AI 工具；作为开发者，我用代码将这些想法变为现实。
+          </p>
+          <p>
+            空闲时间，我会在 GitHub 上分享我的开源项目，在社交媒体上讨论 AI 产品的最新趋势，
+            或者在咖啡馆里构思下一个有趣的产品想法。
+          </p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="p-6 rounded-[var(--radius-card)] bg-[var(--color-secondary)]/30">
+            <div class="text-3xl font-bold text-[var(--color-primary)] mb-2">5+</div>
+            <div class="text-sm text-[var(--color-text-muted)]">年产品经验</div>
+          </div>
+          <div class="p-6 rounded-[var(--radius-card)] bg-[var(--color-secondary)]/30">
+            <div class="text-3xl font-bold text-[var(--color-primary)] mb-2">20+</div>
+            <div class="text-sm text-[var(--color-text-muted)]">产品发布</div>
+          </div>
+          <div class="p-6 rounded-[var(--radius-card)] bg-[var(--color-secondary)]/30">
+            <div class="text-3xl font-bold text-[var(--color-primary)] mb-2">10+</div>
+            <div class="text-sm text-[var(--color-text-muted)]">开源项目</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-20 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-[var(--color-text)] mb-4">一起交流</h2>
+        <p class="text-[var(--color-text-muted)] mb-8">
+          如果你对 AI 产品、vibe coding 或者其他话题感兴趣，欢迎联系我！
+        </p>
+        <a
+          href="mailto:hello@example.com"
+          class="inline-block px-8 py-4 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white font-medium hover:bg-[var(--color-primary-dark)] transition-colors"
+        >
+          发送邮件
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
