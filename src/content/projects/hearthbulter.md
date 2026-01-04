@@ -4,7 +4,7 @@ description: 基于健康数据与电商库存的动态饮食引擎。AI 营养�
 tags: ["Next.js", "AI", "健康管理", "Cloudflare Pages", "Supabase"]
 demoUrl: "https://hearthbulter.pages.dev"
 repoUrl: "https://github.com/marovole/HearthBulter"
-featured: false
+featured: true
 date: 2025-01-03
 ---
 

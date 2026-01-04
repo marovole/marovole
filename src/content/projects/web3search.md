@@ -4,7 +4,7 @@ description: AI 驱动的 Web3 研究平台，用于去中心化数据检索和�
 tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Supabase"]
 demoUrl: "https://web3search.pages.dev"
 repoUrl: "https://github.com/marovole/Web3search"
-featured: false
+featured: true
 date: 2025-01-03
 ---
 
