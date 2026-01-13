@@ -11,6 +11,7 @@ const projects = defineCollection({
     repoUrl: z.string().optional(),
     featured: z.boolean().default(false),
     date: z.string().or(z.date()),
+    lang: z.enum(['en', 'zh']).default('en'),
   }),
 });
 
