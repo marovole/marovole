@@ -1,7 +1,8 @@
 ---
 title: AI Kids Storyteller
-description: 将孩子的“十万个为什么”变成有趣的四格漫画。支持 8 种语言，专为 5-10 岁儿童设计。
+description: 将孩子的"十万个为什么"变成有趣的四格漫画。支持 8 种语言，专为 5-10 岁儿童设计。
 tags: ["AI", "Education", "Storytelling", "GenAI", "React"]
+image: "/images/projects/ai-storyteller.jpg"
 demoUrl: "https://aistoryteller.life/"
 featured: true
 date: 2025-01-12
