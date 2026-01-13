@@ -2,14 +2,14 @@
 const navItems = [
   { label: '首页', href: '/' },
   { label: '项目', href: '/#projects' },
-  { label: '关于', href: '/#about' },
+  { label: '经验', href: '/#experience' },
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
+<header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
   <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="text-xl font-semibold tracking-tight">
-      <span class="gradient-text">marovole</span>
+    <a href="/" class="text-xl font-semibold tracking-tight group">
+      <span class="neon-text-cyan group-hover:animate-pulse-neon">marovole</span>
     </a>
 
     <ul class="flex items-center gap-8">
@@ -17,7 +17,7 @@ const navItems = [
         <li>
           <a
             href={item.href}
-            class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-all duration-300 hover:neon-text-cyan"
           >
             {item.label}
           </a>
