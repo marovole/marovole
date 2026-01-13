@@ -1,23 +1,31 @@
+/* 字体引入 - 必须在最前面 */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #D4A574;
-  --color-primary-dark: #B8956A;
-  --color-secondary: #E8D5C4;
-  --color-bg: #FAF8F5;
-  --color-bg-card: #FFFFFF;
-  --color-text: #2D2D2D;
-  --color-text-muted: #6B6B6B;
-  --color-border: #E5E0D8;
+  /* 霓虹发光配色 - 复古未来风格 */
+  --color-bg: #0A0E1A;
+  --color-bg-card: #111827;
+  --color-bg-card-hover: #1A2332;
+  --color-primary: #00F0FF;
+  --color-primary-dim: #00F0FF40;
+  --color-secondary: #FF00FF;
+  --color-accent: #7B3FEF;
+  --color-text: #E0E0E0;
+  --color-text-muted: #808090;
+  --color-border: #2A3040;
+  --color-border-glow: #00F0FF30;
 
-  --font-sans: 'Inter', 'PingFang SC', 'Source Han Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'JetBrains Mono', 'Inter', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
-  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-neon-cyan: 0 0 10px #00F0FF40, 0 0 20px #00F0FF20, 0 0 30px #00F0FF10;
+  --shadow-neon-magenta: 0 0 10px #FF00FF40, 0 0 20px #FF00FF20, 0 0 30px #FF00FF10;
+  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.5);
 
-  --radius-card: 16px;
-  --radius-button: 10px;
+  --radius-card: 12px;
+  --radius-button: 8px;
 }
 
 /* 基础样式重置 */
@@ -37,10 +45,32 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.6;
+  background-image:
+    linear-gradient(90deg, var(--color-bg) 1px, transparent 1px),
+    linear-gradient(180deg, var(--color-bg) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+  background-attachment: fixed;
 }
 
-/* 字体引入 - 使用 Google Fonts CSS import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+/* CRT 扫描线效果 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+}
 
 /* 链接样式 */
 a {
@@ -59,6 +89,25 @@ a {
   50% { transform: translateY(-5px); }
 }
 
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 10px var(--color-primary-dim), 0 0 20px var(--color-primary-dim); }
+  50% { box-shadow: 0 0 20px var(--color-primary), 0 0 40px var(--color-primary-dim); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
 }
@@ -67,20 +116,104 @@ a {
   animation: float 3s ease-in-out infinite;
 }
 
+.animate-pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+/* 霓虹文字效果 */
+.neon-text {
+  text-shadow:
+    0 0 5px var(--color-primary),
+    0 0 10px var(--color-primary),
+    0 0 20px var(--color-primary-dim);
+}
+
+.neon-text-cyan {
+  color: var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary-dim), 0 0 20px var(--color-primary-dim);
+}
+
+.neon-text-magenta {
+  color: var(--color-secondary);
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.4), 0 0 20px rgba(255, 0, 255, 0.2);
+}
+
 /* 卡片悬停效果 */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--color-border);
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-neon-cyan);
 }
 
 /* 渐变文字 */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #E8C9A0 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* 霓虹边框按钮 */
+.btn-neon {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+  background: var(--color-primary-dim);
+  box-shadow: var(--shadow-neon-cyan);
+}
+
+/* 霓虹背景按钮 */
+.btn-neon-fill {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: 1px solid var(--color-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-neon-fill:hover {
+  box-shadow: var(--shadow-neon-cyan);
+  transform: translateY(-2px);
+}
+
+/* 边框发光效果 */
+.border-glow {
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.border-glow:hover {
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 20px var(--color-border-glow), 0 0 20px var(--color-border-glow);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dim);
+}
+
+/* 选中文字样式 */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-bg);
 }

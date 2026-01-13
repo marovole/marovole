@@ -2,21 +2,24 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="py-12 px-6 border-t border-[var(--color-border)] mt-auto">
+<footer class="py-12 px-6 border-t border-[var(--color-border)] mt-auto relative">
+  <!-- 顶部装饰线 -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent opacity-50"></div>
+
   <div class="max-w-6xl mx-auto">
     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="text-center md:text-left">
-        <p class="text-sm text-[var(--color-text-muted)]">
-          &copy; {currentYear} marovole. All rights reserved.
+        <p class="text-sm text-[var(--color-text-muted)] font-mono">
+          &copy; {currentYear} marovole. <span class="neon-text-cyan">Built with AI.</span>
         </p>
       </div>
 
       <div class="flex items-center gap-6">
         <a
-          href="https://github.com"
+          href="https://github.com/marovole"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          class="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-all duration-300 hover:shadow-[var(--shadow-neon-cyan)] p-2 rounded-lg"
           aria-label="GitHub"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -24,10 +27,10 @@ const currentYear = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="https://twitter.com"
+          href="https://twitter.com/marovole"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          class="text-[var(--color-text-muted)] hover:text-[var(--color-secondary)] transition-all duration-300 hover:shadow-[var(--shadow-neon-magenta)] p-2 rounded-lg"
           aria-label="Twitter"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -35,10 +38,10 @@ const currentYear = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://linkedin.com/in/marovole"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(123,63,239,0.4)] p-2 rounded-lg"
           aria-label="LinkedIn"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -46,8 +49,8 @@ const currentYear = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="mailto:hello@example.com"
-          class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          href="mailto:marovole@gmail.com"
+          class="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-all duration-300 hover:shadow-[var(--shadow-neon-cyan)] p-2 rounded-lg"
           aria-label="Email"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

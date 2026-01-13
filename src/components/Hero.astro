@@ -1,36 +1,60 @@
 ---
 ---
 
-<section id="about" class="pt-32 pb-20 px-6">
-  <div class="max-w-4xl mx-auto text-center animate-fade-in">
-    <div class="inline-block mb-6 px-4 py-1.5 rounded-full bg-[var(--color-secondary)]/50 text-sm font-medium text-[var(--color-text-muted)]">
-      AIfirst 产品经理 & Vibecoder
+<section class="pt-32 pb-20 px-6 relative overflow-hidden">
+  <!-- 背景装饰 - 科技网格 -->
+  <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: linear-gradient(var(--color-primary) 1px, transparent 1px), linear-gradient(90deg, var(--color-primary) 1px, transparent 1px); background-size: 100px 100px; mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);"></div>
+
+  <!-- 霓虹装饰角落 -->
+  <div class="absolute top-32 left-6 w-20 h-20 border-l-2 border-t-2 border-[var(--color-primary)] opacity-50"></div>
+  <div class="absolute top-32 right-6 w-20 h-20 border-r-2 border-t-2 border-[var(--color-secondary)] opacity-50"></div>
+  <div class="absolute bottom-20 left-6 w-20 h-20 border-l-2 border-b-2 border-[var(--color-accent)] opacity-50"></div>
+  <div class="absolute bottom-20 right-6 w-20 h-20 border-r-2 border-b-2 border-[var(--color-primary)] opacity-50"></div>
+
+  <div class="max-w-4xl mx-auto text-center relative z-10 animate-fade-in">
+    <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary-dim)] text-sm font-medium text-[var(--color-primary)]">
+      AI-First 产品经理 & Vibecoder
     </div>
 
-    <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 font-mono">
       你好，我是 <span class="gradient-text">marovole</span>
     </h1>
 
-    <p class="text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed mb-10">
-      专注于 AI 产品设计与开发，相信人机协作的未来。
-      热爱用代码将想法变为现实，用产品思维解决真实问题。
+    <p class="text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed mb-10 font-mono text-sm">
+      专注于 AI 产品设计与开发，将 AI 深度融入工作流。
+      <br />
+      每天消耗 <span class="neon-text-cyan">1亿+ Token</span>，具备极强的 0-1 交付能力。
     </p>
 
-    <div class="flex items-center justify-center gap-4">
+    <div class="flex items-center justify-center gap-4 flex-wrap">
       <a
         href="/#projects"
-        class="px-6 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-white font-medium hover:bg-[var(--color-primary-dark)] transition-colors"
+        class="px-8 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300 btn-neon-fill"
       >
         查看项目
       </a>
       <a
-        href="https://github.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="px-6 py-3 rounded-[var(--radius-button)] border border-[var(--color-border)] text-[var(--color-text)] font-medium hover:bg-[var(--color-secondary)]/30 transition-colors"
+        href="/#experience"
+        class="px-8 py-3 rounded-[var(--radius-button)] border border-[var(--color-primary)] text-[var(--color-primary)] font-medium hover:bg-[var(--color-primary-dim)] transition-all duration-300 btn-neon"
       >
-        GitHub
+        了解更多
       </a>
+    </div>
+
+    <!-- 装饰性数据点 -->
+    <div class="mt-16 flex items-center justify-center gap-8 text-xs font-mono text-[var(--color-text-muted)]">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-primary)] animate-pulse"></span>
+        <span>Claude</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-secondary)] animate-pulse" style="animation-delay: 0.5s;"></span>
+        <span>ChatGPT</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" style="animation-delay: 1s;"></span>
+        <span>Codex</span>
+      </div>
     </div>
   </div>
 </section>
