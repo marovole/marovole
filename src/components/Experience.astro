@@ -1,43 +1,50 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section id="experience" class="py-24 px-6 relative">
-  <!-- 背景装饰 -->
+  <!-- Background decoration -->
   <div class="absolute inset-0 pointer-events-none opacity-10" style="background-image: linear-gradient(90deg, var(--color-secondary) 1px, transparent 1px), linear-gradient(180deg, var(--color-secondary) 1px, transparent 1px); background-size: 50px 50px;"></div>
 
   <div class="max-w-5xl mx-auto relative z-10">
-    <!-- 标题 -->
+    <!-- Title -->
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-bold mb-4 font-mono">
-        <span class="gradient-text">AI-First Product Manager</span>
+        <span class="gradient-text">{t('experience.title')}</span>
       </h2>
       <div class="w-24 h-1 bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-secondary)] to-[var(--color-accent)] mx-auto"></div>
     </div>
 
-    <!-- 核心宣言 -->
+    <!-- Core manifesto -->
     <div class="mb-16 p-8 rounded-[var(--radius-card)] border border-[var(--color-primary)] bg-[var(--color-bg-card)] relative overflow-hidden">
       <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent"></div>
       <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent"></div>
 
       <p class="text-lg text-[var(--color-text)] leading-relaxed font-mono">
-        我是一名 <span class="neon-text-cyan">AI-First 产品经理</span>，正致力于 AI Agent 各个方向的深入研究、探索与实践。
-        将 AI 深度融入工作流，平均每天消耗 <span class="neon-text-magenta">1亿+ Token</span>。
+        {lang === 'zh' ? (
+          <>我是一名 <span class="neon-text-cyan">{t('experience.title')}</span>，正致力于 AI Agent 各个方向的深入研究、探索与实践。将 AI 深度融入工作流，平均每天消耗 <span class="neon-text-magenta">{t('hero.token')}</span>。</>
+        ) : (
+          <>I am an <span class="neon-text-cyan">AI-First Product Manager</span> dedicated to in-depth research, exploration, and practice of AI Agents in various directions. Deeply integrating AI into my workflow, consuming <span class="neon-text-magenta">{t('hero.token')}</span> daily.</>
+        )}
       </p>
     </div>
 
-    <!-- AI 开发流程图 -->
+    <!-- AI Development Process -->
     <div class="mb-16">
       <h3 class="text-xl font-semibold mb-6 text-[var(--color-text)] font-mono">
-        <span class="text-[var(--color-primary)]">▸</span> AI 驱动的开发流程
+        <span class="text-[var(--color-primary)]">▸</span> {t('experience.process')}
       </h3>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <!-- 调研阶段 -->
+        <!-- Research Phase -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-all duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-secondary)] flex items-center justify-center">
             <span class="text-2xl">🔍</span>
           </div>
-          <h4 class="font-semibold text-[var(--color-text)] mb-2">调研阶段</h4>
+          <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.research')}</h4>
           <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Deep Research</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">ChatGPT</span>
@@ -45,12 +52,12 @@
           </div>
         </div>
 
-        <!-- 开发阶段 -->
+        <!-- Development Phase -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-primary)] transition-all duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-primary)] flex items-center justify-center">
             <span class="text-2xl">⚡</span>
           </div>
-          <h4 class="font-semibold text-[var(--color-text)] mb-2">开发阶段</h4>
+          <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.dev')}</h4>
           <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Implementation</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-primary)]/20 text-[var(--color-primary)] font-mono">Claude</span>
@@ -58,24 +65,24 @@
           </div>
         </div>
 
-        <!-- 评审阶段 -->
+        <!-- Review Phase -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-accent)] transition-all duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-accent)] flex items-center justify-center">
             <span class="text-2xl">🛡️</span>
           </div>
-          <h4 class="font-semibold text-[var(--color-text)] mb-2">评审阶段</h4>
+          <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.review')}</h4>
           <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Code Review</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-accent)]/20 text-[var(--color-accent)] font-mono">Codex</span>
           </div>
         </div>
 
-        <!-- 部署阶段 -->
+        <!-- Deployment Phase -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-all duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-secondary)] flex items-center justify-center">
             <span class="text-2xl">🚀</span>
           </div>
-          <h4 class="font-semibold text-[var(--color-text)] mb-2">部署阶段</h4>
+          <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.deploy')}</h4>
           <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Deployment</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">Vercel</span>
@@ -85,40 +92,46 @@
       </div>
     </div>
 
-    <!-- 交付能力数据 -->
+    <!-- Delivery Capabilities -->
     <div class="mb-16">
       <h3 class="text-xl font-semibold mb-6 text-[var(--color-text)] font-mono">
-        <span class="text-[var(--color-primary)]">▸</span> 交付能力
+        <span class="text-[var(--color-primary)]">▸</span> {t('experience.capability.title')}
       </h3>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- 简单项目 -->
+        <!-- Simple Project -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300">
           <div class="text-4xl font-bold neon-text-cyan mb-2 font-mono">3-4h</div>
-          <div class="text-sm text-[var(--color-text-muted)] mb-4">简单项目交付</div>
-          <p class="text-xs text-[var(--color-text-muted)]">从需求到完整前后端产品上线</p>
+          <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.simple')}</div>
+          <p class="text-xs text-[var(--color-text-muted)]">
+            {lang === 'zh' ? '从需求到完整前后端产品上线' : 'From requirements to full-stack product launch'}
+          </p>
         </div>
 
-        <!-- 复杂项目 -->
+        <!-- Complex Project -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-magenta)] transition-all duration-300">
           <div class="text-4xl font-bold neon-text-magenta mb-2 font-mono">3-5d</div>
-          <div class="text-sm text-[var(--color-text-muted)] mb-4">复杂项目交付</div>
-          <p class="text-xs text-[var(--color-text-muted)]">含 API 调用或复杂算法</p>
+          <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.complex')}</div>
+          <p class="text-xs text-[var(--color-text-muted)]">
+            {lang === 'zh' ? '含 API 调用或复杂算法' : 'With API calls or complex algorithms'}
+          </p>
         </div>
 
-        <!-- 核心优势 -->
+        <!-- Core Advantage -->
         <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[0_0_20px_rgba(123,63,239,0.4)] transition-all duration-300">
           <div class="text-4xl font-bold text-[var(--color-accent)] mb-2 font-mono">0-1</div>
-          <div class="text-sm text-[var(--color-text-muted)] mb-4">极强交付能力</div>
-          <p class="text-xs text-[var(--color-text-muted)]">跳过原型/UI设计环节，直接 MVP</p>
+          <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.zero_one')}</div>
+          <p class="text-xs text-[var(--color-text-muted)]">
+            {lang === 'zh' ? '跳过原型/UI设计环节，直接 MVP' : 'Skip prototyping, go directly to MVP'}
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- 技术栈 -->
+    <!-- Tech Stack -->
     <div>
       <h3 class="text-xl font-semibold mb-6 text-[var(--color-text)] font-mono">
-        <span class="text-[var(--color-primary)]">▸</span> 技术栈
+        <span class="text-[var(--color-primary)]">▸</span> {t('experience.stack')}
       </h3>
 
       <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">

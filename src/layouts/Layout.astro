@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { getLangFromUrl } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -7,15 +8,16 @@ interface Props {
   image?: string;
 }
 
-const {
-  title,
-  description = 'AIfirst 产品经理 | Vibecoder - 个人作品集',
-  image = '/images/og.png'
-} = Astro.props;
+const { title, description: desc, image: ogImage } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const description = desc || 'AI-First Product Manager & Vibecoder';
+const image = ogImage || '/images/og.png';
+const langAttr = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={langAttr}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

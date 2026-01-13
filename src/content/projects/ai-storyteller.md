@@ -1,22 +1,23 @@
 ---
 title: AI Kids Storyteller
-description: 将孩子的"十万个为什么"变成有趣的四格漫画。支持 8 种语言，专为 5-10 岁儿童设计。
+description: Turning children's "why" questions into fun four-panel comics. Supports 8 languages, designed for kids aged 5-10.
 tags: ["AI", "Education", "Storytelling", "GenAI", "React"]
 image: "/images/projects/ai-storyteller.jpg"
 demoUrl: "https://aistoryteller.life/"
 featured: true
 date: 2025-01-12
+lang: en
 ---
 
-AI Kids Storyteller 是一款专为 5-10 岁儿童设计的创新教育应用。它利用先进的生成式 AI 技术，将孩子们充满好奇心的“为什么”瞬间转化为生动有趣的四格漫画。
+AI Kids Storyteller is an innovative educational app designed specifically for children aged 5-10. It uses advanced generative AI technology to transform children's curious "why" moments into vivid and fun four-panel comics.
 
-## 核心功能
+## Core Features
 
-- **即时漫画生成**: 输入问题，AI 立即生成包含多彩插图和简单解释的四格漫画，让学习变得直观又有趣。
-- **多语言支持**: 支持 8 种主要语言，帮助孩子在学习知识的同时，也能进行语言启蒙。
-- **适龄内容优化**: 所有生成的内容都经过专门优化，确保适合 5-10 岁儿童的认知水平，安全且富有教育意义。
-- **激发好奇心**: 通过视觉化的叙事方式，鼓励孩子们提出更多问题，培养探索世界的热情。
+- **Instant Comic Generation**: Input a question, and AI immediately generates four-panel comics with colorful illustrations and simple explanations, making learning intuitive and fun.
+- **Multi-Language Support**: Supports 8 major languages, helping children learn knowledge while also getting language启蒙 (early education).
+- **Age-Appropriate Content Optimization**: All generated content is specially optimized to ensure it's suitable for the cognitive level of children aged 5-10, safe and educational.
+- **Inspiring Curiosity**: Through visual storytelling, encourage children to ask more questions and cultivate enthusiasm for exploring the world.
 
-## 技术亮点
+## Technical Highlights
 
-该项目利用了最新的 AI 绘图和文本生成模型，结合 React 构建的流畅前端体验，为孩子们提供了一个安全、快速且极具吸引力的交互平台。
+This project leverages the latest AI image generation and text generation models, combined with a smooth frontend experience built with React, providing children with a safe, fast, and highly engaging interactive platform.

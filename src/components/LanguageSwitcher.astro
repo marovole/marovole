@@ -1,0 +1,43 @@
+---
+import { languages } from '../i18n/ui';
+
+interface Props {
+  currentLang: string;
+}
+
+const { currentLang } = Astro.props;
+
+const targetLang = currentLang === 'en' ? 'zh' : 'en';
+const currentPath = Astro.url.pathname;
+
+// Replace language prefix in path
+const localizedPath = currentPath.replace(/^\/(en|zh)/, `/${targetLang}`);
+---
+
+<div class="flex items-center gap-2">
+  <a
+    href={localizedPath}
+    class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
+    class:list={[
+      currentLang === 'en'
+        ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+        : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+    ]}
+    aria-label="Switch to English"
+  >
+    EN
+  </a>
+  <span class="text-[var(--color-text-muted)]">/</span>
+  <a
+    href={localizedPath}
+    class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
+    class:list={[
+      currentLang === 'zh'
+        ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+        : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+    ]}
+    aria-label="Switch to Chinese"
+  >
+    中文
+  </a>
+</div>
