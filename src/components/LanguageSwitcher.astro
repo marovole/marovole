@@ -7,16 +7,16 @@ interface Props {
 
 const { currentLang } = Astro.props;
 
-const targetLang = currentLang === 'en' ? 'zh' : 'en';
 const currentPath = Astro.url.pathname;
 
-// Replace language prefix in path
-const localizedPath = currentPath.replace(/^\/(en|zh)/, `/${targetLang}`);
+// Generate paths for both languages
+const enPath = currentPath.replace(/^\/(en|zh)/, '/en');
+const zhPath = currentPath.replace(/^\/(en|zh)/, '/zh');
 ---
 
 <div class="flex items-center gap-2">
   <a
-    href={localizedPath}
+    href={enPath}
     class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
     class:list={[
       currentLang === 'en'
@@ -29,7 +29,7 @@ const localizedPath = currentPath.replace(/^\/(en|zh)/, `/${targetLang}`);
   </a>
   <span class="text-[var(--color-text-muted)]">/</span>
   <a
-    href={localizedPath}
+    href={zhPath}
     class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
     class:list={[
       currentLang === 'zh'
