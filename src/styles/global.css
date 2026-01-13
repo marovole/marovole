@@ -39,22 +39,8 @@ body {
   line-height: 1.6;
 }
 
-/* 字体引入 */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url(https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap) format('woff2');
-}
-
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url(https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap) format('woff2');
-}
+/* 字体引入 - 使用 Google Fonts CSS import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 /* 链接样式 */
 a {
