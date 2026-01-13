@@ -2,7 +2,7 @@
 title: Web3search
 description: AI 驱动的 Web3 研究平台，用于去中心化数据检索和分析。支持深度研究、实时价格数据、多模型 AI 路由
 tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Supabase"]
-demoUrl: "https://web3search.pages.dev"
+demoUrl: "https://lulaai.xyz"
 repoUrl: "https://github.com/marovole/Web3search"
 featured: true
 date: 2025-01-03
