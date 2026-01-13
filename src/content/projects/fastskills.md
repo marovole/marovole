@@ -2,6 +2,7 @@
 title: FastSkills
 description: 智能技能编排控制器，Claude Code 的最佳伴侣。提供 227+ 专家级工具，支持自动意图检测和场景化技能路由。
 tags: ["AI", "Claude Code", "DevTools", "Productivity"]
+image: "/images/projects/fastskills.jpg"
 demoUrl: "https://fastskills.xyz/"
 featured: true
 date: 2025-01-12
