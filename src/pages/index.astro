@@ -1,4 +1,75 @@
 ---
-// Redirect root to English version
-return Astro.redirect('/en/', 302);
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Experience from '../components/Experience.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations } from '../i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured && project.data.lang === 'en')
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
+
+<Layout title={`marovole | ${t('hero.role')}`}>
+  <Header />
+  <main class="flex-grow">
+    <Hero />
+    <Experience />
+    <ProjectGrid projects={featuredProjects} />
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[var(--color-text)] mb-8 text-center font-mono">
+          <span class="gradient-text">{t('about.title')}</span>
+        </h2>
+        <div class="prose prose-lg mx-auto text-[var(--color-text-muted)]">
+          <p class="mb-6 font-mono text-sm">{t('about.p1')}</p>
+          <p class="mb-6 font-mono text-sm">{t('about.p2')}</p>
+          <p class="font-mono text-sm">{t('about.p3')}</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+            <div class="text-3xl font-bold neon-text-cyan mb-2 font-mono">5+</div>
+            <div class="text-sm text-[var(--color-text-muted)] font-mono">{t('hero.stats.exp')}</div>
+          </div>
+          <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+            <div class="text-3xl font-bold neon-text-magenta mb-2 font-mono">20+</div>
+            <div class="text-sm text-[var(--color-text-muted)] font-mono">Products Launched</div>
+          </div>
+          <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+            <div class="text-3xl font-bold text-[var(--color-accent)] mb-2 font-mono">10+</div>
+            <div class="text-sm text-[var(--color-text-muted)] font-mono">{t('hero.stats.opensource')}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-20 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-[var(--color-text)] mb-4 font-mono">
+          {t('contact.title')}<span class="gradient-text">{t('contact.titleHighlight')}</span>
+        </h2>
+        <p class="text-[var(--color-text-muted)] mb-8 font-mono text-sm">
+          {t('contact.desc')}
+        </p>
+        <a
+          href="mailto:marovole@gmail.com"
+          class="inline-block px-8 py-4 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300 btn-neon-fill"
+        >
+          {t('contact.cta')}
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
