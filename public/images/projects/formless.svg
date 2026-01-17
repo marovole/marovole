@@ -1,0 +1,53 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F7F3EE" />
+      <stop offset="0.55" stop-color="#EFE8DF" />
+      <stop offset="1" stop-color="#E6DDD3" />
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 540) rotate(90) scale(420 520)">
+      <stop offset="0" stop-color="#F4E9D6" stop-opacity="0.9" />
+      <stop offset="0.5" stop-color="#E6D2B4" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#D1B38B" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="sage" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1380 760) rotate(120) scale(360 520)">
+      <stop offset="0" stop-color="#C9D4C2" stop-opacity="0.6" />
+      <stop offset="0.6" stop-color="#AEB9A6" stop-opacity="0.25" />
+      <stop offset="1" stop-color="#9AA38F" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="shadow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(520 260) rotate(120) scale(360 480)">
+      <stop offset="0" stop-color="#6D665F" stop-opacity="0.35" />
+      <stop offset="0.7" stop-color="#8B8278" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#A79C91" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1220 260) rotate(120) scale(260 380)">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5" />
+      <stop offset="0.6" stop-color="#F7F3EE" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#F7F3EE" stop-opacity="0" />
+    </radialGradient>
+    <filter id="blur80" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="80" />
+    </filter>
+    <filter id="blur120" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="120" />
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)" />
+
+  <g filter="url(#blur80)">
+    <ellipse cx="980" cy="540" rx="420" ry="520" fill="url(#core)" />
+  </g>
+
+  <g filter="url(#blur120)">
+    <ellipse cx="1380" cy="760" rx="360" ry="520" fill="url(#sage)" />
+  </g>
+
+  <g filter="url(#blur120)">
+    <ellipse cx="520" cy="260" rx="360" ry="480" fill="url(#shadow)" />
+  </g>
+
+  <g filter="url(#blur80)">
+    <ellipse cx="1220" cy="260" rx="260" ry="380" fill="url(#halo)" />
+  </g>
+</svg>
