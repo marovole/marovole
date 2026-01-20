@@ -1,0 +1,62 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF5F8" />
+      <stop offset="0.55" stop-color="#FFE8EF" />
+      <stop offset="1" stop-color="#F8D7E3" />
+    </linearGradient>
+    <radialGradient id="core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 540) rotate(90) scale(420 520)">
+      <stop offset="0" stop-color="#FFB6C1" stop-opacity="0.9" />
+      <stop offset="0.5" stop-color="#E6A8B4" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#D4919E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="accent" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1380 760) rotate(120) scale(360 520)">
+      <stop offset="0" stop-color="#E8D4F0" stop-opacity="0.6" />
+      <stop offset="0.6" stop-color="#D4B8E6" stop-opacity="0.25" />
+      <stop offset="1" stop-color="#C9A8DC" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="shadow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(520 260) rotate(120) scale(360 480)">
+      <stop offset="0" stop-color="#B8889E" stop-opacity="0.35" />
+      <stop offset="0.7" stop-color="#C9A0B4" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#D4B0C2" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1220 260) rotate(120) scale(260 380)">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5" />
+      <stop offset="0.6" stop-color="#FFF5F8" stop-opacity="0.2" />
+      <stop offset="1" stop-color="#FFF5F8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="sparkle" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720 680) rotate(45) scale(280 380)">
+      <stop offset="0" stop-color="#FFD700" stop-opacity="0.3" />
+      <stop offset="0.5" stop-color="#FFC0CB" stop-opacity="0.15" />
+      <stop offset="1" stop-color="#FFB6C1" stop-opacity="0" />
+    </radialGradient>
+    <filter id="blur80" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="80" />
+    </filter>
+    <filter id="blur120" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="120" />
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)" />
+
+  <g filter="url(#blur80)">
+    <ellipse cx="980" cy="540" rx="420" ry="520" fill="url(#core)" />
+  </g>
+
+  <g filter="url(#blur120)">
+    <ellipse cx="1380" cy="760" rx="360" ry="520" fill="url(#accent)" />
+  </g>
+
+  <g filter="url(#blur120)">
+    <ellipse cx="520" cy="260" rx="360" ry="480" fill="url(#shadow)" />
+  </g>
+
+  <g filter="url(#blur80)">
+    <ellipse cx="1220" cy="260" rx="260" ry="380" fill="url(#halo)" />
+  </g>
+
+  <g filter="url(#blur80)">
+    <ellipse cx="720" cy="680" rx="280" ry="380" fill="url(#sparkle)" />
+  </g>
+</svg>
