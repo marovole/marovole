@@ -2,7 +2,7 @@
 title: Formless (无相)
 description: A dialog-first healing companion. A wise elder voice that uses calm, philosophical guidance to soothe anxiety, irritability, and emotional overwhelm.
 tags: ["AI", "Wellness", "Dialogue", "Healing", "Philosophy"]
-image: "/images/projects/formless.svg"
+image: "/images/projects/formless-final.jpg"
 demoUrl: "https://formless.pro"
 featured: true
 date: 2026-01-17

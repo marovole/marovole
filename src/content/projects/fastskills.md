@@ -2,7 +2,7 @@
 title: FastSkills
 description: Smart skill orchestration controller, the best companion for Claude Code. Provides 227+ expert-level tools with automatic intent detection and contextual skill routing.
 tags: ["AI", "Claude Code", "DevTools", "Productivity"]
-image: "/images/projects/fastskills.jpg"
+image: "/images/projects/fastskills-final.jpg"
 demoUrl: "https://fastskills.xyz/"
 featured: true
 date: 2025-01-12

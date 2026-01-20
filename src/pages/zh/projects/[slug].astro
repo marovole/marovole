@@ -47,17 +47,17 @@ const backLink = `/${lang}/#projects`;
 
         <div class="mb-6 flex flex-wrap gap-2">
           {project.data.tags.map(tag => (
-            <span class="px-3 py-1 text-sm font-medium rounded-full bg-[var(--color-secondary)]/50 text-[var(--color-text-muted)]">
+            <span class="px-3 py-1 text-sm font-medium rounded-full border border-[var(--color-primary)]/60 text-[var(--color-primary)] bg-[var(--color-primary)]/10">
               {tag}
             </span>
           ))}
         </div>
 
-        <h1 class="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-[var(--color-text)] mb-6 neon-text-cyan">
           {project.data.title}
         </h1>
 
-        <p class="text-xl text-[var(--color-text-muted)] mb-8 max-w-2xl">
+        <p class="text-xl text-[var(--color-text)] leading-relaxed mb-8 max-w-2xl">
           {project.data.description}
         </p>
 

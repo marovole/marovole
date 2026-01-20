@@ -2,7 +2,7 @@
 title: Nail-Designs.ai
 description: An AI-powered nail design studio that generates stunning nail art and lets you virtually try them on. Create, customize, and visualize your perfect manicure before visiting the salon.
 tags: ["AI", "SaaS", "Beauty", "Generative AI", "Virtual Try-on"]
-image: "/images/projects/nail-design.svg"
+image: "/images/projects/nail-design-final.jpg"
 demoUrl: "https://www.nail-designs.ai/"
 featured: true
 date: 2026-01-20

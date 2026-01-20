@@ -3,7 +3,7 @@ id: formless.zh
 title: Formless（无相）
 description: 以对话为核心的疗愈陪伴项目。以睿智长者的语气，用哲理与安抚平复焦虑、烦躁与情绪波动。
 tags: ["AI", "Wellness", "Dialogue", "Healing", "Philosophy"]
-image: "/images/projects/formless.svg"
+image: "/images/projects/formless-final.jpg"
 demoUrl: "https://formless.pro"
 featured: true
 date: 2026-01-17

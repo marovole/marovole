@@ -3,8 +3,31 @@ import { ui, defaultLang } from './ui';
 export function getLangFromUrl(url: URL): string {
   const segments = url.pathname.split('/').filter(Boolean);
   const lang = segments[0];
-  if (lang && lang in ui) return lang as keyof typeof ui;
+  // Only 'zh' is prefixed; root paths are 'en' (default)
+  if (lang === 'zh') return 'zh';
   return defaultLang;
+}
+
+/**
+ * Get the base path for a language.
+ * English (default) uses root '/', Chinese uses '/zh/'
+ */
+export function getLangPath(lang: string): string {
+  return lang === defaultLang ? '' : `/${lang}`;
+}
+
+/**
+ * Generate a localized URL path.
+ * For English: /projects/foo
+ * For Chinese: /zh/projects/foo
+ */
+export function getLocalizedUrl(path: string, lang: string): string {
+  // Ensure path starts with /
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  if (lang === defaultLang) {
+    return cleanPath;
+  }
+  return `/${lang}${cleanPath}`;
 }
 
 export function useTranslations(lang: string) {

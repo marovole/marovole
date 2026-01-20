@@ -1,5 +1,5 @@
 ---
-import { languages } from '../i18n/ui';
+import { languages, defaultLang } from '../i18n/ui';
 
 interface Props {
   currentLang: string;
@@ -10,8 +10,15 @@ const { currentLang } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 // Generate paths for both languages
-const enPath = currentPath.replace(/^\/(en|zh)/, '/en');
-const zhPath = currentPath.replace(/^\/(en|zh)/, '/zh');
+// For English (default): strip /zh prefix or keep root path
+// For Chinese: add /zh prefix
+const getPathWithoutLang = (path: string) => {
+  return path.replace(/^\/(en|zh)/, '') || '/';
+};
+
+const basePath = getPathWithoutLang(currentPath);
+const enPath = basePath;
+const zhPath = `/zh${basePath === '/' ? '' : basePath}`;
 ---
 
 <div class="flex items-center gap-2">

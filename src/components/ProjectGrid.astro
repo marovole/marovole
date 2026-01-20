@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/utils';
 
 interface Props {
   projects: Array<{
@@ -38,7 +38,7 @@ const t = useTranslations(lang);
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projects.map(project => (
         <article class="group">
-          <a href={`/${lang}/projects/${project.slug}`} class="block card-hover bg-[var(--color-bg-card)] rounded-[var(--radius-card)] overflow-hidden border border-[var(--color-border)] h-full">
+          <a href={getLocalizedUrl(`/projects/${project.slug}`, lang)} class="block card-hover bg-[var(--color-bg-card)] rounded-[var(--radius-card)] overflow-hidden border border-[var(--color-border)] h-full">
             <!-- Image area -->
             <div class="aspect-video bg-[var(--color-bg-card-hover)] relative overflow-hidden">
               {project.data.image ? (

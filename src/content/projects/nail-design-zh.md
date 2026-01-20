@@ -3,7 +3,7 @@ id: nail-design.zh
 title: Nail-Designs.ai
 description: AI 驱动的美甲设计工作室，可生成惊艳的美甲图案，并支持虚拟试戴。在去美甲店之前，先创建、定制并预览你的完美美甲。
 tags: ["AI", "SaaS", "Beauty", "Generative AI", "Virtual Try-on"]
-image: "/images/projects/nail-design.svg"
+image: "/images/projects/nail-design-final.jpg"
 demoUrl: "https://www.nail-designs.ai/"
 featured: true
 date: 2026-01-20

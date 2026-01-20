@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -36,13 +36,13 @@ const t = useTranslations(lang);
 
     <div class="flex items-center justify-center gap-4 flex-wrap">
       <a
-        href={`/${lang}/#projects`}
+        href={getLocalizedUrl('/#projects', lang)}
         class="px-8 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300 btn-neon-fill"
       >
         {t('hero.cta.projects')}
       </a>
       <a
-        href={`/${lang}/#experience`}
+        href={getLocalizedUrl('/#experience', lang)}
         class="px-8 py-3 rounded-[var(--radius-button)] border border-[var(--color-primary)] text-[var(--color-primary)] font-medium hover:bg-[var(--color-primary-dim)] transition-all duration-300 btn-neon"
       >
         {t('hero.cta.about')}

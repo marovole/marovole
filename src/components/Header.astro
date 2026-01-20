@@ -1,20 +1,20 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const navItems = [
-  { label: t('nav.home'), href: `/${lang}/` },
-  { label: t('nav.projects'), href: `/${lang}/#projects` },
-  { label: t('nav.experience'), href: `/${lang}/#experience` },
+  { label: t('nav.home'), href: getLocalizedUrl('/', lang) },
+  { label: t('nav.projects'), href: getLocalizedUrl('/#projects', lang) },
+  { label: t('nav.experience'), href: getLocalizedUrl('/#experience', lang) },
 ];
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
   <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href={`/${lang}/`} class="text-xl font-semibold tracking-tight group">
+    <a href={getLocalizedUrl('/', lang)} class="text-xl font-semibold tracking-tight group">
       <span class="neon-text-cyan group-hover:animate-pulse-neon">marovole</span>
     </a>
 
