@@ -1,0 +1,12 @@
+[site]
+bucket = "./dist"
+
+# Disable i18n routing
+[build]
+command = "npm run build"
+
+# Disable automatic locale redirects
+[[headers]]
+for = "/*"
+[headers.values]
+X-Robots-Tag = "all"
