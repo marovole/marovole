@@ -4,7 +4,7 @@ title: 健康管家 (HearthBulter)
 description: 基于健康数据与电商库存的动态饮食引擎。AI 营养规划、智能食谱生成和电商自动采购的家庭健康管理平台
 tags: ["Next.js", "AI", "健康管理", "Cloudflare Pages", "Supabase"]
 image: "/images/projects/hearthbulter.jpg"
-demoUrl: "https://hearthbulter.pages.dev"
+demoUrl: "https://healthbutler.life/"
 repoUrl: "https://github.com/marovole/HearthBulter"
 featured: true
 date: 2025-01-03

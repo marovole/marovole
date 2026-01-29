@@ -3,7 +3,7 @@ title: HearthBulter
 description: Dynamic diet engine based on health data and e-commerce inventory. AI nutrition planning, smart recipe generation, and automated e-commerce purchasing for family health management.
 tags: ["Next.js", "AI", "Health Management", "Cloudflare Pages", "Supabase"]
 image: "/images/projects/hearthbulter.jpg"
-demoUrl: "https://hearthbulter.pages.dev"
+demoUrl: "https://healthbutler.life/"
 repoUrl: "https://github.com/marovole/HearthBulter"
 featured: true
 date: 2025-01-03
