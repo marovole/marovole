@@ -5,6 +5,23 @@ bucket = "./dist"
 [build]
 command = "npm run build"
 
+# WWW → Non-WWW 重定向
+[[redirects]]
+from = "http://www.marovole.com/*"
+to = "https://marovole.com/:splat"
+status = 301
+
+[[redirects]]
+from = "https://www.marovole.com/*"
+to = "https://marovole.com/:splat"
+status = 301
+
+# HTTP → HTTPS 重定向
+[[redirects]]
+from = "http://marovole.com/*"
+to = "https://marovole.com/:splat"
+status = 301
+
 # Disable automatic locale redirects
 [[headers]]
 for = "/*"

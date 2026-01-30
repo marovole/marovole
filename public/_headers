@@ -1,2 +1,7 @@
+# SEO: 允许所有爬虫索引
 /*
-  Accept-Language: en
+  X-Robots-Tag: all
+
+# 静态资源缓存 1 年
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

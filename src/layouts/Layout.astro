@@ -27,6 +27,7 @@ const langAttr = lang === 'zh' ? 'zh-CN' : 'en';
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={`https://marovole.com${Astro.url.pathname.replace(/\/$/, '')}`} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
