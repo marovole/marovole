@@ -12,6 +12,8 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     date: z.string().or(z.date()),
     lang: z.enum(['en', 'zh']).default('en'),
+    /** Counterpart slug in the other locale (e.g. en `formless` ↔ zh `formless-zh`). */
+    otherLocaleSlug: z.string().optional(),
   }),
 });
 

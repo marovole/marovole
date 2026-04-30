@@ -25,9 +25,21 @@ const t = useTranslations(lang);
 
       <p class="text-lg text-[var(--color-text)] leading-relaxed font-mono">
         {lang === 'zh' ? (
-          <>我是一名 <span class="neon-text-cyan">{t('experience.title')}</span>，正致力于 AI Agent 各个方向的深入研究、探索与实践。将 AI 深度融入工作流，平均每天消耗 <span class="neon-text-magenta">{t('hero.token')}</span>。</>
+          <>
+            {t('experience.manifesto.zh_before_title')}
+            <span class="neon-text-cyan">{t('experience.title')}</span>
+            {t('experience.manifesto.zh_after_title')}
+            <span class="neon-text-magenta">{t('hero.token')}</span>
+            {t('experience.manifesto.zh_suffix')}
+          </>
         ) : (
-          <>I am an <span class="neon-text-cyan">AI-First Product Manager</span> dedicated to in-depth research, exploration, and practice of AI Agents in various directions. Deeply integrating AI into my workflow, consuming <span class="neon-text-magenta">{t('hero.token')}</span> daily.</>
+          <>
+            {t('experience.manifesto.en_lead')}
+            <span class="neon-text-cyan">{t('experience.manifesto.en_role')}</span>
+            {t('experience.manifesto.en_mid')}
+            <span class="neon-text-magenta">{t('hero.token')}</span>
+            {t('experience.manifesto.en_suffix')}
+          </>
         )}
       </p>
     </div>
@@ -40,12 +52,12 @@ const t = useTranslations(lang);
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <!-- Research Phase -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-[border-color,box-shadow] duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-secondary)] flex items-center justify-center">
             <span class="text-2xl">🔍</span>
           </div>
           <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.research')}</h4>
-          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Deep Research</p>
+          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">{t('experience.phase.research.sub')}</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">ChatGPT</span>
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">Gemini</span>
@@ -53,12 +65,12 @@ const t = useTranslations(lang);
         </div>
 
         <!-- Development Phase -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-primary)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-primary)] transition-[border-color,box-shadow] duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-primary)] flex items-center justify-center">
             <span class="text-2xl">⚡</span>
           </div>
           <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.dev')}</h4>
-          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Implementation</p>
+          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">{t('experience.phase.dev.sub')}</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-primary)]/20 text-[var(--color-primary)] font-mono">Claude</span>
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-primary)]/20 text-[var(--color-primary)] font-mono">OpenSpec</span>
@@ -66,24 +78,24 @@ const t = useTranslations(lang);
         </div>
 
         <!-- Review Phase -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-accent)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-accent)] transition-[border-color,box-shadow] duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-accent)] flex items-center justify-center">
             <span class="text-2xl">🛡️</span>
           </div>
           <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.review')}</h4>
-          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Code Review</p>
+          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">{t('experience.phase.review.sub')}</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-accent)]/20 text-[var(--color-accent)] font-mono">Codex</span>
           </div>
         </div>
 
         <!-- Deployment Phase -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center group hover:border-[var(--color-secondary)] transition-[border-color,box-shadow] duration-300">
           <div class="w-12 h-12 mx-auto mb-4 rounded-full border border-[var(--color-secondary)] flex items-center justify-center">
             <span class="text-2xl">🚀</span>
           </div>
           <h4 class="font-semibold text-[var(--color-text)] mb-2">{t('experience.phase.deploy')}</h4>
-          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">Deployment</p>
+          <p class="text-xs text-[var(--color-text-muted)] font-mono mb-3">{t('experience.phase.deploy.sub')}</p>
           <div class="flex flex-wrap justify-center gap-1">
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">Vercel</span>
             <span class="px-2 py-0.5 text-xs rounded bg-[var(--color-secondary)]/20 text-[var(--color-secondary)] font-mono">Supabase</span>
@@ -100,30 +112,24 @@ const t = useTranslations(lang);
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Simple Project -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-cyan)] transition-[box-shadow,border-color] duration-300">
           <div class="text-4xl font-bold neon-text-cyan mb-2 font-mono">3-4h</div>
           <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.simple')}</div>
-          <p class="text-xs text-[var(--color-text-muted)]">
-            {lang === 'zh' ? '从需求到完整前后端产品上线' : 'From requirements to full-stack product launch'}
-          </p>
+          <p class="text-xs text-[var(--color-text-muted)]">{t('experience.capability.simple.blurb')}</p>
         </div>
 
         <!-- Complex Project -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-magenta)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[var(--shadow-neon-magenta)] transition-[box-shadow,border-color] duration-300">
           <div class="text-4xl font-bold neon-text-magenta mb-2 font-mono">3-5d</div>
           <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.complex')}</div>
-          <p class="text-xs text-[var(--color-text-muted)]">
-            {lang === 'zh' ? '含 API 调用或复杂算法' : 'With API calls or complex algorithms'}
-          </p>
+          <p class="text-xs text-[var(--color-text-muted)]">{t('experience.capability.complex.blurb')}</p>
         </div>
 
         <!-- Core Advantage -->
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[0_0_20px_rgba(123,63,239,0.4)] transition-all duration-300">
+        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center hover:shadow-[0_0_20px_rgba(123,63,239,0.4)] transition-[box-shadow,border-color] duration-300">
           <div class="text-4xl font-bold text-[var(--color-accent)] mb-2 font-mono">0-1</div>
           <div class="text-sm text-[var(--color-text-muted)] mb-4">{t('experience.capability.zero_one')}</div>
-          <p class="text-xs text-[var(--color-text-muted)]">
-            {lang === 'zh' ? '跳过原型/UI设计环节，直接 MVP' : 'Skip prototyping, go directly to MVP'}
-          </p>
+          <p class="text-xs text-[var(--color-text-muted)]">{t('experience.capability.zero_one.blurb')}</p>
         </div>
       </div>
     </div>

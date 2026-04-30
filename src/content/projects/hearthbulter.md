@@ -8,6 +8,7 @@ repoUrl: "https://github.com/marovole/HearthBulter"
 featured: true
 date: 2025-01-03
 lang: en
+otherLocaleSlug: hearthbulter-zh
 ---
 
 ## Core Features

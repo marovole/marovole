@@ -7,6 +7,7 @@ demoUrl: "https://aistoryteller.life/"
 featured: true
 date: 2025-01-12
 lang: en
+otherLocaleSlug: ai-storyteller-zh
 ---
 
 AI Kids Storyteller is an innovative educational app designed specifically for children aged 5-10. It uses advanced generative AI technology to transform children's curious "why" moments into vivid and fun four-panel comics.

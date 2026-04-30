@@ -7,6 +7,7 @@ demoUrl: "https://fastskills.xyz/"
 featured: true
 date: 2025-01-12
 lang: en
+otherLocaleSlug: fastskills-zh
 ---
 
 FastSkills is a smart skill orchestration controller designed specifically for Claude Code. It's not just a tool collection, but a complete skill ecosystem.

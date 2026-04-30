@@ -7,6 +7,7 @@ demoUrl: "https://formless.pro"
 featured: true
 date: 2026-01-17
 lang: en
+otherLocaleSlug: formless-zh
 ---
 
 Formless is a new initiative focused on conversation and inner healing. It embodies a wise, compassionate elder—almost like a soul—who listens first and then responds with grounded, philosophical insight.

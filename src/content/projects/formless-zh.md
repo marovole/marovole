@@ -8,6 +8,7 @@ demoUrl: "https://formless.pro"
 featured: true
 date: 2026-01-17
 lang: zh
+otherLocaleSlug: formless
 ---
 
 Formless 是一个全新的对话与疗愈项目。它被设定为一位智慧、睿智的长者，也可以理解为一个灵魂。它倾听、共情，并用温和而有力量的语言陪伴用户。

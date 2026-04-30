@@ -8,6 +8,7 @@ demoUrl: "https://fastskills.xyz/"
 featured: true
 date: 2025-01-12
 lang: zh
+otherLocaleSlug: fastskills
 ---
 
 FastSkills 是专为 Claude Code 打造的智能技能编排控制器。它不仅仅是一个工具集合，更是一个完整的技能生态系统。

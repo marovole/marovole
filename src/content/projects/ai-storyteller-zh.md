@@ -8,6 +8,7 @@ demoUrl: "https://aistoryteller.life/"
 featured: true
 date: 2025-01-12
 lang: zh
+otherLocaleSlug: ai-storyteller
 ---
 
 AI Kids Storyteller 是一款专为 5-10 岁儿童设计的创新教育应用。它利用先进的生成式 AI 技术，将孩子们充满好奇心的"为什么"瞬间转化为生动有趣的四格漫画。

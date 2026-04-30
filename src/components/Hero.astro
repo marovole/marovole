@@ -37,13 +37,13 @@ const t = useTranslations(lang);
     <div class="flex items-center justify-center gap-4 flex-wrap">
       <a
         href={getLocalizedUrl('/#projects', lang)}
-        class="px-8 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-all duration-300 btn-neon-fill"
+        class="px-8 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-shadow duration-300 btn-neon-fill"
       >
         {t('hero.cta.projects')}
       </a>
       <a
         href={getLocalizedUrl('/#experience', lang)}
-        class="px-8 py-3 rounded-[var(--radius-button)] border border-[var(--color-primary)] text-[var(--color-primary)] font-medium hover:bg-[var(--color-primary-dim)] transition-all duration-300 btn-neon"
+        class="px-8 py-3 rounded-[var(--radius-button)] border border-[var(--color-primary)] text-[var(--color-primary)] font-medium hover:bg-[var(--color-primary-dim)] transition-[background-color,box-shadow,color] duration-300 btn-neon"
       >
         {t('hero.cta.about')}
       </a>

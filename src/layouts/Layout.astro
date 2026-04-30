@@ -5,15 +5,42 @@ import { getLangFromUrl } from '../i18n/utils';
 interface Props {
   title: string;
   description?: string;
+  /** Relative (/) or absolute image URL for OG / Twitter */
   image?: string;
+  /** Path-only localized URLs for hreflang, e.g. { en: '/projects/foo', zh: '/zh/projects/foo-zh' } */
+  langPaths?: { en: string; zh: string };
 }
 
-const { title, description: desc, image: ogImage } = Astro.props;
+const { title, description: desc, image: ogImageProp, langPaths } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const description = desc || 'AI-First Product Manager & Vibecoder';
-const image = ogImage || '/images/og.png';
+const imagePath = ogImageProp || '/images/og.png';
+
+const site = Astro.site ?? new URL('https://marovole.com/');
+let pathname = Astro.url.pathname;
+if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+const canonicalURL = new URL(pathname || '/', site).href;
+
+function toAbsoluteAsset(href: string): string {
+  if (href.startsWith('http://') || href.startsWith('https://')) return href;
+  const path = href.startsWith('/') ? href : `/${href}`;
+  return new URL(path, site).href;
+}
+
+const ogImage = toAbsoluteAsset(imagePath);
+
 const langAttr = lang === 'zh' ? 'zh-CN' : 'en';
+const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
+const ogLocaleAlternate = lang === 'zh' ? 'en_US' : 'zh_CN';
+
+const hreflangLinks = langPaths
+  ? [
+      { hreflang: 'en', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
+      { hreflang: 'zh-CN', href: new URL(langPaths.zh.startsWith('/') ? langPaths.zh : `/${langPaths.zh}`, site).href },
+      { hreflang: 'x-default', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
+    ]
+  : null;
 ---
 
 <!doctype html>
@@ -21,25 +48,49 @@ const langAttr = lang === 'zh' ? 'zh-CN' : 'en';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={`https://marovole.com${Astro.url.pathname.replace(/\/$/, '')}`} />
+    <link rel="canonical" href={canonicalURL} />
+    {hreflangLinks?.map((l) => <link rel="alternate" hreflang={l.hreflang} href={l.href} />)}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="marovole" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImage} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'WebSite', name: 'marovole', url: site.origin },
+        {
+          '@type': 'Person',
+          name: 'marovole',
+          url: site.origin,
+          sameAs: [
+            'https://github.com/marovole',
+            'https://twitter.com/marovole',
+            'https://www.linkedin.com/in/marovole-lu-4866ab245',
+          ],
+        },
+      ],
+    })} />
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />

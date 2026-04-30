@@ -7,6 +7,7 @@ demoUrl: "https://www.nail-designs.ai/"
 featured: true
 date: 2026-01-20
 lang: en
+otherLocaleSlug: nail-design-zh
 ---
 
 Nail-Designs.ai is an innovative AI-powered platform that revolutionizes how people discover and try nail designs. Using advanced generative AI, users can create unique nail art and visualize them on their own hands before committing to a salon visit.

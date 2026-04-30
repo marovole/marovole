@@ -8,6 +8,7 @@ demoUrl: "https://www.nail-designs.ai/"
 featured: true
 date: 2026-01-20
 lang: zh
+otherLocaleSlug: nail-design
 ---
 
 Nail-Designs.ai 是一个创新的 AI 美甲设计平台，彻底改变了人们发现和尝试美甲设计的方式。借助先进的生成式 AI，用户可以创建独特的美甲图案，并在去美甲店之前，先在自己的手上预览效果。

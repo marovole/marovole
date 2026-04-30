@@ -1,30 +1,63 @@
 ---
-import { languages, defaultLang } from '../i18n/ui';
+import { getCollection } from 'astro:content';
+import { defaultLang } from '../i18n/ui';
 
 interface Props {
   currentLang: string;
 }
 
 const { currentLang } = Astro.props;
-
 const currentPath = Astro.url.pathname;
 
-// Generate paths for both languages
-// For English (default): strip /zh prefix or keep root path
-// For Chinese: add /zh prefix
 const getPathWithoutLang = (path: string) => {
   return path.replace(/^\/(en|zh)/, '') || '/';
 };
 
-const basePath = getPathWithoutLang(currentPath);
-const enPath = basePath;
-const zhPath = `/zh${basePath === '/' ? '' : basePath}`;
+const projects = await getCollection('projects');
+const slugPair = new Map<string, string>();
+for (const p of projects) {
+  const other = p.data.otherLocaleSlug;
+  if (other) {
+    slugPair.set(p.slug, other);
+    slugPair.set(other, p.slug);
+  }
+}
+
+function parseProjectSlug(pathname: string): string | null {
+  const trimmed = pathname.replace(/\/$/, '') || '/';
+  const zhMatch = trimmed.match(/^\/zh\/projects\/([^/]+)$/);
+  if (zhMatch) return zhMatch[1];
+  const enMatch = trimmed.match(/^\/projects\/([^/]+)$/);
+  if (enMatch) return enMatch[1];
+  return null;
+}
+
+const projectSlug = parseProjectSlug(currentPath);
+
+let enPath: string;
+let zhPath: string;
+
+if (projectSlug) {
+  if (currentLang === defaultLang) {
+    const zhTarget = slugPair.get(projectSlug) ?? projectSlug;
+    enPath = `/projects/${projectSlug}`;
+    zhPath = `/zh/projects/${zhTarget}`;
+  } else {
+    const enTarget = slugPair.get(projectSlug) ?? projectSlug;
+    enPath = `/projects/${enTarget}`;
+    zhPath = `/zh/projects/${projectSlug}`;
+  }
+} else {
+  const basePath = getPathWithoutLang(currentPath);
+  enPath = basePath;
+  zhPath = `/zh${basePath === '/' ? '' : basePath}`;
+}
 ---
 
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 shrink-0">
   <a
     href={enPath}
-    class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
+    class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
     class:list={[
       currentLang === 'en'
         ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
@@ -34,10 +67,10 @@ const zhPath = `/zh${basePath === '/' ? '' : basePath}`;
   >
     EN
   </a>
-  <span class="text-[var(--color-text-muted)]">/</span>
+  <span class="text-[var(--color-text-muted)]" aria-hidden="true">/</span>
   <a
     href={zhPath}
-    class="text-xs font-mono px-2 py-1 rounded border transition-all duration-300"
+    class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
     class:list={[
       currentLang === 'zh'
         ? 'border-[var(--color-primary)] text-[var(--color-primary)]'

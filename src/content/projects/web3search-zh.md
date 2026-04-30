@@ -9,6 +9,7 @@ repoUrl: "https://github.com/marovole/Web3search"
 featured: true
 date: 2025-01-03
 lang: zh
+otherLocaleSlug: web3search
 ---
 
 ## 核心功能

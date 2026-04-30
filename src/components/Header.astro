@@ -12,20 +12,29 @@ const navItems = [
 ];
 ---
 
+<a
+  href="#main-content"
+  class="skip-to-main px-4 py-2 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-mono text-sm outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
+>
+  {t('nav.skip')}
+</a>
 <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
-  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href={getLocalizedUrl('/', lang)} class="text-xl font-semibold tracking-tight group">
+  <nav
+    class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4"
+    aria-label={t('nav.landmark')}
+  >
+    <a href={getLocalizedUrl('/', lang)} class="text-xl font-semibold tracking-tight group shrink-0">
       <span class="neon-text-cyan group-hover:animate-pulse-neon">marovole</span>
     </a>
 
-    <div class="flex items-center gap-8">
+    <div class="hidden md:flex items-center gap-8">
       <ul class="flex items-center gap-8">
         {navItems.map(item => (
           <li>
             <a
               href={item.href}
-              class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-all duration-300 hover:neon-text-cyan"
-            >
+              class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors duration-300 hover:neon-text-cyan"
+              >
               {item.label}
             </a>
           </li>
@@ -33,5 +42,35 @@ const navItems = [
       </ul>
       <LanguageSwitcher currentLang={lang} />
     </div>
+
+    <details class="relative md:hidden group">
+      <summary
+        class="list-none cursor-pointer p-2 rounded-lg border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors [&::-webkit-details-marker]:hidden flex items-center justify-center min-w-[44px] min-h-[44px]"
+        aria-label={t('nav.menu')}
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </summary>
+      <div
+        class="absolute right-0 top-full mt-2 py-3 w-56 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-[var(--shadow-card)] flex flex-col gap-1 z-50"
+      >
+        <ul class="px-2">
+          {navItems.map(item => (
+            <li>
+              <a
+                href={item.href}
+                class="block px-3 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg-card-hover)] rounded-lg transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="border-t border-[var(--color-border)] pt-2 px-3 mt-1 flex justify-end">
+          <LanguageSwitcher currentLang={lang} />
+        </div>
+      </div>
+    </details>
   </nav>
 </header>

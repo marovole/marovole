@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* 霓虹发光配色 - 复古未来风格 */
@@ -9,6 +10,7 @@
   --color-bg-card: #111827;
   --color-bg-card-hover: #1A2332;
   --color-primary: #00F0FF;
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 82%, #0a1620);
   --color-primary-dim: #00F0FF40;
   --color-secondary: #FF00FF;
   --color-accent: #7B3FEF;
@@ -50,10 +52,15 @@ body {
     linear-gradient(180deg, var(--color-bg) 1px, transparent 1px);
   background-size: 50px 50px;
   background-position: center center;
-  background-attachment: fixed;
 }
 
-/* CRT 扫描线效果 */
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
+/* CRT 扫描线 — 尊重减少动画偏好 */
 body::before {
   content: "";
   position: fixed;
@@ -63,13 +70,44 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.1) 2px,
-    rgba(0, 0, 0, 0.1) 4px
-  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+  }
+}
+
+/* 跳过导航 — 仅键盘聚焦时可见 */
+.skip-to-main {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to-main:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  z-index: 100;
 }
 
 /* 链接样式 */
@@ -79,6 +117,19 @@ a {
 }
 
 /* 动画 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -138,9 +189,22 @@ a {
   text-shadow: 0 0 10px rgba(255, 0, 255, 0.4), 0 0 20px rgba(255, 0, 255, 0.2);
 }
 
+/* 文章区：深色霓虹下的可读性 */
+.prose-invert.prose {
+  --tw-prose-body: var(--color-text-muted);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-links: var(--color-primary);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-code: var(--color-secondary);
+  --tw-prose-bullets: var(--color-primary-dim);
+}
+
 /* 卡片悬停效果 */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--color-border);
 }
 
@@ -162,7 +226,10 @@ a {
 .btn-neon {
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  transition: all 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
 }
 
 .btn-neon:hover {
@@ -175,7 +242,9 @@ a {
   background: var(--color-primary);
   color: var(--color-bg);
   border: 1px solid var(--color-primary);
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .btn-neon-fill:hover {
@@ -186,7 +255,9 @@ a {
 /* 边框发光效果 */
 .border-glow {
   border: 1px solid var(--color-border);
-  transition: all 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .border-glow:hover {
