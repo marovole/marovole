@@ -67,6 +67,8 @@ export const ui = {
     'about.p2': 'I believe AI is changing how we work and live, and good AI products need both technical depth and human touch.',
     'about.p3': 'In my free time, I share open source projects on GitHub, discuss AI product trends on social media, or brainstorm the next interesting product idea in a cafe.',
     'about.stats.products': 'Products Launched',
+    'about.stats.founder': 'Years as Founder',
+    'about.stats.opensource': 'Open Source Projects',
 
     // Contact
     'contact.title': 'Let\'s',
@@ -144,6 +146,8 @@ export const ui = {
     'about.p2': '我相信 AI 正在改变我们工作和生活的方式，而好的 AI 产品需要兼具技术深度和人文关怀。',
     'about.p3': '空闲时间，我会在 GitHub 上分享我的开源项目，在社交媒体上讨论 AI 产品的最新趋势，或者在咖啡馆里构思下一个有趣的产品想法。',
     'about.stats.products': '产品发布',
+    'about.stats.founder': '年创业经验',
+    'about.stats.opensource': '开源项目',
 
     // Contact
     'contact.title': '一起',
