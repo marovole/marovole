@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /zh/
+Allow: /projects/
+Allow: /zh/projects/
+Disallow:
+
+Sitemap: https://marovole.com/sitemap-index.xml

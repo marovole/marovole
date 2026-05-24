@@ -3,10 +3,13 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://marovole.com',
+
+  trailingSlash: 'always',
 
   i18n: {
     defaultLocale: 'en',
@@ -21,5 +24,16 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx()]
+  integrations: [
+    mdx(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          zh: 'zh-CN',
+        },
+      },
+    }),
+  ],
 });

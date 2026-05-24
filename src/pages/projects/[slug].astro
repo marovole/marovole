@@ -22,7 +22,7 @@ const zhProjectSlug = project.data.otherLocaleSlug ?? project.slug;
   title={`${project.data.title} | marovole`}
   description={project.data.description}
   image={project.data.image}
-  langPaths={{ en: `/projects/${enProjectSlug}`, zh: `/zh/projects/${zhProjectSlug}` }}
+  langPaths={{ en: `/projects/${enProjectSlug}/`, zh: `/zh/projects/${zhProjectSlug}/` }}
 >
   <ProjectDetail project={project} lang="en" backLink="/#projects" />
 </Layout>

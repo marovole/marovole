@@ -1,1 +1,2 @@
-# No redirects - disable i18n auto-routing
+https://www.marovole.com/* https://marovole.com/:splat 301!
+/sitemap.xml /sitemap-index.xml 301

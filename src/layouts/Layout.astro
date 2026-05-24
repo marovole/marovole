@@ -18,9 +18,7 @@ const description = desc || 'AI-First Product Manager & Vibecoder';
 const imagePath = ogImageProp || '/images/og.png';
 
 const site = Astro.site ?? new URL('https://marovole.com/');
-let pathname = Astro.url.pathname;
-if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
-const canonicalURL = new URL(pathname || '/', site).href;
+const canonicalURL = new URL(Astro.url.pathname || '/', site).href;
 
 function toAbsoluteAsset(href: string): string {
   if (href.startsWith('http://') || href.startsWith('https://')) return href;
