@@ -1,6 +1,6 @@
 ---
 title: Formless (无相)
-description: A dialog-first healing companion. A wise elder voice that uses calm, philosophical guidance to soothe anxiety, irritability, and emotional overwhelm.
+description: An AI companion built to sit with you, not fix you. A conversation space modeled on a calm, older voice.
 tags: ["AI", "Wellness", "Dialogue", "Healing", "Philosophy"]
 image: "/images/projects/formless-final.jpg"
 demoUrl: "https://formless.pro"
@@ -10,18 +10,27 @@ lang: en
 otherLocaleSlug: formless-zh
 ---
 
-Formless is a new initiative focused on conversation and inner healing. It embodies a wise, compassionate elder—almost like a soul—who listens first and then responds with grounded, philosophical insight.
+**Formless — formless.pro**
+*An AI companion built to sit with you, not fix you.*
 
-## Purpose
+Most AI products race to do more for you. Formless does less, on purpose. It's a conversation space modeled on a calm, older voice — someone who listens before answering and replies with perspective instead of a to-do list.
 
-Many people carry restlessness, anxiety, and emotional turbulence that is hard to name. Formless offers a gentle space to be heard and to regain balance through thoughtful dialogue.
+## The problem
 
-## Experience
+Restlessness and low moods are hard to put into words, which makes them hard to get help with. A blank chat box and a cheerful assistant don't meet that moment. I wanted something closer to talking with a steady person at the end of a long day.
 
-- **Wise Presence**: A calm, elder voice that speaks with clarity and depth.
-- **Emotional Soothing**: Responses designed to settle agitation and ease negative emotions.
-- **Reflective Guidance**: Encourages users to slow down, observe, and reconnect with themselves.
+## The bet
 
-## Why It Matters
+Treat it as emotional support, not a tool. No streaks, no metrics, no optimization. The product's only job is to feel present — a wise-elder persona that soothes rather than solves. That call shaped everything: the pacing, the morning and evening modes, how a conversation opens.
 
-The goal is not to “fix” people, but to offer a steady presence that helps them feel safe, understood, and capable of moving forward with quiet strength.
+## What I built
+
+A private space behind a login, an open-ended dialogue ("talk freely about what's worrying you"), a three-step onboarding, a morning prompt to start the day, and a guided evening meditation. Concept to live domain, end to end.
+
+## Where it stands
+
+Live at formless.pro since January 2026, with the full flow working — login, dialogue, and the morning/evening modules.
+
+## My role
+
+Solo — product definition, experience design, and shipping.

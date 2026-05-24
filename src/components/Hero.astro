@@ -26,12 +26,6 @@ const t = useTranslations(lang);
 
     <p class="text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed mb-10 font-mono text-sm">
       {t('hero.intro')}
-      <br />
-      {lang === 'zh' ? (
-        <>每天消耗 <span class="neon-text-cyan">{t('hero.token')}</span>，具备极强的 0-1 交付能力。</>
-      ) : (
-        <>Consuming <span class="neon-text-cyan">{t('hero.token')}</span> daily with strong 0-1 delivery capabilities.</>
-      )}
     </p>
 
     <div class="flex items-center justify-center gap-4 flex-wrap">
@@ -58,10 +52,6 @@ const t = useTranslations(lang);
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-[var(--color-secondary)] animate-pulse" style="animation-delay: 0.5s;"></span>
         <span>{t('hero.stats.projects')}</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse" style="animation-delay: 1s;"></span>
-        <span>{t('hero.stats.opensource')}</span>
       </div>
     </div>
   </div>
