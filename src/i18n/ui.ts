@@ -19,12 +19,12 @@ export const ui = {
     'hero.role': 'AI-First Product Manager & Vibecoder',
     'hero.greeting': 'Hello, I\'m',
     'hero.intro': 'Focused on AI product design and development, deeply integrating AI into my workflow.',
-    'hero.token': '100M+ Tokens',
+    'hero.token': 'Millions of Tokens',
     'hero.cta.projects': 'View Projects',
     'hero.cta.about': 'Learn More',
-    'hero.stats.exp': '10 Years Experience',
+    'hero.stats.exp': '10 Years Product Experience',
     'hero.stats.projects': '20+ Projects',
-    'hero.stats.opensource': '~10 Open Source',
+    'hero.stats.opensource': '10+ Open Source',
 
     // Experience
     'experience.title': 'AI-First Product Manager',
@@ -66,6 +66,9 @@ export const ui = {
     'about.p1': 'I am a product manager focused on AI, and also a Vibecoder who loves code.',
     'about.p2': 'I believe AI is changing how we work and live, and good AI products need both technical depth and human touch.',
     'about.p3': 'In my free time, I share open source projects on GitHub, discuss AI product trends on social media, or brainstorm the next interesting product idea in a cafe.',
+    'about.stats.exp': 'Product Experience',
+    'about.stats.projects': 'Projects',
+    'about.stats.opensource': 'Open Source',
     'about.stats.products': 'Products Launched',
 
     // Contact
@@ -96,12 +99,12 @@ export const ui = {
     'hero.role': 'AI-First 产品经理 & Vibecoder',
     'hero.greeting': '你好，我是',
     'hero.intro': '专注于 AI 产品设计与开发，将 AI 深度融入工作流。',
-    'hero.token': '1亿+ Token',
+    'hero.token': '数千万 Token',
     'hero.cta.projects': '查看项目',
     'hero.cta.about': '了解更多',
     'hero.stats.exp': '10年产品经验',
-    'hero.stats.projects': '20+公司项目',
-    'hero.stats.opensource': '~10开源项目',
+    'hero.stats.projects': '20+ 项目',
+    'hero.stats.opensource': '10+ 开源项目',
 
     // Experience
     'experience.title': 'AI-First 产品经理',
@@ -143,6 +146,9 @@ export const ui = {
     'about.p1': '我是一名专注于 AI 领域的产品经理，同时也是一位热爱代码的 Vibecoder。',
     'about.p2': '我相信 AI 正在改变我们工作和生活的方式，而好的 AI 产品需要兼具技术深度和人文关怀。',
     'about.p3': '空闲时间，我会在 GitHub 上分享我的开源项目，在社交媒体上讨论 AI 产品的最新趋势，或者在咖啡馆里构思下一个有趣的产品想法。',
+    'about.stats.exp': '产品经验',
+    'about.stats.projects': '项目',
+    'about.stats.opensource': '开源项目',
     'about.stats.products': '产品发布',
 
     // Contact
