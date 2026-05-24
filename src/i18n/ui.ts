@@ -18,13 +18,12 @@ export const ui = {
     // Hero
     'hero.role': 'AI-First Product Manager & Vibecoder',
     'hero.greeting': 'Hello, I\'m',
-    'hero.intro': 'Focused on AI product design and development, deeply integrating AI into my workflow.',
+    'hero.intro': 'AI isn\'t a feature I bolt on; it\'s how I work. I burn 300M tokens a day taking products from an empty repo to a live domain.',
     'hero.token': '300 Million Tokens',
     'hero.cta.projects': 'View Projects',
     'hero.cta.about': 'Learn More',
-    'hero.stats.exp': '10 Years Product Experience',
-    'hero.stats.projects': '20+ Projects',
-    'hero.stats.opensource': '10+ Open Source',
+    'hero.stats.exp': '12 Years Experience',
+    'hero.stats.projects': '20+ public GitHub projects',
 
     // Experience
     'experience.title': 'AI-First Product Manager',
@@ -63,13 +62,10 @@ export const ui = {
 
     // About
     'about.title': 'About Me',
-    'about.p1': 'I am a product manager focused on AI, and also a Vibecoder who loves code.',
-    'about.p2': 'I believe AI is changing how we work and live, and good AI products need both technical depth and human touch.',
-    'about.p3': 'In my free time, I share open source projects on GitHub, discuss AI product trends on social media, or brainstorm the next interesting product idea in a cafe.',
-    'about.stats.exp': 'Product Experience',
-    'about.stats.projects': 'Projects',
-    'about.stats.opensource': 'Open Source',
-    'about.stats.products': 'Products Launched',
+    'about.p1': 'I\'m a product manager who codes — a vibecoder. I care about AI products that are both technically real and genuinely human; the interesting work lives in the gap between the two.',
+    'about.p2': 'Most of what I build, I build end to end: define it, architect it, write the code, ship it. The rest of the time I\'m putting projects on GitHub, arguing about where AI products are headed, or sketching the next idea somewhere with decent coffee.',
+    'about.p3': '12 yrs building · 20+ public GitHub projects',
+    'about.stats.products': 'public GitHub projects',
 
     // Contact
     'contact.title': 'Let\'s',
@@ -98,13 +94,12 @@ export const ui = {
     // Hero
     'hero.role': 'AI-First 产品经理 & Vibecoder',
     'hero.greeting': '你好，我是',
-    'hero.intro': '专注于 AI 产品设计与开发，将 AI 深度融入工作流。',
+    'hero.intro': 'AI 不是我外挂的一个功能，而是我工作的方式。我每天烧掉 3亿 Token，把一个产品从空仓库带到能访问的域名。',
     'hero.token': '3亿 Token',
     'hero.cta.projects': '查看项目',
     'hero.cta.about': '了解更多',
-    'hero.stats.exp': '10年产品经验',
-    'hero.stats.projects': '20+ 项目',
-    'hero.stats.opensource': '10+ 开源项目',
+    'hero.stats.exp': '12年实战',
+    'hero.stats.projects': '20+ GitHub 项目/仓库',
 
     // Experience
     'experience.title': 'AI-First 产品经理',
@@ -143,13 +138,10 @@ export const ui = {
 
     // About
     'about.title': '关于我',
-    'about.p1': '我是一名专注于 AI 领域的产品经理，同时也是一位热爱代码的 Vibecoder。',
-    'about.p2': '我相信 AI 正在改变我们工作和生活的方式，而好的 AI 产品需要兼具技术深度和人文关怀。',
-    'about.p3': '空闲时间，我会在 GitHub 上分享我的开源项目，在社交媒体上讨论 AI 产品的最新趋势，或者在咖啡馆里构思下一个有趣的产品想法。',
-    'about.stats.exp': '产品经验',
-    'about.stats.projects': '项目',
-    'about.stats.opensource': '开源项目',
-    'about.stats.products': '产品发布',
+    'about.p1': '我是一个会写代码的产品经理——一个 vibecoder。我在意那种既站得住技术、又有人味的 AI 产品；有意思的活儿，恰恰长在这两者中间。',
+    'about.p2': '我做的大部分东西都是一个人从头走到尾：定义、架构、写码、上线。其余时间，我在 GitHub 上放项目、争论 AI 产品的走向，或者在某个咖啡还不错的地方，琢磨下一个点子。',
+    'about.p3': '12年实战 · 20+ GitHub 项目/仓库',
+    'about.stats.products': 'GitHub 项目/仓库',
 
     // Contact
     'contact.title': '一起',
