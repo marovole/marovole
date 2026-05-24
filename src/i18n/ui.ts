@@ -19,12 +19,12 @@ export const ui = {
     'hero.role': 'AI-First Product Manager & Vibecoder',
     'hero.greeting': 'Hello, I\'m',
     'hero.intro': 'Focused on AI product design and development, deeply integrating AI into my workflow.',
-    'hero.token': '100M+ Tokens',
+    'hero.token': 'Millions of Tokens',
     'hero.cta.projects': 'View Projects',
     'hero.cta.about': 'Learn More',
-    'hero.stats.exp': '10 Years Experience',
+    'hero.stats.exp': '10 Years Product Experience',
     'hero.stats.projects': '20+ Projects',
-    'hero.stats.opensource': '~10 Open Source',
+    'hero.stats.opensource': '10+ Open Source',
 
     // Experience
     'experience.title': 'AI-First Product Manager',
@@ -96,12 +96,12 @@ export const ui = {
     'hero.role': 'AI-First 产品经理 & Vibecoder',
     'hero.greeting': '你好，我是',
     'hero.intro': '专注于 AI 产品设计与开发，将 AI 深度融入工作流。',
-    'hero.token': '1亿+ Token',
+    'hero.token': '数千万 Token',
     'hero.cta.projects': '查看项目',
     'hero.cta.about': '了解更多',
     'hero.stats.exp': '10年产品经验',
-    'hero.stats.projects': '20+公司项目',
-    'hero.stats.opensource': '~10开源项目',
+    'hero.stats.projects': '20+ Projects',
+    'hero.stats.opensource': '10+ 开源项目',
 
     // Experience
     'experience.title': 'AI-First 产品经理',

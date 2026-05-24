@@ -15,7 +15,7 @@ AI Kids Storyteller is an innovative educational app designed specifically for c
 ## Core Features
 
 - **Instant Comic Generation**: Input a question, and AI immediately generates four-panel comics with colorful illustrations and simple explanations, making learning intuitive and fun.
-- **Multi-Language Support**: Supports 8 major languages, helping children learn knowledge while also getting language启蒙 (early education).
+- **Multi-Language Support**: Supports 8 major languages, helping children learn knowledge while also getting early language education.
 - **Age-Appropriate Content Optimization**: All generated content is specially optimized to ensure it's suitable for the cognitive level of children aged 5-10, safe and educational.
 - **Inspiring Curiosity**: Through visual storytelling, encourage children to ask more questions and cultivate enthusiasm for exploring the world.
 
