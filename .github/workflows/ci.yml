@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 1: Build — 硬性门禁，失败则阻止合并
+  # ─────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 2: Smoke Check — 关键页面 + SEO 端点，硬性门禁
+  # ─────────────────────────────────────────────────────────────────────────────
+  smoke:
+    name: Smoke Check
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Start preview server
+        run: npm run preview &
+
+      - name: Wait for preview server to be ready
+        run: |
+          echo "Waiting for http://localhost:4321 …"
+          for i in $(seq 1 30); do
+            curl -s -o /dev/null http://localhost:4321/ && echo "Server ready (${i}s)" && break
+            [ "$i" -eq 30 ] && echo "ERROR: server did not start in 30 s" && exit 1
+            sleep 1
+          done
+
+      - name: Check critical pages
+        run: |
+          fail=0
+          check() {
+            local url="$1"
+            local status
+            status=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:4321${url}")
+            if [ "$status" = "200" ]; then
+              echo "  ✓ ${url}"
+            else
+              echo "  ✗ ${url}  →  HTTP ${status}"
+              fail=1
+            fi
+          }
+
+          echo "=== Critical pages ==="
+          check /
+          check /zh/
+          check /projects/
+          check /projects/ai-storyteller
+          check /projects/fastskills
+          check /projects/formless
+          check /projects/hearthbulter
+          check /projects/nail-design
+          check /projects/web3search
+
+          exit $fail
+
+      - name: Check SEO endpoints
+        run: |
+          fail=0
+          check_seo() {
+            local url="$1"
+            local status content_type
+            status=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:4321${url}")
+            content_type=$(curl -s -o /dev/null -w "%{content_type}" "http://localhost:4321${url}")
+            if [ "$status" = "200" ]; then
+              echo "  ✓ ${url}  [${content_type}]"
+            else
+              echo "  ✗ ${url}  →  HTTP ${status}"
+              fail=1
+            fi
+          }
+
+          echo "=== SEO endpoints ==="
+          check_seo /sitemap.xml
+          check_seo /robots.txt
+
+          exit $fail
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 3: External Link Check — 报告模式，允许失败，不阻塞合并
+  # ─────────────────────────────────────────────────────────────────────────────
+  link-check:
+    name: External Link Check (report only)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Check external links
+        continue-on-error: true
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-loopback
+            --exclude "twitter\.com"
+            --exclude "x\.com"
+            --exclude "linkedin\.com"
+            ./dist/
+          fail: true
