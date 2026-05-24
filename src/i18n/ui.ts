@@ -18,8 +18,8 @@ export const ui = {
     // Hero
     'hero.role': 'AI-First Product Manager & Vibecoder',
     'hero.greeting': 'Hello, I\'m',
-    'hero.intro': 'AI isn\'t a feature I bolt on; it\'s how I work. I burn 100M+ tokens a day taking products from an empty repo to a live domain.',
-    'hero.token': '100M+ Tokens',
+    'hero.intro': 'AI isn\'t a feature I bolt on; it\'s how I work. I burn 300M tokens a day taking products from an empty repo to a live domain.',
+    'hero.token': '300 Million Tokens',
     'hero.cta.projects': 'View Projects',
     'hero.cta.about': 'Learn More',
     'hero.stats.exp': '12 Years Experience',
@@ -94,8 +94,8 @@ export const ui = {
     // Hero
     'hero.role': 'AI-First 产品经理 & Vibecoder',
     'hero.greeting': '你好，我是',
-    'hero.intro': 'AI 不是我外挂的一个功能，而是我工作的方式。我每天烧掉 1 亿+ Token，把一个产品从空仓库带到能访问的域名。',
-    'hero.token': '1亿+ Token',
+    'hero.intro': 'AI 不是我外挂的一个功能，而是我工作的方式。我每天烧掉 3亿 Token，把一个产品从空仓库带到能访问的域名。',
+    'hero.token': '3亿 Token',
     'hero.cta.projects': '查看项目',
     'hero.cta.about': '了解更多',
     'hero.stats.exp': '12年实战',
