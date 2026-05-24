@@ -13,6 +13,6 @@ const featuredProjects = allProjects
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<Layout title={`marovole | ${t('hero.role')}`} langPaths={{ en: '/', zh: '/zh' }}>
+<Layout title={`marovole | ${t('hero.role')}`} description={t('site.description')} langPaths={{ en: '/', zh: '/zh' }}>
   <HomePage lang="en" featuredProjects={featuredProjects} />
 </Layout>

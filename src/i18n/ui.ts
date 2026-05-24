@@ -7,6 +7,9 @@ export const defaultLang = 'en';
 
 export const ui = {
   en: {
+    // Site
+    'site.description': 'AI-First Product Manager & Vibecoder — Building intelligent products with deep AI integration.',
+
     // Header
     'nav.home': 'Home',
     'nav.projects': 'Projects',
@@ -84,6 +87,9 @@ export const ui = {
     'footer.built_with_ai': 'Built with AI.'
   },
   zh: {
+    // Site
+    'site.description': 'AI-First 产品经理 & Vibecoder — 深度融合 AI，打造智能产品。',
+
     // Header
     'nav.home': '首页',
     'nav.projects': '项目',

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marovole.com/sitemap-index.xml
