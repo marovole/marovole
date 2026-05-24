@@ -13,6 +13,10 @@ const featuredProjects = allProjects
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 
-<Layout title={`marovole | ${t('hero.role')}`} langPaths={{ en: '/', zh: '/zh/' }}>
+<Layout
+  title={`marovole | ${t('hero.role')}`}
+  description="AI-First Product Manager & Vibecoder — Building intelligent products with deep AI integration."
+  langPaths={{ en: '/', zh: '/zh/' }}
+>
   <HomePage lang="en" featuredProjects={featuredProjects} />
 </Layout>
