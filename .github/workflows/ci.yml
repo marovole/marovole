@@ -115,7 +115,7 @@ jobs:
           }
 
           echo "=== SEO endpoints ==="
-          check_seo /sitemap.xml
+          check_seo /sitemap-index.xml
           check_seo /robots.txt
 
           exit $fail
