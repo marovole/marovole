@@ -51,3 +51,31 @@ I believe AI is reshaping how we work and live, and great AI products require bo
 - GitHub: https://github.com/marovole
 - X(Twitter): https://twitter.com/marovole
 - LinkedIn: https://linkedin.com/in/marovole
+
+---
+
+## Local Development & Verification
+
+```bash
+# 安装依赖 / Install dependencies
+npm ci
+
+# 构建 / Build (mirrors CI build step)
+npm run build
+
+# 本地 smoke check — 启动 preview 服务器后检查关键页面
+# Run after `npm run build`; starts preview server and checks critical URLs
+npm run preview &
+sleep 3
+for path in / /zh/ /projects/ /projects/ai-storyteller /projects/fastskills \
+            /projects/formless /projects/hearthbulter /projects/nail-design \
+            /projects/web3search /sitemap.xml /robots.txt; do
+  status=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:4321${path}")
+  [ "$status" = "200" ] && echo "✓ ${path}" || echo "✗ ${path} → HTTP ${status}"
+done
+```
+
+CI runs automatically on every push/PR to `main` via `.github/workflows/ci.yml`:
+- **Build** — `npm ci` + `npm run build` (blocks merge on failure)
+- **Smoke Check** — critical pages + SEO endpoints (`/sitemap.xml`, `/robots.txt`) (blocks merge on failure)
+- **External Link Check** — report-only, does not block merge
