@@ -37,7 +37,7 @@ The product has three core components that solve different parts of the research
 
 ### The Glass Box UX Decision
 
-The most deliberate design choice in Web3search is what I call Glass Box UX: the AI shows its thinking chain in real time as it researches.
+The defining design choice in Web3search is what I call Glass Box UX: the AI shows its thinking chain in real time as it researches.
 
 In most AI products, the answer appears after a loading spinner. You get the conclusion without the reasoning. In a domain where trust is scarce and mistakes are expensive, that's the wrong tradeoff.
 
@@ -55,7 +55,7 @@ I route across three different AI backends via OpenRouter: DeepSeek, GPT, and To
 
 Factual lookups and data extraction go to cheaper, faster models. Complex reasoning about a project's economic design or team credibility signals go to stronger models. The user doesn't see this routing — they just see consistent quality at reasonable cost.
 
-This was a deliberate architecture choice against using a single model for everything. Single-model approaches either overspend on simple queries or underspend on complex ones. Multi-model routing lets the system optimize per-query rather than per-session.
+This was an architecture call against using a single model for everything. Single-model approaches either overspend on simple queries or underspend on complex ones. Multi-model routing lets the system optimize per-query rather than per-session.
 
 ### Search Layer: Multiple Sources, Not One
 

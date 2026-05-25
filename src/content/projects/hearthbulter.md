@@ -31,7 +31,7 @@ That's three systems that normally live in separate worlds — health analytics,
 
 ### Why 71 Database Tables
 
-The database schema is the part I'm most proud of, and also the part that took the longest to get right. Seventy-one tables isn't bloat — it's what honest health data modeling looks like.
+The database schema is the part I'm most proud of, and also the part that took the longest to get right. Seventy-one tables isn't bloat — it's what you get when you actually model a health data domain properly.
 
 Consider what you need to represent properly:
 
@@ -41,7 +41,7 @@ Consider what you need to represent properly:
 - Shopping items need to map to real SKUs across different e-commerce platforms with price variance
 - User profiles carry preferences, allergies, household size, and budget constraints that affect every recommendation
 
-Each of these domains has its own internal complexity. The 71 tables reflect that complexity rather than hiding it behind a leaky abstraction. I made a deliberate choice to model the domain correctly rather than shipping something fast that would need to be rebuilt in six months.
+Each of these domains has its own internal complexity. The 71 tables reflect that complexity rather than hiding it behind a leaky abstraction. I chose to model the domain correctly rather than shipping something fast that would need to be rebuilt in six months.
 
 ### AI Integration Choices
 
@@ -63,7 +63,7 @@ NextAuth.js handles authentication because families need shared-but-separate pro
 
 **Health data normalization.** Lab reports arrive in different formats with different units and reference ranges. A hemoglobin value from one lab isn't directly comparable to another without knowing the lab's methodology. I built a normalization layer, but I was careful to surface uncertainty rather than paper over it. The system shows users which data points it's confident about and which it's treating as approximate.
 
-**Avoiding overclaiming.** It would be easy to say "this AI will transform your health." I was deliberate about framing — the system helps you eat more consistently with your health data, not cure anything. That framing constraint shaped product decisions throughout: every recommendation comes with a source, every plan comes with an edit button.
+**Avoiding overclaiming.** It would be easy to say "this AI will transform your health." I was careful about framing — the system helps you eat more consistently with your health data, not cure anything. That framing constraint shaped product decisions throughout: every recommendation comes with a source, every plan comes with an edit button.
 
 ## Results and Current State
 
