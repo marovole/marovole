@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import { getLangFromUrl } from '../i18n/utils';
 
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+
 interface Props {
   title: string;
   description?: string;
@@ -91,8 +93,38 @@ const hreflangLinks = langPaths
         },
       ],
     })} />
+
+    <!-- Cloudflare Web Analytics — set PUBLIC_CF_BEACON_TOKEN env var to enable -->
+    {cfBeaconToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+      />
+    )}
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />
+    <script>
+      // Unified outbound click tracker — reads data-track="event_name" on any element
+      function trackEvent(name: string, props?: Record<string, string>) {
+        // Cloudflare Web Analytics custom event
+        const cf = (window as any).__cfBeacon;
+        if (cf?.push) {
+          cf.push({ name, extra: JSON.stringify(props ?? {}) });
+        }
+      }
+
+      document.addEventListener('click', (e) => {
+        const el = (e.target as Element).closest('[data-track]') as HTMLElement | null;
+        if (!el) return;
+        const name = el.dataset.track ?? 'outbound_click';
+        const href = (el as HTMLAnchorElement).href ?? el.dataset.href ?? '';
+        trackEvent(name, { href });
+      });
+
+      // Expose globally so individual components can call it directly
+      (window as any).trackEvent = trackEvent;
+    </script>
   </body>
 </html>
