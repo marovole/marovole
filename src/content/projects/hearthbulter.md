@@ -11,17 +11,38 @@ lang: en
 otherLocaleSlug: hearthbulter-zh
 ---
 
-## Core Features
+I built HearthBulter because I was frustrated by a specific problem: health data lives in silos. Your lab report is in one app, your shopping list is in another, and your nutritionist's advice is in a PDF you haven't opened in two months. Nobody connects what you *should* eat to what actually ends up in your refrigerator.
 
-- **Data-Driven Nutrition Planning**: Integration with health reports and wearable device data, automatic BMR/TDEE calculation
-- **Smart Recipe Generation**: 7-day/30-day/90-day periodic meal plans, dynamically adapting to seasons and inventory
-- **E-commerce Automated Purchasing**: One-click shopping list generation with SKU matching
-- **Health Data Loop**: Visualized trends, AI analysis of nutritional imbalances
+HearthBulter is a diet engine that reads your health baseline—lab reports, wearable data, or manual input—and translates it into a weekly meal plan, recipe instructions, and a one-click grocery order. The loop closes when food arrives.
 
-## Tech Stack
+## The Problem
 
-- **Frontend**: Next.js 14 + React 18 + TypeScript + Tailwind CSS + shadcn/ui
-- **Backend**: Cloudflare Functions + Prisma + NextAuth.js
-- **Database**: Supabase PostgreSQL (71 tables)
-- **AI**: OpenAI GPT-4
-- **Caching**: Upstash Redis
+Family health management has a coordination failure at its core. Tracking what you should eat is a solved problem. Tracking what you did eat is solved. Getting the right food into your house automatically, based on your actual health data—nobody had done that end-to-end.
+
+## My Role
+
+Solo developer and product owner. Designed the schema, built the API layer, connected the AI generation pipeline, and deployed to production at [healthbutler.life](https://healthbutler.life/).
+
+## Key Decisions
+
+**71-table schema from day one.**
+Health data is relational, not flat. A meal plan links to nutritional targets, which link to health baselines, which link to household members—each with their own medical history and dietary restrictions. The temptation in early projects is to store everything in JSON blobs and figure out structure "later." I resisted that. The upfront schema complexity paid off in the AI generation layer: the LLM has structured context to reason against, not free-form text.
+
+**Cloudflare Functions over traditional server.**
+The target user checks meal plans on a phone in a supermarket. Edge deployment means the API responds from the nearest datacenter. Combined with Upstash Redis caching for calculated values (BMR/TDEE don't change daily), the app feels fast on mobile even under load.
+
+**GPT-4 for recipe generation, not template filling.**
+Early prototypes used rule-based meal generation—pick a protein, a carb, a vegetable, done. The plans were technically correct but joyless. Switching to GPT-4 with structured health context injected into the prompt produced plans that adapt to seasons, local cuisine, and pantry availability. The meals feel designed, not computed.
+
+## What Ships
+
+- **Nutritional onboarding**: input lab results, wearable data, or manual health parameters
+- **AI-generated meal plans**: 7-day, 30-day, or 90-day horizons with full nutritional breakdown
+- **Shopping list automation**: plan-to-cart in one click, SKU-matched to supported e-commerce platforms
+- **Health trend visualization**: track actuals against targets over time
+
+## What I Learned
+
+71 tables taught me that data model decisions compound. The tables added in week one constrained what was possible in week twelve. I would spend more time on the schema before writing a single line of application code.
+
+The AI-to-e-commerce bridge is where users' eyes light up. That "click and food appears" moment is the product's core value—everything before it is setup.
