@@ -1,0 +1,72 @@
+# CI 质量门禁 — marovole.com
+#
+# 三步门禁:
+#   1. build — astro build（死链/编译错误在此捕获）
+#   2. link check — 构建产物中内部链接完整性
+#   3. Lighthouse — SEO/Performance/Accessibility/Best-Practices
+#
+# 对齐: MAR-53（build + smoke + link check）→ 复用其 CI 模式
+#       MAR-59（SEO 规格，阈值 ≥90）
+#       MAR-65（最小 CI + Lighthouse 门禁）
+
+name: Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build + Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      # Step 1: Build（含 Astro 编译时内部链接验证）
+      - name: Build
+        run: npm run build
+
+      # Step 2: Dead link check（构建产物中的绝对 URL）
+      - name: Check dead links
+        run: |
+          npx linkinator ./dist --recurse --skip '.*\.(jpg|png|svg|ico|webp).*' --verbosity error
+
+  lighthouse:
+    name: Lighthouse Audit
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Serve dist on port 4321 for lhci collect
+      - name: Start preview server
+        run: npx serve ./dist -l 4321 &
+        # serve takes ~2s to start; lhci collect will retry
+
+      - name: Run Lighthouse CI
+        run: npx lhci autorun
+        env:
+          LHCI_SERVER_URL: '' # use temporary-public-storage (no LHCI server)
