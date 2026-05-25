@@ -1,9 +1,9 @@
 ---
 title: Web3search
 description: AI-driven Web3 research platform for decentralized data retrieval and analysis. Supports deep research, real-time price data, and multi-model AI routing.
-tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Supabase"]
+tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Convex"]
 image: "/images/projects/web3search.jpg"
-demoUrl: "https://lulaai.xyz"
+demoUrl: "https://web3search.pages.dev"
 repoUrl: "https://github.com/marovole/Web3search"
 featured: true
 date: 2025-01-03
@@ -13,7 +13,7 @@ otherLocaleSlug: web3search-zh
 
 Researching a Web3 project in 2024 meant opening twelve tabs simultaneously: CoinGecko for price history, Etherscan for on-chain activity, Twitter for sentiment, the project's own docs, and at least two audit reports you couldn't evaluate without a Solidity background. Existing research tools aggregated data but hid their reasoning. You got a score, not an argument.
 
-Web3search is a research platform that shows its work. Every source consulted, every query run, every confidence signal—visible in real time as the research unfolds. Live at [lulaai.xyz](https://lulaai.xyz).
+Web3search is a research platform that shows its work. Every source consulted, every query run, every confidence signal—visible in real time as the research unfolds. Live at [web3search.pages.dev](https://web3search.pages.dev).
 
 ## The Problem
 

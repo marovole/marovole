@@ -2,9 +2,9 @@
 id: web3search.zh
 title: Web3search
 description: AI 驱动的 Web3 研究平台，用于去中心化数据检索和分析。支持深度研究、实时价格数据、多模型 AI 路由
-tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Supabase"]
+tags: ["AI/LLM", "Web3", "Cloudflare Workers", "React", "Convex"]
 image: "/images/projects/web3search.jpg"
-demoUrl: "https://lulaai.xyz"
+demoUrl: "https://web3search.pages.dev"
 repoUrl: "https://github.com/marovole/Web3search"
 featured: true
 date: 2025-01-03
@@ -14,7 +14,7 @@ otherLocaleSlug: web3search
 
 2024 年研究一个 Web3 项目意味着同时打开十几个标签：CoinGecko 查价格历史，Etherscan 看链上活动，Twitter 测情绪，项目官方文档，还有两份没有 Solidity 背景根本看不懂的审计报告。现有的研究工具能聚合数据，但把推理过程藏起来了。你得到的是一个分数，不是一套论证。
 
-Web3search 是一个把推理过程完全暴露的研究平台。每一条被查询的来源、每一次检索、每一个置信度信号——随着研究展开，实时可见。在线地址：[lulaai.xyz](https://lulaai.xyz)。
+Web3search 是一个把推理过程完全暴露的研究平台。每一条被查询的来源、每一次检索、每一个置信度信号——随着研究展开，实时可见。在线地址：[web3search.pages.dev](https://web3search.pages.dev)。
 
 ## 我在解决什么问题
 
