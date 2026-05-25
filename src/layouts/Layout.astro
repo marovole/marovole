@@ -106,24 +106,52 @@ const hreflangLinks = langPaths
   <body class="min-h-screen flex flex-col">
     <slot />
     <script>
-      // Unified outbound click tracker — reads data-track="event_name" on any element
-      function trackEvent(name: string, props?: Record<string, string>) {
-        // Cloudflare Web Analytics custom event
-        const cf = (window as any).__cfBeacon;
-        if (cf?.push) {
-          cf.push({ name, extra: JSON.stringify(props ?? {}) });
+      // ─── MAR-62 spec: outbound click tracking ──────────────────────────────
+      function trackEvent(eventName: string, props: Record<string, string>): void {
+        try {
+          // 1. console.debug — always fires, used for browser-side verification
+          console.debug('[track]', eventName, props);
+
+          // 2. localStorage persistence — keeps last 200 events, circular overwrite
+          const KEY = 'marvole_track_events';
+          const list: unknown[] = JSON.parse(localStorage.getItem(KEY) ?? '[]');
+          list.push({ ts: Date.now(), event: eventName, ...props });
+          localStorage.setItem(KEY, JSON.stringify(list.slice(-200)));
+
+          // 3. Cloudflare Zaraz — no-op if not enabled
+          (window as any).zaraz?.track(eventName, props);
+        } catch {
+          // silent failure — never block link navigation
         }
       }
 
-      document.addEventListener('click', (e) => {
-        const el = (e.target as Element).closest('[data-track]') as HTMLElement | null;
-        if (!el) return;
-        const name = el.dataset.track ?? 'outbound_click';
-        const href = (el as HTMLAnchorElement).href ?? el.dataset.href ?? '';
-        trackEvent(name, { href });
-      });
+      function initOutboundTracking(): void {
+        if (typeof window === 'undefined') return;
+        if ((window as any).__trackInitialized) return; // prevent duplicate binding
+        (window as any).__trackInitialized = true;
 
-      // Expose globally so individual components can call it directly
+        document.addEventListener('click', (e) => {
+          const el = (e.target as Element).closest<HTMLAnchorElement>('[data-track]');
+          if (!el) return;
+
+          // 300ms dedup: same href within 300ms fires only once
+          const key = el.href;
+          const now = Date.now();
+          const lastClick: Record<string, number> = (window as any).__trackLastClick ?? {};
+          if (now - (lastClick[key] ?? 0) < 300) return;
+          lastClick[key] = now;
+          (window as any).__trackLastClick = lastClick;
+
+          trackEvent(el.dataset.track ?? 'outbound_click', {
+            href: el.href ?? '',
+            label: el.dataset.trackLabel ?? '',
+            location: el.dataset.trackLocation ?? '',
+            text: el.innerText?.trim() ?? '',
+          });
+        });
+      }
+
+      initOutboundTracking();
       (window as any).trackEvent = trackEvent;
     </script>
   </body>
