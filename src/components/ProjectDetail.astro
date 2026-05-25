@@ -58,6 +58,9 @@ const formatDate = (date: string | Date) => {
             href={project.data.demoUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-track="outbound_click"
+            data-track-label="project_demo"
+            data-track-location="project_card"
             class="inline-flex items-center gap-2 px-6 py-3 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] text-base font-semibold tracking-wide shadow-md hover:bg-[var(--color-primary-dark)] hover:shadow-lg transition-[box-shadow,background-color] duration-200"
           >
             {t('project.visit')}
@@ -71,6 +74,9 @@ const formatDate = (date: string | Date) => {
             href={project.data.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-track="outbound_click"
+            data-track-label="project_github"
+            data-track-location="project_card"
             class="inline-flex items-center gap-2 px-6 py-3 rounded-[var(--radius-button)] border-2 border-[var(--color-border)] text-[var(--color-text)] text-base font-semibold tracking-wide hover:bg-[var(--color-secondary)]/40 hover:border-[var(--color-text-muted)] transition-colors duration-200"
           >
             <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
