@@ -13,11 +13,11 @@ otherLocaleSlug: web3search-zh
 
 Researching a Web3 project in 2024 meant opening twelve tabs simultaneously: CoinGecko for price history, Etherscan for on-chain activity, Twitter for sentiment, the project's own docs, and at least two audit reports you couldn't evaluate without a Solidity background. Existing research tools aggregated data but hid their reasoning. You got a score, not an argument.
 
-Web3search is a research platform that shows its work. Every source consulted, every query run, every confidence signal—visible in real time as the research unfolds. Live at [web3search.pages.dev](https://web3search.pages.dev).
+Web3search is a research platform that shows its work. Every source consulted, every query run, every confidence signal—visible in real time as the research unfolds. Online at [web3search.pages.dev](https://web3search.pages.dev).
 
 ## The Problem
 
-Trust in Web3 is cheap to fake and expensive to verify. The information asymmetry between project teams and retail investors is enormous. The tools that existed either oversimplified the risk picture or required expert knowledge to interpret. I wanted to build something that made rigorous analysis accessible without dumbing it down—transparent by design, not by accident.
+Trust in Web3 is cheap to fake and expensive to verify. The gap between what project teams know and what retail investors can find out is enormous. The tools that existed either oversimplified the risk picture or required expert knowledge to interpret. I wanted to build something that made rigorous analysis accessible without dumbing it down—transparent by design, not by accident.
 
 ## My Role
 
@@ -47,4 +47,4 @@ Edge deployment matters for a research tool where latency kills momentum. Hono i
 
 The Glass Box pattern is more than a UX choice—it's an accountability structure. When the research process is visible, users engage differently. They catch errors. They ask follow-up questions about specific sources. They trust conclusions more because they can trace the reasoning.
 
-The hardest engineering problem was maintaining conversation context across turns in a stateless edge environment. Session-scoped state in Workers KV solved it, but the design required careful thought about what "session" means when users close and reopen a tab mid-research.
+The hardest engineering problem was maintaining conversation context across turns in a stateless edge environment. Workers KV session state solved it, but the design required thinking through what "session" means when a user closes and reopens a tab mid-research.
