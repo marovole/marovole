@@ -1,0 +1,53 @@
+---
+interface Props {
+  src: string;
+  slug: string;
+  title: string;
+}
+
+const { src, slug, title } = Astro.props;
+const frameId = `article-frame-${slug}`;
+---
+
+<div class="article-frame-wrap w-full overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+  <iframe
+    id={frameId}
+    class="article-frame w-full border-0 block"
+    src={src}
+    title={title}
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin allow-popups"
+    referrerpolicy="no-referrer-when-downgrade"
+  />
+</div>
+
+<script define:vars={{ frameId, slug }}>
+  const frame = document.getElementById(frameId);
+  if (!frame) throw new Error(`Article frame not found: ${frameId}`);
+
+  function onMessage(event) {
+    if (event.source !== frame.contentWindow) return;
+    const data = event.data;
+    if (!data || data.type !== 'article-frame-resize' || data.slug !== slug) return;
+    if (typeof data.height !== 'number' || data.height <= 0) return;
+    frame.style.height = `${Math.ceil(data.height)}px`;
+  }
+
+  window.addEventListener('message', onMessage);
+
+  frame.addEventListener('load', () => {
+    try {
+      frame.contentWindow?.postMessage({ type: 'article-frame-theme', theme: 'dark' }, '*');
+    } catch {
+      // ignore cross-origin edge cases
+    }
+  });
+</script>
+
+<style>
+  .article-frame {
+    min-height: 480px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+</style>

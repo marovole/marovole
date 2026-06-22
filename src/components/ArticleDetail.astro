@@ -1,0 +1,59 @@
+---
+import type { ArticleMeta } from '../utils/article-loader';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import ArticleFrame from './ArticleFrame.astro';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  article: ArticleMeta;
+  lang: 'en' | 'zh';
+  backLink: string;
+}
+
+const { article, lang, backLink } = Astro.props;
+const t = useTranslations(lang);
+const locale = lang === 'zh' ? 'zh-CN' : 'en-US';
+const formatDate = (date: Date) =>
+  date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Header />
+
+<main id="main-content" class="flex-grow pt-20">
+  <section class="py-12 px-4 sm:px-6 bg-[var(--color-bg-card)] border-b border-[var(--color-border)]">
+    <div class="max-w-5xl mx-auto">
+      <a
+        href={backLink}
+        class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors duration-200 mb-8"
+      >
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        {t('article.back')}
+      </a>
+
+      <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-4 neon-text-cyan">
+        {article.title}
+      </h1>
+
+      {article.description && (
+        <p class="text-lg text-[var(--color-text-muted)] mb-4 max-w-3xl">
+          {article.description}
+        </p>
+      )}
+
+      <p class="text-sm text-[var(--color-text-muted)]">
+        {t('article.published')} {formatDate(article.date)}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-8 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto">
+      <ArticleFrame src={article.htmlPath} slug={article.slug} title={article.title} />
+    </div>
+  </section>
+</main>
+
+<Footer />

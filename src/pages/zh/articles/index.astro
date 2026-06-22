@@ -1,0 +1,15 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ArticleListPage from '../../../components/ArticleListPage.astro';
+import { loadArticles } from '../../../utils/article-loader';
+
+const articles = loadArticles();
+---
+
+<Layout
+  title={`文章 | marovole`}
+  description="以独立 HTML 发布的文章与指南。"
+  langPaths={{ en: '/articles', zh: '/zh/articles' }}
+>
+  <ArticleListPage articles={articles} />
+</Layout>

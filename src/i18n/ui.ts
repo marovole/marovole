@@ -10,6 +10,7 @@ export const ui = {
     // Header
     'nav.home': 'Home',
     'nav.projects': 'Projects',
+    'nav.articles': 'Articles',
     'nav.experience': 'Experience',
     'nav.skip': 'Skip to main content',
     'nav.menu': 'Menu',
@@ -84,6 +85,14 @@ export const ui = {
     'project.source': 'View Source',
     'project.published': 'Published on',
 
+    // Articles
+    'articles.title': 'Articles',
+    'articles.titleHighlight': '',
+    'articles.description': 'Long-form articles and guides published as standalone HTML files.',
+    'articles.empty': 'No articles yet.',
+    'article.back': 'Back to Articles',
+    'article.published': 'Published on',
+
     // Footer
     'footer.built_with_ai': 'Built with AI.'
   },
@@ -91,6 +100,7 @@ export const ui = {
     // Header
     'nav.home': '首页',
     'nav.projects': '项目',
+    'nav.articles': '文章',
     'nav.experience': '经验',
     'nav.skip': '跳到主要内容',
     'nav.menu': '菜单',
@@ -164,6 +174,14 @@ export const ui = {
     'project.visit': '访问项目',
     'project.source': '查看源码',
     'project.published': '发布于',
+
+    // Articles
+    'articles.title': '文章',
+    'articles.titleHighlight': '',
+    'articles.description': '以独立 HTML 文件发布的长文与指南。',
+    'articles.empty': '暂无文章。',
+    'article.back': '返回文章列表',
+    'article.published': '发布于',
 
     // Footer
     'footer.built_with_ai': '用 AI 辅助构建。'
