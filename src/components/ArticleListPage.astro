@@ -1,8 +1,9 @@
 ---
 import type { ArticleMeta } from '../utils/article-loader';
+import { articleDetailPath } from '../utils/article-loader';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
-import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/utils';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 interface Props {
   articles: ArticleMeta[];
@@ -39,7 +40,7 @@ const formatDate = (date: Date) =>
           {articles.map((article) => (
             <li>
               <a
-                href={getLocalizedUrl(`/articles/${article.slug}`, lang)}
+                href={articleDetailPath(article)}
                 class="block card-hover rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] px-5 py-4 sm:px-6 sm:py-5"
               >
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">

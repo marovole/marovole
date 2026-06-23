@@ -1,10 +1,14 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import ArticleDetail from '../../../components/ArticleDetail.astro';
-import { loadArticles } from '../../../utils/article-loader';
+import {
+  articleDetailPath,
+  getArticleLangPaths,
+  loadArticlesForLocale,
+} from '../../../utils/article-loader';
 
 export async function getStaticPaths() {
-  const articles = loadArticles();
+  const articles = loadArticlesForLocale('zh');
   return articles.map((article) => ({
     params: { slug: article.slug },
     props: { article },
@@ -13,13 +17,14 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const site = Astro.site ?? new URL('https://marovole.com/');
-const articleUrl = new URL(`/zh/articles/${article.slug}`, site).href;
+const articleUrl = new URL(articleDetailPath(article), site).href;
+const langPaths = getArticleLangPaths(article);
 ---
 
 <Layout
   title={`${article.title} | marovole`}
   description={article.description}
-  langPaths={{ en: `/articles/${article.slug}`, zh: `/zh/articles/${article.slug}` }}
+  langPaths={langPaths}
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     '@context': 'https://schema.org',
@@ -28,7 +33,7 @@ const articleUrl = new URL(`/zh/articles/${article.slug}`, site).href;
     description: article.description,
     datePublished: article.date.toISOString(),
     dateModified: article.date.toISOString(),
-    inLanguage: article.lang === 'zh' ? 'zh-CN' : 'en-US',
+    inLanguage: 'zh-CN',
     url: articleUrl,
     author: {
       '@type': 'Person',

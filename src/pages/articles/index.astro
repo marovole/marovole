@@ -1,9 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ArticleListPage from '../../components/ArticleListPage.astro';
-import { loadArticles } from '../../utils/article-loader';
+import { loadArticlesForLocale } from '../../utils/article-loader';
 
-const articles = loadArticles();
+const articles = loadArticlesForLocale('en');
 ---
 
 <Layout

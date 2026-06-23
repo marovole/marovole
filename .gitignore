@@ -1,6 +1,6 @@
 # build output
 dist/
-public/articles/
+public/article-frames/
 # generated types
 .astro/
 
