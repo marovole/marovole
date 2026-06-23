@@ -25,6 +25,16 @@
 - X(Twitter): https://twitter.com/marovole
 - LinkedIn: https://linkedin.com/in/marovole
 
+### 发布 HTML 文章
+
+站点支持把本地写好的 **standalone HTML** 文件直接发布为文章，无需改写成 Markdown。
+
+1. 将 `.html` 文件放入 `content/articles/`（文件名即 slug，仅允许小写字母、数字和连字符，例如 `my-post.html` → `/articles/my-post/`）。
+2. 文章标题默认读取 HTML 的 `<title>`；摘要优先读 `<meta name="description">`，否则取正文前 200 字。
+3. 可选：在同目录添加 `{slug}.yml` 旁路配置，覆盖 `title`、`description`、`date`（ISO 日期）、`lang`（`en` 或 `zh`）、`otherLocaleSlug`（另一语言版本的 slug，用于双语 hreflang）。
+4. 本地预览：`npm run dev`，访问 `/articles`（英文）或 `/zh/articles`（中文）；单语文章只出现在对应语言列表。
+5. 构建发布：`npm run build`（构建时将 HTML 复制到内部路径 `public/article-frames/` 供 iframe 加载，并注入 `noindex` + canonical 指回详情页；sitemap 只收录详情页 URL）。
+
 ---
 
 ## English
@@ -51,3 +61,13 @@ I believe AI is reshaping how we work and live, and great AI products require bo
 - GitHub: https://github.com/marovole
 - X(Twitter): https://twitter.com/marovole
 - LinkedIn: https://linkedin.com/in/marovole
+
+### Publishing HTML articles
+
+Drop standalone `.html` files into `content/articles/` — no Markdown rewrite required.
+
+1. Filename becomes the slug (ASCII lowercase, digits, hyphens only; e.g. `my-post.html` → `/articles/my-post/`).
+2. Title defaults to the HTML `<title>`; description uses `<meta name="description">` or the first ~200 characters of body text.
+3. Optional sidecar `{slug}.yml` can override `title`, `description`, `date` (ISO), `lang` (`en` / `zh`), and `otherLocaleSlug` (paired article slug for bilingual hreflang).
+4. Preview locally with `npm run dev` at `/articles` (English) or `/zh/articles` (Chinese); monolingual articles appear only in their locale list.
+5. Ship with `npm run build` — HTML is copied to internal `public/article-frames/` for iframe embedding (with `noindex` + canonical back to the detail page); sitemap lists detail URLs only.

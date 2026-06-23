@@ -5,3 +5,7 @@
 # 静态资源缓存 1 年
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# iframe 源 HTML：不索引，避免与详情页重复
+/article-frames/*
+  X-Robots-Tag: noindex, nofollow

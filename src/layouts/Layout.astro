@@ -55,6 +55,8 @@ const hreflangLinks = langPaths
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
+    <slot name="head" />
+
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />

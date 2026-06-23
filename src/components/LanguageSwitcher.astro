@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { defaultLang } from '../i18n/ui';
+import { getArticleBySlug, getArticleLangPaths } from '../utils/article-loader';
 
 interface Props {
   currentLang: string;
@@ -32,10 +33,22 @@ function parseProjectSlug(pathname: string): string | null {
   return null;
 }
 
-const projectSlug = parseProjectSlug(currentPath);
+function parseArticleSlug(pathname: string): string | null {
+  const trimmed = pathname.replace(/\/$/, '') || '/';
+  const zhMatch = trimmed.match(/^\/zh\/articles\/([^/]+)$/);
+  if (zhMatch) return zhMatch[1];
+  const enMatch = trimmed.match(/^\/articles\/([^/]+)$/);
+  if (enMatch) return enMatch[1];
+  return null;
+}
 
-let enPath: string;
-let zhPath: string;
+const projectSlug = parseProjectSlug(currentPath);
+const articleSlug = parseArticleSlug(currentPath);
+
+let enPath = '';
+let zhPath = '';
+let showEn = true;
+let showZh = true;
 
 if (projectSlug) {
   if (currentLang === defaultLang) {
@@ -47,6 +60,26 @@ if (projectSlug) {
     enPath = `/projects/${enTarget}`;
     zhPath = `/zh/projects/${projectSlug}`;
   }
+} else if (articleSlug) {
+  const article = getArticleBySlug(articleSlug);
+  const langPaths = article ? getArticleLangPaths(article) : undefined;
+
+  if (langPaths) {
+    enPath = langPaths.en;
+    zhPath = langPaths.zh;
+  } else if (article) {
+    if (article.lang === 'en') {
+      enPath = `/articles/${article.slug}`;
+      showZh = false;
+    } else {
+      zhPath = `/zh/articles/${article.slug}`;
+      showEn = false;
+    }
+  } else {
+    const basePath = getPathWithoutLang(currentPath);
+    enPath = basePath;
+    zhPath = `/zh${basePath === '/' ? '' : basePath}`;
+  }
 } else {
   const basePath = getPathWithoutLang(currentPath);
   enPath = basePath;
@@ -55,29 +88,35 @@ if (projectSlug) {
 ---
 
 <div class="flex items-center gap-2 shrink-0">
-  <a
-    href={enPath}
-    class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
-    class:list={[
-      currentLang === 'en'
-        ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
-        : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-    ]}
-    aria-label="Switch to English"
-  >
-    EN
-  </a>
-  <span class="text-[var(--color-text-muted)]" aria-hidden="true">/</span>
-  <a
-    href={zhPath}
-    class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
-    class:list={[
-      currentLang === 'zh'
-        ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
-        : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-    ]}
-    aria-label="Switch to Chinese"
-  >
-    中文
-  </a>
+  {showEn && (
+    <a
+      href={enPath}
+      class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
+      class:list={[
+        currentLang === 'en'
+          ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+          : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+      ]}
+      aria-label="Switch to English"
+    >
+      EN
+    </a>
+  )}
+  {showEn && showZh && (
+    <span class="text-[var(--color-text-muted)]" aria-hidden="true">/</span>
+  )}
+  {showZh && (
+    <a
+      href={zhPath}
+      class="text-xs font-mono px-2 py-1 rounded border transition-colors duration-300"
+      class:list={[
+        currentLang === 'zh'
+          ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+          : 'border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+      ]}
+      aria-label="Switch to Chinese"
+    >
+      中文
+    </a>
+  )}
 </div>

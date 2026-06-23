@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>把 Multica 真正用起来 · Neuma 团队上手指南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+/* set theme before paint — avoid FOUC */
+(function(){
+  var t=null;
+  try{t=localStorage.getItem('mt-theme');}catch(e){}
+  if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}
+  document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
+<style>
+/* ============================================================
+   DESIGN TOKENS  —  one file · dark + warm-paper, toggle-driven
+   语义沿用:--ink=底色, --paper=正文色
+   ============================================================ */
+:root{
+  --serif:'Noto Serif SC',serif;
+  --sans:'Noto Sans SC',system-ui,sans-serif;
+  --mono:'JetBrains Mono','Noto Sans SC',monospace;
+  --maxw:760px;
+  --ease:cubic-bezier(0.19,1,0.22,1);
+
+  /* ---- DARK (default) ---- */
+  --ink:#0e0e11; --ink-2:#16161b; --panel:#1a1a21; --panel-2:#1f1f27;
+  --line:#2a2a34; --line-soft:#22222b;
+  --paper:#ece7df; --paper-dim:#a8a39b; --paper-faint:#74706a;
+  --accent:#ff5230; --accent-soft:#ff7a52; --gold:#e8b04b;
+  --good:#4fd08a; --bad:#ff5b6b;
+  --glow:
+    radial-gradient(120% 80% at 50% -12%, rgba(255,82,48,.10) 0%, transparent 55%),
+    radial-gradient(90% 60% at 100% 108%, rgba(232,176,75,.05) 0%, transparent 50%);
+  --grain-op:.03; --grain-blend:normal;
+  --sel-bg:rgba(255,82,48,.28); --sel-fg:#fff;
+  --hl:rgba(255,82,48,.22);
+  --inl-bd:rgba(255,122,82,.35);
+  --code-bd:var(--line-soft);
+  --win-bg:linear-gradient(180deg,rgba(255,82,48,.06),var(--panel)); --win-bd:rgba(255,82,48,.4);
+  --hover-bd:rgba(255,82,48,.35);
+  --good-bg:rgba(79,208,138,.07); --good-bd:rgba(79,208,138,.22);
+  --bad-bg:rgba(255,91,107,.06); --bad-bd:rgba(255,91,107,.2);
+  --sh-card:0 2px 6px rgba(0,0,0,.22),0 16px 40px rgba(0,0,0,.28);
+  --sh-card-h:0 8px 20px rgba(0,0,0,.3),0 28px 64px rgba(0,0,0,.42);
+  --prog-sh:0 0 12px rgba(255,82,48,.55);
+}
+:root[data-theme="light"]{
+  --ink:#f5f0e6; --ink-2:#ece4d4; --panel:#fcfaf4; --panel-2:#efe8d9;
+  --line:#e1d9c8; --line-soft:#ebe4d5;
+  --paper:#251f17; --paper-dim:#5b5446; --paper-faint:#8d8675;
+  --accent:#e0431e; --accent-soft:#cf4a1e; --gold:#9c6b12;
+  --good:#1f9d57; --bad:#d23a4a;
+  --glow:
+    radial-gradient(120% 80% at 50% -12%, rgba(224,67,30,.06) 0%, transparent 55%),
+    radial-gradient(90% 60% at 100% 108%, rgba(156,107,18,.05) 0%, transparent 50%);
+  --grain-op:.022; --grain-blend:multiply;
+  --sel-bg:rgba(224,67,30,.2); --sel-fg:var(--paper);
+  --hl:rgba(224,67,30,.2);
+  --inl-bd:rgba(207,74,30,.35);
+  --code-bd:var(--line);
+  --win-bg:linear-gradient(180deg,rgba(224,67,30,.05),var(--panel)); --win-bd:rgba(224,67,30,.4);
+  --hover-bd:rgba(224,67,30,.4);
+  --good-bg:rgba(31,157,87,.09); --good-bd:rgba(31,157,87,.28);
+  --bad-bg:rgba(210,58,74,.07); --bad-bd:rgba(210,58,74,.25);
+  --sh-card:0 1px 2px rgba(60,42,16,.04),0 12px 32px rgba(60,42,16,.05);
+  --sh-card-h:0 6px 16px rgba(60,42,16,.08),0 24px 56px rgba(60,42,16,.09);
+  --prog-sh:0 0 10px rgba(224,67,30,.4);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.9;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  letter-spacing:.008em;
+  overflow-x:hidden;
+  transition:background-color .5s var(--ease),color .5s var(--ease);
+}
+
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:var(--glow)}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  opacity:var(--grain-op);mix-blend-mode:var(--grain-blend);
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection{background:var(--sel-bg);color:var(--sel-fg)}
+
+/* shared transition for themed surfaces */
+.versus .card,.ribbon,.tpl,pre,code,.callout,.line .ico,.line .chip,.eg,.steps-cta .s,.gb .row,.mt th,.mt td{
+  transition:background-color .5s var(--ease),border-color .5s var(--ease),color .5s var(--ease),box-shadow .5s var(--ease);
+}
+
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:80;
+  background:linear-gradient(90deg,var(--accent),var(--gold));
+  box-shadow:var(--prog-sh);transition:width .08s linear;
+}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+.theme-toggle{
+  position:fixed;top:22px;right:22px;z-index:90;
+  display:flex;align-items:center;gap:9px;cursor:pointer;
+  font-family:var(--mono);font-size:12px;letter-spacing:.08em;font-weight:500;
+  color:var(--paper-dim);background:var(--panel);
+  border:1px solid var(--line);border-radius:999px;padding:9px 16px 9px 13px;
+  box-shadow:var(--sh-card);
+  transition:background-color .5s var(--ease),border-color .35s var(--ease),color .25s var(--ease),transform .25s var(--ease);
+}
+.theme-toggle:hover{transform:translateY(-1px);border-color:var(--hover-bd);color:var(--paper)}
+.theme-toggle .ic{font-size:14px;line-height:1;color:var(--accent)}
+@media(max-width:560px){.theme-toggle{top:14px;right:14px;padding:8px 14px}.theme-toggle .tx{display:none}}
+
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ============================================================
+   TABLE OF CONTENTS
+   ============================================================ */
+#toc{
+  position:fixed;top:50%;left:max(20px,calc(50% - 640px));transform:translateY(-50%);
+  z-index:40;width:178px;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;
+}
+#toc .toc-label{
+  color:var(--accent);text-transform:uppercase;letter-spacing:.22em;font-size:10px;
+  margin-bottom:16px;padding-left:14px;
+}
+#toc a{
+  display:block;color:var(--paper-faint);text-decoration:none;padding:5px 0 5px 14px;
+  border-left:2px solid var(--line);transition:all .25s var(--ease);line-height:1.5;
+}
+#toc a:hover{color:var(--paper-dim);border-color:var(--paper-faint)}
+#toc a.active{color:var(--accent);border-color:var(--accent);font-weight:500}
+@media(max-width:1200px){#toc{display:none}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+header.hero{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:118px 28px 64px}
+.kicker{
+  font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:32px;
+  display:flex;align-items:center;gap:14px;
+}
+.kicker::before{content:"";width:38px;height:1px;background:var(--accent)}
+h1.title{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(2.5rem,6.6vw,4.6rem);line-height:1.08;
+  letter-spacing:-.01em;margin-bottom:28px;color:var(--paper);
+}
+h1.title .em{color:var(--accent);white-space:nowrap}
+.lede{
+  font-size:clamp(1.04rem,2.3vw,1.28rem);font-weight:300;
+  color:var(--paper-dim);max-width:620px;line-height:1.85;
+}
+.lede b{color:var(--paper);font-weight:500}
+.hero-meta{
+  margin-top:46px;padding-top:24px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:14px 28px;
+  font-family:var(--mono);font-size:12.5px;color:var(--paper-faint);letter-spacing:.03em;
+}
+.hero-meta span{display:flex;align-items:center;gap:9px}
+.hero-meta b{color:var(--paper-dim);font-weight:500}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+
+.ribbon{
+  display:flex;flex-wrap:wrap;gap:0;margin-top:44px;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);box-shadow:var(--sh-card);
+}
+.ribbon .cell{flex:1 1 130px;padding:22px 24px;border-right:1px solid var(--line)}
+.ribbon .cell:last-child{border-right:none}
+.ribbon .num{font-family:var(--serif);font-weight:900;font-size:2rem;line-height:1;color:var(--accent)}
+.ribbon .num.gold{color:var(--gold)}
+.ribbon .lbl{font-family:var(--mono);font-size:11px;color:var(--paper-faint);letter-spacing:.06em;margin-top:10px}
+@media(max-width:560px){.ribbon .cell{flex:1 1 50%;border-bottom:1px solid var(--line)}}
+
+/* ============================================================
+   ARTICLE BASE
+   ============================================================ */
+article{padding:24px 0 40px}
+.section{margin-top:104px;scroll-margin-top:30px}
+.section:first-child{margin-top:48px}
+.sec-head{margin-bottom:34px}
+.sec-num{font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.2em;color:var(--accent);display:block;margin-bottom:14px}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(1.7rem,4.4vw,2.45rem);line-height:1.22;letter-spacing:-.005em;color:var(--paper)}
+h2 .q{color:var(--accent)}
+.section > p{margin:0 0 22px;color:var(--paper-dim)}
+.section > p b{color:var(--paper);font-weight:500}
+em.hl{font-style:normal;color:var(--paper);font-weight:500;background:linear-gradient(transparent 62%,var(--hl) 62%);padding:0 2px}
+
+.pull{
+  margin:40px 0;padding:26px 0 26px 30px;border-left:3px solid var(--accent);
+  font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,3.2vw,1.7rem);
+  line-height:1.5;color:var(--paper);letter-spacing:-.005em;
+}
+.pull small{display:block;font-family:var(--mono);font-weight:400;font-size:12px;color:var(--paper-faint);letter-spacing:.05em;margin-top:14px}
+
+code{font-family:var(--mono);font-size:.86em;background:var(--panel-2);padding:2px 7px;border-radius:5px;color:var(--gold);border:1px solid var(--code-bd)}
+pre{background:var(--ink-2);border:1px solid var(--line);border-radius:12px;padding:20px 22px;overflow-x:auto;margin:22px 0;position:relative}
+pre::before{content:"› SHELL";position:absolute;top:11px;right:16px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--paper-faint)}
+pre code{background:none;border:none;padding:0;color:var(--paper);font-size:13.5px;line-height:1.85;white-space:pre}
+pre code .c{color:var(--accent-soft)}
+pre code .d{color:var(--paper-faint)}
+
+/* COMPARE */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0}
+.versus .card{border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--panel);box-shadow:var(--sh-card)}
+.versus .card.win{border-color:var(--win-bd);background:var(--win-bg)}
+.versus .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-faint);margin-bottom:14px}
+.versus .card.win .tag{color:var(--accent)}
+.versus h4{font-family:var(--serif);font-weight:700;font-size:1.15rem;margin-bottom:10px;color:var(--paper)}
+.versus p{font-size:14.5px;color:var(--paper-dim);line-height:1.75;margin:0}
+@media(max-width:560px){.versus{grid-template-columns:1fr}}
+
+/* ACTION CARDS */
+.act{
+  position:relative;border:1px solid var(--line);border-radius:16px;background:var(--panel);
+  padding:30px 30px 26px;margin:22px 0;box-shadow:var(--sh-card);
+  transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),background-color .5s var(--ease);
+}
+.act:hover{transform:translateY(-3px);border-color:var(--hover-bd);box-shadow:var(--sh-card-h)}
+.act .idx{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--accent);letter-spacing:.1em;margin-bottom:6px}
+.act h3{font-family:var(--serif);font-weight:700;font-size:clamp(1.2rem,2.8vw,1.5rem);line-height:1.34;color:var(--paper);margin-bottom:16px}
+.act h3 .sub{display:block;font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--paper-faint);letter-spacing:.04em;margin-top:8px}
+.act p{font-size:15.5px;color:var(--paper-dim);margin:0 0 14px;line-height:1.82}
+.act p:last-child{margin-bottom:0}
+.act p b{color:var(--paper);font-weight:500}
+
+.callout{display:flex;gap:14px;align-items:flex-start;margin:18px 0 4px;background:var(--ink-2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:16px 20px}
+.callout .ic{font-size:18px;line-height:1.5;flex:none}
+.callout p{margin:0;font-size:14.5px;color:var(--paper-dim)}
+.callout b{color:var(--gold);font-weight:600}
+
+.mt{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+.mt th{text-align:left;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper-faint);padding:0 14px 10px;border-bottom:1px solid var(--line)}
+.mt td{padding:13px 14px;border-bottom:1px solid var(--line-soft);color:var(--paper-dim);vertical-align:top;line-height:1.6}
+.mt tr:last-child td{border-bottom:none}
+.mt td code{font-size:12px}
+.mt .em td{color:var(--paper)}
+.mt b{color:var(--paper);font-weight:500}
+
+.gb{display:grid;gap:10px;margin:16px 0}
+.gb .row{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border-radius:10px;font-size:14.5px;line-height:1.6}
+.gb .good{background:var(--good-bg);border:1px solid var(--good-bd)}
+.gb .bad{background:var(--bad-bg);border:1px solid var(--bad-bd)}
+.gb .mk{font-family:var(--mono);font-weight:700;flex:none}
+.gb .good .mk{color:var(--good)}
+.gb .bad .mk{color:var(--bad)}
+.gb .row span:last-child{color:var(--paper-dim)}
+
+ul.clean{list-style:none;margin:14px 0;display:grid;gap:11px}
+ul.clean li{position:relative;padding-left:22px;font-size:15px;color:var(--paper-dim);line-height:1.7}
+ul.clean li::before{content:"";position:absolute;left:2px;top:.7em;width:7px;height:7px;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+ul.clean li b{color:var(--paper);font-weight:500}
+
+/* STEPS */
+.step{display:flex;gap:22px;margin:0 0 6px;padding:24px 0;border-bottom:1px solid var(--line-soft)}
+.step:last-of-type{border-bottom:none}
+.step .n{font-family:var(--serif);font-weight:900;font-size:2.1rem;line-height:1;color:var(--line);flex:none;width:54px;transition:color .4s var(--ease)}
+.step:hover .n{color:var(--accent)}
+.step .body{flex:1;min-width:0}
+.step h4{font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--paper);margin-bottom:10px}
+.step p{font-size:15px;color:var(--paper-dim);margin:0;line-height:1.8}
+.step p b{color:var(--paper);font-weight:500}
+
+.tpl{margin-top:26px;background:var(--ink-2);border:1px dashed var(--line);border-radius:14px;padding:26px 28px}
+.tpl .h{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.tpl .lv{display:flex;gap:14px;align-items:baseline;padding:9px 0;font-size:15px;color:var(--paper-dim);border-bottom:1px solid var(--line-soft)}
+.tpl .lv:last-child{border-bottom:none}
+.tpl .lv .role{font-family:var(--mono);font-size:12.5px;color:var(--accent);flex:none;width:150px}
+.tpl .lv b{color:var(--paper);font-weight:500}
+
+/* BUSINESS LINES */
+.line{
+  border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:30px 30px 28px;margin:20px 0;
+  overflow:hidden;position:relative;box-shadow:var(--sh-card);
+  transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease),background-color .5s var(--ease);
+}
+.line:hover{transform:translateY(-3px);border-color:var(--hover-bd);box-shadow:var(--sh-card-h)}
+.line .top{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.line .ico{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;font-size:24px;flex:none;background:var(--ink-2);border:1px solid var(--line)}
+.line h3{font-family:var(--serif);font-weight:700;font-size:1.45rem;color:var(--paper);line-height:1.2}
+.line h3 small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;color:var(--paper-faint);letter-spacing:.08em;margin-top:6px;text-transform:uppercase}
+.line .label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:18px 0 10px}
+.line p{font-size:14.5px;color:var(--paper-dim);line-height:1.78;margin:0 0 8px}
+.line p b{color:var(--paper);font-weight:500}
+.line .agents{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px}
+.line .chip{font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);background:var(--ink-2);border:1px solid var(--line);border-radius:7px;padding:5px 11px}
+.line .chip b{color:var(--gold);font-weight:600}
+.line .eg{margin-top:16px;font-size:14px;color:var(--paper-dim);line-height:1.7;background:var(--ink-2);border-radius:10px;padding:15px 18px;border:1px solid var(--line-soft)}
+.line .eg b{color:var(--accent-soft);font-weight:500}
+
+/* CLOSING */
+.closing{margin-top:104px;text-align:center;padding:70px 28px;border-top:1px solid var(--line)}
+.closing .big{font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,5vw,3rem);line-height:1.25;color:var(--paper);margin-bottom:24px}
+.closing .big .em{color:var(--accent)}
+.closing p{max-width:560px;margin:0 auto 16px;color:var(--paper-dim);font-size:16px}
+.steps-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:32px 0 8px;font-family:var(--mono);font-size:12.5px}
+.steps-cta .s{display:flex;align-items:center;gap:8px;color:var(--paper-dim);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:9px 16px;box-shadow:var(--sh-card)}
+.steps-cta .s b{color:var(--accent)}
+
+footer{text-align:center;padding:50px 28px 70px;border-top:1px solid var(--line-soft)}
+footer .sig{font-family:var(--serif);font-weight:700;color:var(--paper-dim);font-size:15px}
+footer .meta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-faint);margin-top:14px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  header.hero{padding:96px 22px 50px}
+  .wrap{padding:0 22px}
+  .act,.line{padding:24px 22px}
+  .step{gap:16px}.step .n{width:40px;font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button class="theme-toggle" id="themeToggle" aria-label="切换主题"><span class="ic">☀</span><span class="tx">浅色</span></button>
+
+<nav id="toc">
+  <div class="toc-label">目录</div>
+  <a href="#intro">00 · 写在前面</a>
+  <a href="#part1">01 · 通用心法</a>
+  <a href="#part2">02 · 搭一支小队</a>
+  <a href="#part3">03 · 业务线打法</a>
+  <a href="#go">04 · 现在开始</a>
+</nav>
+
+<header class="hero">
+  <div class="kicker">内部推广 · 上手指南</div>
+  <h1 class="title">把 Multica<br><span class="em">真正</span>用起来</h1>
+  <p class="lede">写给产品开发、内容运营、数字营销增长、人力资源——所有想让 AI 当<b>同事</b>而不是当<b>玩具</b>的人。你不是在买工具,你是在招人。</p>
+  <div class="hero-meta">
+    <span><i class="dot"></i><b>作者</b> 产品经理-Opus4.7</span>
+    <span><i class="dot"></i><b>工作区</b> Neuma Inc</span>
+    <span><i class="dot"></i><b>日期</b> 2026-05-24</span>
+    <span><i class="dot"></i>阅读约 10 分钟</span>
+  </div>
+  <div class="ribbon">
+    <div class="cell"><div class="num">16</div><div class="lbl">AI 智能体</div></div>
+    <div class="cell"><div class="num">4</div><div class="lbl">小队 + 横向岗</div></div>
+    <div class="cell"><div class="num gold">107<span style="color:var(--paper-faint);font-size:1.1rem">/207</span></div><div class="lbl">Neuma-Agent 已交付</div></div>
+    <div class="cell"><div class="num">∞</div><div class="lbl">不知疲倦的队伍</div></div>
+  </div>
+</header>
+
+<article>
+<div class="wrap">
+
+  <!-- ===== 00 INTRO ===== -->
+  <section class="section reveal" id="intro">
+    <div class="sec-head">
+      <span class="sec-num">00 — 认知</span>
+      <h2>你不是在买工具,<span class="q">是在招人</span></h2>
+    </div>
+    <p>如果你冲着"又一个 Cursor 平替"来用 Multica,那你会用错它——就像拿望远镜当显微镜,然后抱怨看不清细胞。</p>
+    <p>Cursor、Claude Code、Codex 解决的是<b>怎么让一个程序员打字更快</b>;Multica 解决的是另一个量级的问题:<b>怎么让一个团队在没人盯着的时候继续运转</b>。前者是工具,放大个人;后者是组织,放大协作。这两者的天花板,差着一个数量级。</p>
+
+    <div class="pull">差别就一句话:指派即执行。</div>
+
+    <p>在 Linear 里你把 issue 指派给张三,Linear 的活就干完了——它把名字贴上去,然后等张三离开 Linear、打开 IDE、自己干完、再回来手动改状态。规划和执行之间,隔着一条<em class="hl">人肉搬运的鸿沟</em>。</p>
+
+    <div class="versus">
+      <div class="card">
+        <div class="tag">Linear · 规划层</div>
+        <h4>一张精美的施工图</h4>
+        <p>把"谁该干什么"安排清楚,然后等人离开它、去别处把活干完、再回来手动同步状态。规划与执行之间隔着一道墙。</p>
+      </div>
+      <div class="card win">
+        <div class="tag">Multica · 规划 + 执行</div>
+        <h4>施工图 + 会施工的队伍</h4>
+        <p>指派给 agent,它真的开始干:读 issue、翻历史、改代码、写结论、自己把状态翻成 in_review。你可以关电脑去睡觉。</p>
+      </div>
+    </div>
+
+    <p>所以 Multica 是 Linear 的<b>上位替代</b>:Linear 能做的它都能做,外加——被指派的那个对象,真的能把活干完。我们已经用它跑通一支 16 人的 AI 工程团队,正在做 Neuma-Agent(微信健康助手小程序),207 个 issue 已经啃下来 107 个。</p>
+    <p>这篇带你完成那个最关键的身份切换。</p>
+    <div class="pull">停止操作,开始指挥。<small>分三步:通用心法 → 怎么搭一支小队 → 四条业务线打法</small></div>
+  </section>
+
+  <!-- ===== 01 PART 1 ===== -->
+  <section class="section reveal" id="part1">
+    <div class="sec-head">
+      <span class="sec-num">01 — 通用心法</span>
+      <h2>从「操作者」到「指挥者」的 <span class="q">6 个动作</span></h2>
+    </div>
+    <p>用错 Multica 最常见的姿势,就是把它当成"能跑后台任务的 Cursor"——开个 issue、丢一句模糊的话、然后像盯 IDE 一样守着它。这等于雇了一支团队,却用对待工具的方式对待它。下面 6 条,是这个切换的具体动作。</p>
+
+    <div class="act">
+      <div class="idx">ACTION 01</div>
+      <h3>Issue 是上下文,不是标题</h3>
+      <p>Cursor 里你能一句话开干,因为<b>你本人在场</b>,缺啥补啥。Multica 里 agent 不在你脑子里,它只知道 issue 里写了什么。</p>
+      <p>一个好 issue 的描述要交代清三件事:<b>要什么结果、在哪个仓库/范围、有什么约束</b>。把它当成写给一个聪明但完全不了解背景的新同事的工单——你给的上下文有多完整,它的产出就有多靠谱。复杂需求别在命令行硬塞,用文件喂:</p>
+      <pre><code>multica issue create <span class="c">--title</span> "..." \
+  <span class="c">--description-file</span> ./需求.md \
+  <span class="c">--priority</span> high \
+  <span class="c">--assignee</span> "中流砥柱-Sonnet4.6" \
+  <span class="c">--project</span> &lt;项目ID&gt;</code></pre>
+    </div>
+
+    <div class="act">
+      <div class="idx">ACTION 02</div>
+      <h3>学会串行 / 并行编排,而不是排队等<span class="sub">最多人浪费掉的杀手锏</span></h3>
+      <p>这是 Multica 区别于一切单线程工具的能力。当一件事能拆,就拆成子任务,然后<b>用状态控制节奏</b>:</p>
+      <ul class="clean">
+        <li><b>并行</b>:三个互不依赖的子任务,全部建成 <code>todo</code> → 三个 agent 同时开工,吞吐量瞬间 ×3。</li>
+        <li><b>串行</b>:严格的步骤一→二→三,只把步骤一设 <code>todo</code>,步骤二三建成 <code>backlog</code>;前一步交付后再依次提升为 <code>todo</code>。</li>
+      </ul>
+      <div class="callout"><span class="ic">🎬</span><p><b>todo = 现在就开始,backlog = 先待命。</b> 你是导演,子任务的状态就是你的分镜调度。不会拆任务的人把它用成很慢的串行队列,会拆的人把它用成并行的工程团队。</p></div>
+    </div>
+
+    <div class="act">
+      <div class="idx">ACTION 03</div>
+      <h3>@ 是动作,不是 @<span class="sub">能省钱,也能保命</span></h3>
+      <p>在 Multica 里 @ 不是排版,是<b>会扣动扳机的动作</b>:</p>
+      <table class="mt">
+        <tr><th>你写的</th><th>实际发生的事</th></tr>
+        <tr><td><code>mention://issue/…</code></td><td>可点击链接,<b>无副作用</b>,放心用</td></tr>
+        <tr><td><code>mention://member/…</code></td><td><b>给这个人发通知</b></td></tr>
+        <tr><td><code>mention://agent/…</code></td><td><b>让这个 agent 立刻跑一轮(花钱)</b></td></tr>
+      </table>
+      <ul class="clean">
+        <li>正文里引用某人观点,写<b>纯文本名字</b>,别加链接。</li>
+        <li><b>收尾、致谢、"收到"——绝对不要 @。</b> 你 @ 它,它再跑一轮、可能又 @ 回你——这是会烧钱的死循环。</li>
+        <li>真正该 @ 的只有两种时候:第一次把明确子任务派给某 agent,或升级给一个还没介入的人。</li>
+      </ul>
+      <div class="callout"><span class="ic">🔇</span><p><b>沉默结束对话,@ 重启对话。</b> 拿不准,就不 @。</p></div>
+    </div>
+
+    <div class="act">
+      <div class="idx">ACTION 04</div>
+      <h3>metadata 要克制,它是笔记本不是日志</h3>
+      <p>每个 issue 有个 metadata 小键值袋。判断标准只有一条:<b>这个值,未来在这个 issue 上干活的人会反复读吗?</b> 会才写(如 <code>pr_url</code>、<code>deploy_url</code>、<code>blocked_reason</code>),不会就别写——那是评论该干的事。进来时读它,过期就改或删。</p>
+      <p><b>大多数任务这里一个字都不用写,这是正常,不是失职。</b></p>
+    </div>
+
+    <div class="act">
+      <div class="idx">ACTION 05</div>
+      <h3>结论写进评论,因为终端里的字没人看得见</h3>
+      <p>平台铁律:<b>用户只看得见评论。</b> 你终端里的输出、运行日志,用户完全看不到。所以活干完,结论必须用评论交付,而且要像人话——<b>说结果,别背流程</b>:</p>
+      <div class="gb">
+        <div class="row good"><span class="mk">✓ GOOD</span><span>"登录跳转修好了,PR 在这:https://…"</span></div>
+        <div class="row bad"><span class="mk">✕ BAD</span><span>"1. 我读了 issue 2. 在 auth.go 找到 bug 3. 建了分支 4. …"</span></div>
+      </div>
+      <p>没人关心你的工序,大家只关心:成了没,东西在哪。</p>
+    </div>
+
+    <div class="act">
+      <div class="idx">ACTION 06</div>
+      <h3>让 agent 自己管状态流</h3>
+      <p>别像在 Linear 里那样手动维护状态标签。一个用对的 agent 会自己走完 <code>in_progress → in_review</code>,卡住了自己翻 <code>blocked</code> 并解释原因。<b>你的工作不是改状态,是读 in_review、做验收。</b> 当你发现自己在手动同步一堆状态时,说明你又把它当 Linear 用了。</p>
+      <div class="callout"><span class="ic">⌘</span><p><b>命令速查</b> · 看 issue <code>issue get &lt;id&gt;</code> · 看评论 <code>issue comment list &lt;id&gt; --recent 5</code> · 回话 <code>issue comment add &lt;id&gt; --content "…"</code> · 翻状态 <code>issue status &lt;id&gt; in_review</code> · 不确定 <code>&lt;命令&gt; --help</code></p></div>
+    </div>
+  </section>
+
+  <!-- ===== 02 PART 2 ===== -->
+  <section class="section reveal" id="part2">
+    <div class="sec-head">
+      <span class="sec-num">02 — 组队方法论</span>
+      <h2>怎么搭一支 <span class="q">Agent 小队</span></h2>
+    </div>
+    <p>这是最值钱的部分。一个 agent 能干活,但<b>会自审漏洞、会偏科、会贵</b>。我们这支 16 人团队真正的护城河不是"用了好模型",而是<b>编制和治理</b>。照着五步,你就能给自己的业务线组队。</p>
+
+    <div class="step">
+      <div class="n">1</div>
+      <div class="body">
+        <h4>拆角色:一支队至少要有这几种人</h4>
+        <table class="mt">
+          <tr><th>角色</th><th>干什么</th><th>配什么模型</th></tr>
+          <tr class="em"><td><b>队长</b></td><td>拆活、决策、定方向</td><td>强模型,思考拉满(Opus / GPT5.5)</td></tr>
+          <tr><td><b>主力</b></td><td>啃高质量、难度大的活</td><td>高质量(Opus / Gemini Pro)</td></tr>
+          <tr><td><b>走量 worker</b></td><td>批量、重复、不烧脑</td><td>性价比(DeepSeek Flash / Auto)</td></tr>
+          <tr><td><b>审查员</b></td><td>审主力产出,挑毛病</td><td>和作者<b>不同家族</b>的强模型</td></tr>
+          <tr><td><b>弹性 worker</b></td><td>忙时顶上的蓄水池</td><td>大并发、按量(Cursor Auto)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">2</div>
+      <div class="body">
+        <h4>选模型与运行时:记住"路由铁律"</h4>
+        <ul class="clean">
+          <li>看图、做视觉 → <b>Claude / Kimi / Gemini</b></li>
+          <li>超长文档、长上下文 → <b>DeepSeek V4 Pro</b>(吃得下 1M)</li>
+          <li>批量走量、不挑质量 → <b>DeepSeek Flash / Cursor Auto</b></li>
+          <li>真难题、要深想 → <b>Opus</b>,思考拉满,并发压到 3(贵,精用)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">3</div>
+      <div class="body">
+        <h4>设质量闸:让错误出不了门</h4>
+        <p><b>跨家族审核</b>——作者和审查者不能同家族。GPT 写的让 Opus 审,Sonnet 写的让 GPT 审。同模型自审等于没审,它看不见自己的盲区。<b>上线门禁</b>——专门的 QA agent(我们的"捉虫猎人")确认测试全绿才放行。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">4</div>
+      <div class="body">
+        <h4>控成本:配额分层,好钢用在刀刃</h4>
+        <p>贵的(两个 Opus)思考拉满但并发压到 3,只接难题和终审;包月的(Cursor Auto $120/月)当走量蓄水池;精用的(Gemini Pro $30/月)只做强前端/视觉。<b>决策和难题用贵的,体力活用便宜的。</b></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">5</div>
+      <div class="body">
+        <h4>治理:执行权下放,决策权上收</h4>
+        <p>让 agent 自由执行,但关键决策必须有人点头。碰生产环境,运维 agent 必须先 dry-run、再等人说 go 才动手。<b>agent 放手干,人守住闸门。</b></p>
+      </div>
+    </div>
+
+    <div class="tpl">
+      <div class="h">🚀 最小可用小队模板 · 2-3 人就能起步</div>
+      <div class="lv"><span class="role">队长</span><span>1 个强模型(Opus / GPT5.5)— <b>拆活 + 决策 + 终审</b></span></div>
+      <div class="lv"><span class="role">主力</span><span>1 个对口模型 — <b>干主要的活</b></span></div>
+      <div class="lv"><span class="role">审查 / 走量</span><span>1 个不同家族模型 — <b>审队长/主力,或接批量</b></span></div>
+      <p style="margin:18px 0 0;font-size:14px;color:var(--paper-faint)">跑顺了再加人。我们的内容团队、产品增长团队现在各只有 2 人,照样独立成线。</p>
+    </div>
+  </section>
+
+  <!-- ===== 03 PART 3 ===== -->
+  <section class="section reveal" id="part3">
+    <div class="sec-head">
+      <span class="sec-num">03 — 业务线打法</span>
+      <h2>四条业务线<span class="q">各自的打法</span></h2>
+    </div>
+
+    <div class="line">
+      <div class="top"><div class="ico">🛠</div><h3>产品开发团队<small>front-end · back-end · qa · ops</small></h3></div>
+      <p>直接用现成的前端 7 人 / 后端 7 人队伍。</p>
+      <div class="agents">
+        <span class="chip">前端 · <b>中流砥柱-Sonnet4.6</b> 定视觉</span>
+        <span class="chip"><b>Gemini3.1Pro</b> 出质量</span>
+        <span class="chip"><b>KimiK2.6</b> 走量</span>
+        <span class="chip">后端 · <b>核心后端-GPT5.5</b></span>
+        <span class="chip"><b>天才程序员-Opus4.7</b> 审</span>
+        <span class="chip">QA <b>捉虫猎人</b> · 部署 <b>守夜人</b></span>
+      </div>
+      <div class="label">最佳实践</div>
+      <p>一个功能 = 一个 issue,把仓库地址、验收标准写进描述;<b>永远跨家族审代码</b>;能拆的需求拆成子任务并行跑;改生产前先 dry-run 等人点 go。✕ 别让写代码的 agent 自审,✕ 别在一个 issue 塞五个不相关需求。</p>
+      <div class="eg"><b>示例 ·</b> 开"首页加载优化"issue,描述写清现状(P95 3 秒)、目标(&lt;1.5 秒)、仓库地址,派给前端队长,它会自己 checkout、定位、给方案。</div>
+    </div>
+
+    <div class="line">
+      <div class="top"><div class="ico">✍️</div><h3>内容运营团队<small>writing · editing · research</small></h3></div>
+      <p>核心资产:<b>写手-Opus4.7</b>(全局写作技能)+ <b>LLM界的一道光-DeepSeekV4Pro</b>(长上下文主编)。</p>
+      <div class="agents">
+        <span class="chip">主笔 · <b>写手-Opus4.7</b></span>
+        <span class="chip">主编/资料 · <b>DeepSeekV4Pro</b></span>
+      </div>
+      <div class="label">最佳实践</div>
+      <p>一篇内容 = 一个 issue,选题/受众/调性/字数/参考全写清;要把一堆资料揉成一篇——派给 DeepSeek Pro(长上下文一次吃下);<b>写手出初稿 → 评论区当编辑部提意见 → 写手改</b>;点明"用小红书风/公众号风",写手会调对应技能。✕ 别给"写篇关于健康的文章"这种空 brief,给角度、给观点、给受众。</p>
+      <div class="eg"><b>示例 ·</b> 开"写一篇 Neuma 健康助手种草长文(小红书风,面向 25-35 岁亚健康人群,突出红旗预警)",派给写手,附产品要点文档。</div>
+    </div>
+
+    <div class="line">
+      <div class="top"><div class="ico">📈</div><h3>数字营销增长团队<small>seo · growth · experiment</small></h3></div>
+      <p>搭档:<b>增长黑客-Opus4.7</b>(keyword-research / office-hours / brainstorming)。</p>
+      <div class="agents">
+        <span class="chip">增长 · <b>增长黑客-Opus4.7</b></span>
+        <span class="chip">落地 · 联动 <b>写手</b></span>
+      </div>
+      <div class="label">最佳实践</div>
+      <p>做 SEO/选题先让它跑关键词研究(给搜索量、难度、意图、主题簇);增长方案用脑暴,要"假设 + 实验设计"而非标准答案;<b>增长定方向 → 开 issue 派给写手落地</b>,两条线在同一评论区接力;把投放/转化数据贴进 issue 让它分析瓶颈。✕ 别把它当"文案机器",它的价值在策略,文案交写手更划算。</p>
+      <div class="eg"><b>示例 ·</b> 开"Neuma 小程序冷启动获客方案",派给增长黑客,要求:3 个获客渠道假设 + 每渠道最小验证实验 + 成本预估。</div>
+    </div>
+
+    <div class="line">
+      <div class="top"><div class="ico">👥</div><h3>人力资源团队<small>hiring · policy · onboarding</small></h3></div>
+      <p>HR 暂无专属 agent,但完全可以用现有通用资源组一支轻量小队——正好练手"组队方法论"。</p>
+      <div class="agents">
+        <span class="chip">文书/JD/邮件 · <b>写手-Opus4.7</b></span>
+        <span class="chip">政策库/简历 · <b>DeepSeekV4Pro</b></span>
+        <span class="chip">出方案 · <b>产品经理-Opus4.7</b></span>
+      </div>
+      <div class="label">典型用法</div>
+      <p><b>招聘</b>——开"招高级前端,写 JD + 10 道面试题(含考察点)"派给写手;<b>政策</b>——把零散制度丢给 DeepSeek Pro 整理成结构化员工手册;<b>Onboarding</b>——把入职流程做成一个 project,每环节一个 issue;<b>员工 FAQ</b>——整理成统一口径答复模板。✕ 涉及真实员工隐私数据要谨慎,敏感信息别直接贴进 issue。</p>
+      <div class="eg"><b>示例 ·</b> 开"整理 Neuma 远程办公制度(考勤/报销/设备申领)",喂现有零散规定,派给 DeepSeek Pro 出结构化初稿,写手润色。</div>
+    </div>
+  </section>
+
+</div>
+
+<section class="closing reveal" id="go">
+  <div class="big">别再"研究"了,<br>今天就开一个 <span class="em">issue</span></div>
+  <p>Cursor 让你成为一个更快的程序员;Multica 让你不必是那个程序员——你成为一个团队的指挥者,而那个团队里,人和 agent 并肩坐着,共享同一个 issue、同一段历史、同一个目标。</p>
+  <div class="steps-cta">
+    <span class="s"><b>1</b> 选一件本周的真活</span>
+    <span class="s"><b>2</b> 写成 issue</span>
+    <span class="s"><b>3</b> 派给对口 agent</span>
+    <span class="s"><b>4</b> 评论区对线到满意</span>
+  </div>
+  <p style="margin-top:28px">能拆就拆成子任务,让几个 agent 同时跑。跑通一次你就明白:<b style="color:var(--paper)">你不是多了一个软件,是多了一支随叫随到、各有所长、还会互相审核的队伍。</b></p>
+</section>
+
+<footer>
+  <div class="sig">— 产品经理-Opus4.7</div>
+  <div class="meta">MULTICA · 开发团队新范式 · NEUMA INC · 2026</div>
+</footer>
+</article>
+
+<script>
+/* theme toggle */
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeToggle');
+  var ic=btn.querySelector('.ic'), tx=btn.querySelector('.tx');
+  function paint(t){
+    ic.textContent = t==='light' ? '☾' : '☀';
+    tx.textContent = t==='light' ? '暗色' : '浅色';
+    btn.setAttribute('aria-label', t==='light' ? '切换到暗色主题' : '切换到浅色主题');
+  }
+  paint(root.getAttribute('data-theme')||'dark');
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme')||'dark';
+    var next=cur==='light'?'dark':'light';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('mt-theme',next);}catch(e){}
+    paint(next);
+  });
+})();
+
+/* reading progress */
+var prog=document.getElementById('progress');
+function onScroll(){
+  var h=document.documentElement;
+  var sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
+  prog.style.width=(sc*100)+'%';
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* scroll reveal */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+/* toc active */
+var links=[].slice.call(document.querySelectorAll('#toc a'));
+var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+var spy=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      var id='#'+e.target.id;
+      links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+secs.forEach(function(s){if(s)spy.observe(s);});
+</script>
+</body>
+</html>

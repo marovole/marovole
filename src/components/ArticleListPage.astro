@@ -1,0 +1,73 @@
+---
+import type { ArticleMeta } from '../utils/article-loader';
+import { articleDetailPath } from '../utils/article-loader';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+interface Props {
+  articles: ArticleMeta[];
+}
+
+const { articles } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const locale = lang === 'zh' ? 'zh-CN' : 'en-US';
+const formatDate = (date: Date) =>
+  date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Header />
+
+<main id="main-content" class="flex-grow pt-20">
+  <section class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center gap-4 mb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-text)] font-mono">
+          {t('articles.title')}<span class="gradient-text">{t('articles.titleHighlight')}</span>
+        </h1>
+        <div class="flex-1 h-px bg-gradient-to-r from-[var(--color-primary)] to-transparent" />
+      </div>
+
+      <p class="text-[var(--color-text-muted)] mb-10 max-w-2xl font-mono text-sm">
+        {t('articles.description')}
+      </p>
+
+      {articles.length === 0 ? (
+        <p class="text-[var(--color-text-muted)]">{t('articles.empty')}</p>
+      ) : (
+        <ul class="space-y-4">
+          {articles.map((article) => (
+            <li>
+              <a
+                href={articleDetailPath(article)}
+                class="block card-hover rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] px-5 py-4 sm:px-6 sm:py-5"
+              >
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                  <div class="min-w-0">
+                    <h2 class="text-lg font-semibold text-[var(--color-text)] group-hover:text-[var(--color-primary)] transition-colors">
+                      {article.title}
+                    </h2>
+                    {article.description && (
+                      <p class="mt-2 text-sm text-[var(--color-text-muted)] line-clamp-2">
+                        {article.description}
+                      </p>
+                    )}
+                  </div>
+                  <time
+                    class="shrink-0 text-xs font-mono text-[var(--color-text-muted)] sm:pt-1"
+                    datetime={article.date.toISOString()}
+                  >
+                    {formatDate(article.date)}
+                  </time>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</main>
+
+<Footer />
