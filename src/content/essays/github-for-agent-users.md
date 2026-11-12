@@ -8,6 +8,8 @@ categoryEn: "FDE Field Manual"
 date: "2026-10-19"
 cover: "/images/essays/card-undo.jpg"
 order: 1
+takeaways: ["OpenAI Codex 默认前提是目录存在 Git 版本库，开新任务不会自动找回另一任务未提交的改动。", "非开发者只需掌握 4 个原语：仓库 = 项目文件夹，Commit = 手动存档点（撤销键），Branch = 平行试错副本，PR = 交作业差异验收单。", "GitHub 官方入门明确无需编程基础；截至 2026 年 7 月用户已突破 2.25 亿。"]
+takeawaysEn: ["CLI and cloud coding agents assume Git version control; uncommitted changes in isolated workspaces are not automatically recoverable.", "Non-coders only need four Git primitives: Repo (project folder), Commit (manual save-point / undo button), Branch (safe sandbox copy), and PR (visual acceptance checklist).", "GitHub requires zero programming knowledge to adopt as an Agent document safety net (surpassing 225M users as of July 2026)."]
 ---
 
 ![示意动画](/images/essays/github-for-agent-users/s1_save.gif)

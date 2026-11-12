@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="404 — 页面未找到 | 翡冷翠 · marovole" lang="zh" noindex={true}>
+  <Header lang="zh" switchHref="/en/" />
+  <main id="main-content" class="flex-grow flex items-center justify-center px-6 pt-32 pb-20">
+    <div class="text-center max-w-lg">
+      <div class="mono text-xs tracking-widest text-[var(--accent)] mb-4">404 / NOT FOUND</div>
+      <h1 class="serif text-4xl md:text-5xl font-semibold text-[var(--ink)] mb-4">
+        这一页不在归档里
+      </h1>
+      <p class="text-[var(--ink-soft)] text-base mb-8">
+        链接可能已迁移或下架。你可以回到主页浏览最新代表作与说明书手记。
+      </p>
+      <div class="inline-flex items-center gap-3">
+        <a href="/" class="cta-dark">返回中文主页 →</a>
+        <a href="/en/" class="cta-glass">English Home</a>
+      </div>
+    </div>
+  </main>
+  <Footer lang="zh" />
+</Layout>

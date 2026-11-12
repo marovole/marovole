@@ -8,6 +8,8 @@ categoryEn: "Hands-on Reproduction"
 date: "2026-11-11"
 cover: "/images/essays/card-omni12.jpg"
 order: 6
+takeaways: ["对原片 MP4 跑 ffprobe、ebur128 与语音反测核出 5 处教程出入：实为 768x576 全灰阶画面、依赖原声切片克隆，且综合响度仅 -20.8 LUFS。", "M2 Max 本机接管 Omni 1.2 Flash 并发生成 3 机位 720p 短剧（耗时约 58s、消耗 126 credits），实测时长滑块底层取值为「滑块值 + 3 秒」。", "抓出并修复古装语境「监控→军控」串音、彩色服装词致红外夜景残留 30% 饱和度、句间停顿误压导致音画早停 0.6s 等 4 个工程坑。"]
+takeawaysEn: ["Forensic ffprobe, ebur128, and ASR audit of the viral source MP4 uncovered 5 discrepancies (768x576 grayscale output, reference-voice cloning, -20.8 LUFS quietness).", "Reproduced an original 3-camera 720p short on M2 Max in ~58s (126 Flow credits), uncovering the Length slider index offset (actual seconds = slider value + 3).", "Solved 4 production pitfalls: period-context homophone bleed, 30% color bleed on IR night shots, and 600ms lip-sync drift via bidirectional pause scaling."]
 ---
 
 **11** 月 **11** 日，创作者刘老板（`@leo_xiaolei`）在 X 上发了一篇长文教程《一个人指挥一支 AI 剧组：Gemini **4** + Omni **1.2** 剧情短片制作保姆级教程》（[原帖](https://x.com/leo_xiaolei/status/2120353779455512776)），截至抓取时已有 **16911** 次浏览、**181** 个赞、**30** 次转发和 **314** 次收藏（[数据来源](https://api.fxtwitter.com/leo_xiaolei/status/2120353779455512776)）。

@@ -8,6 +8,8 @@ categoryEn: "Ablation Benchmark"
 date: "2026-11-10"
 cover: "/images/essays/card-ambition.jpg"
 order: 2
+takeaways: ["跨 5 个 Agent 框架（Claude Code、Codex、dsh、opencode、Hermes）完成 597 次有效运行与 2,428 次双盲成对评审。", "空喊「更有野心」安慰剂口号（A3）有害无益：耗时中位数暴涨 7.3 倍（42.0s → 307.1s），基础合格率从 93.5% 暴跌至 65.0%，并在数据题中误删真实记录。", "显式挂载可执行四轴框架（速度/高度/深度/广度，A2）在开放方案规划题上以 285:107（73% 胜率）大幅击败基线。"]
+takeawaysEn: ["Evaluated across 5 Agent frameworks (Claude Code, Codex, dsh, opencode, Hermes) over 597 valid runs and 2,428 double-blind pairwise judgments.", "Appending vague 'be more ambitious' slogans (A3) degraded pass rate from 93.5% to 65.0%, slowed median runtime by 7.3x (42.0s to 307.1s), and caused data-deletion errors.", "Explicitly invoking the structured 4-axis skill (Speed, Altitude, Depth, Range) achieved a 73% blind win rate (285 vs 107) on open-ended planning tasks."]
 ---
 
 10 月 13 日，Felix Rieseberg 在 X 上发了一条帖子（[原帖](https://x.com/felixrieseberg/status/2110023283169247623)）。他自我介绍是做 Claude 的工程负责人，说自己很喜欢看别人"起飞"，做成原本以为不可能的事。圈里习惯把这叫作用 AI 时要"更有野心"，但他也承认，这条建议很难照着做。所以他写了一篇教程，标题是《How to be more ambitious: A tutorial for humans with models》（[原文](https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/)）。

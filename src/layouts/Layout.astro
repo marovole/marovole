@@ -9,6 +9,11 @@ interface Props {
   image?: string;
   lang?: 'zh' | 'en';
   langPaths?: { zh: string; en: string };
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  markdownAlternate?: string;
+  noindex?: boolean;
+  extraJsonLd?: Record<string, unknown>[];
 }
 
 const {
@@ -17,6 +22,11 @@ const {
   image: ogImageProp,
   lang: langProp,
   langPaths,
+  ogType = 'website',
+  publishedTime,
+  markdownAlternate,
+  noindex = false,
+  extraJsonLd = [],
 } = Astro.props;
 
 const pathnameRaw = Astro.url.pathname;
@@ -24,17 +34,22 @@ const lang: 'zh' | 'en' = langProp ?? (pathnameRaw === '/en' || pathnameRaw.star
 
 const defaultDesc =
   lang === 'zh'
-    ? '翡冷翠 (marovole) · 12 年产品经理与一线 FDE。不用学写代码，学会像产品经理一样指挥 AI。'
-    : 'marovole · 12y Product Director & Forward Deployed Engineer. Crafting verifiable Agent systems at the intersection of precision and beauty.';
+    ? '翡冷翠 (marovole) · 12 年产品经理与一线 FDE。不用学写代码，学会像产品经理一样指挥 AI。开源 marovole-skills 与 AI 实测研究主场。'
+    : 'marovole (翡冷翠) · 12y Product Director & Forward Deployed Engineer. Crafting verifiable Agent systems, plain-text skills, and grounded AI benchmarks.';
 
 const description = desc || defaultDesc;
 const imagePath = ogImageProp || '/images/og.png';
 
 const site = Astro.site ?? new URL('https://marovole.com/');
-let pathname = pathnameRaw;
-if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
-const canonicalPath = pathname === '/zh' ? '/' : pathname;
-const canonicalURL = new URL(canonicalPath || '/', site).href;
+
+function normalizePagePath(p: string): string {
+  const withLead = p.startsWith('/') ? p : `/${p}`;
+  if (withLead === '/' || /\.[a-z0-9]+$/i.test(withLead)) return withLead;
+  return withLead.endsWith('/') ? withLead : `${withLead}/`;
+}
+
+const canonicalPath = normalizePagePath(pathnameRaw === '/zh' || pathnameRaw === '/zh/' ? '/' : pathnameRaw);
+const canonicalURL = new URL(canonicalPath, site).href;
 
 function toAbsoluteAsset(href: string): string {
   if (href.startsWith('http://') || href.startsWith('https://')) return href;
@@ -49,11 +64,54 @@ const ogLocaleAlternate = lang === 'zh' ? 'en_US' : 'zh_CN';
 
 const hreflangLinks = langPaths
   ? [
-      { hreflang: 'zh-CN', href: new URL(langPaths.zh.startsWith('/') ? langPaths.zh : `/${langPaths.zh}`, site).href },
-      { hreflang: 'en', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
-      { hreflang: 'x-default', href: new URL(langPaths.zh.startsWith('/') ? langPaths.zh : `/${langPaths.zh}`, site).href },
+      { hreflang: 'zh-CN', href: new URL(normalizePagePath(langPaths.zh), site).href },
+      { hreflang: 'en', href: new URL(normalizePagePath(langPaths.en), site).href },
+      { hreflang: 'x-default', href: new URL(normalizePagePath(langPaths.zh), site).href },
     ]
   : null;
+
+const personId = `${site.origin}/#person`;
+const websiteId = `${site.origin}/#website`;
+
+const jsonLdGraph: Record<string, unknown>[] = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: '翡冷翠',
+    alternateName: ['marovole', '翡冷翠的AI笔记', 'Hermes-marovole'],
+    jobTitle: 'Product Director & Forward Deployed Engineer',
+    description:
+      '12-year Product Manager (5-year consumer founder) and Forward Deployed Engineer enabling non-technical teams to deploy verifiable AI Agent workflows.',
+    url: `${site.origin}/`,
+    knowsAbout: [
+      'AI Agent Engineering',
+      'Forward Deployed Engineering (FDE)',
+      'Product Management',
+      'Claude Code',
+      'OpenAI Codex',
+      'Hermes Agent',
+      'Workflow Verification & Grounding',
+      'Engineering Aesthetics',
+    ],
+    sameAs: [
+      'https://github.com/marovole',
+      'https://github.com/Hermes-marovole',
+      'https://x.com/marovole',
+      'https://twitter.com/marovole',
+      'https://www.linkedin.com/in/marovole-lu-4866ab245',
+    ],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    name: '翡冷翠 · marovole',
+    alternateName: ['marovole.com', '翡冷翠的AI笔记'],
+    url: `${site.origin}/`,
+    inLanguage: ['zh-CN', 'en-US'],
+    publisher: { '@id': personId },
+  },
+  ...extraJsonLd,
+];
 ---
 
 <!doctype html>
@@ -72,7 +130,7 @@ const hreflangLinks = langPaths
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Default Light Mode, only switch to dark if user explicitly saved 'dark' -->
+    <!-- Default Light Mode -->
     <script is:inline>
       (function () {
         try {
@@ -88,14 +146,21 @@ const hreflangLinks = langPaths
       })();
     </script>
 
-    <!-- SEO -->
+    <!-- SEO & GEO Discovery -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    <meta name="author" content="翡冷翠 (marovole)" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {!noindex && <link rel="canonical" href={canonicalURL} />}
     {hreflangLinks?.map((l) => <link rel="alternate" hreflang={l.hreflang} href={l.href} />)}
+    <link rel="alternate" type="application/rss+xml" title="翡冷翠 · marovole RSS Feed" href={`${site.origin}/rss.xml`} />
+    <link rel="alternate" type="text/plain" title="LLMs Index" href={`${site.origin}/llms.txt`} />
+    {markdownAlternate && (
+      <link rel="alternate" type="text/markdown" title="Markdown Source" href={toAbsoluteAsset(markdownAlternate)} />
+    )}
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="翡冷翠 · marovole" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content={ogLocale} />
@@ -103,35 +168,25 @@ const hreflangLinks = langPaths
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@marovole" />
+    <meta name="twitter:creator" content="@marovole" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@graph': [
-          { '@type': 'WebSite', name: '翡冷翠 · marovole', url: site.origin },
-          {
-            '@type': 'Person',
-            name: '翡冷翠 (marovole)',
-            jobTitle: 'Product Director & Forward Deployed Engineer',
-            url: site.origin,
-            sameAs: [
-              'https://github.com/marovole',
-              'https://x.com/marovole',
-              'https://twitter.com/marovole',
-              'https://www.linkedin.com/in/marovole-lu-4866ab245',
-            ],
-          },
-        ],
-      })}
-    />
+    {!noindex && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': jsonLdGraph,
+        })}
+      />
+    )}
 
     <!-- Cloudflare Web Analytics -->
     {cfBeaconToken && (

@@ -16,6 +16,19 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const enProjectSlug = project.slug;
 const zhProjectSlug = project.data.otherLocaleSlug ?? project.slug;
+const canonicalUrl = `https://marovole.com/projects/${enProjectSlug}/`;
+
+const extraJsonLd = [
+  {
+    '@type': 'SoftwareApplication',
+    name: project.data.title,
+    description: project.data.description,
+    applicationCategory: 'WebApplication',
+    operatingSystem: 'Web',
+    url: project.data.demoUrl || canonicalUrl,
+    author: { '@id': 'https://marovole.com/#person' },
+  },
+];
 ---
 
 <Layout
@@ -23,12 +36,13 @@ const zhProjectSlug = project.data.otherLocaleSlug ?? project.slug;
   description={project.data.description}
   image={project.data.image}
   lang="en"
-  langPaths={{ en: `/projects/${enProjectSlug}`, zh: `/zh/projects/${zhProjectSlug}` }}
+  langPaths={{ en: `/projects/${enProjectSlug}/`, zh: `/zh/projects/${zhProjectSlug}/` }}
+  extraJsonLd={extraJsonLd}
 >
   <ProjectDetail
     project={project}
     lang="en"
-    backLink="/en#works"
-    switchHref={`/zh/projects/${zhProjectSlug}`}
+    backLink="/en/#works"
+    switchHref={`/zh/projects/${zhProjectSlug}/`}
   />
 </Layout>

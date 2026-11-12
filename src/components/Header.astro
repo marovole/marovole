@@ -6,8 +6,8 @@ interface Props {
 
 const pathname = Astro.url.pathname;
 const lang: 'zh' | 'en' = Astro.props.lang ?? (pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'zh');
-const homeHref = lang === 'en' ? '/en' : '/';
-const switchHref = Astro.props.switchHref ?? (lang === 'en' ? '/' : '/en');
+const homeHref = lang === 'en' ? '/en/' : '/';
+const switchHref = Astro.props.switchHref ?? (lang === 'en' ? '/' : '/en/');
 ---
 
 <a href="#main-content" class="skip-to-main mono text-xs">

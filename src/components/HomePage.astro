@@ -13,10 +13,10 @@ interface Props {
 const { lang, essays, switchHref } = Astro.props;
 const isZh = lang === 'zh';
 
-const formlessHref = isZh ? '/zh/projects/formless-zh' : '/projects/formless';
-const nailHref = isZh ? '/zh/projects/nail-design-zh' : '/projects/nail-design';
-const web3Href = isZh ? '/zh/projects/web3search-zh' : '/projects/web3search';
-const hearthHref = isZh ? '/zh/projects/hearthbulter-zh' : '/projects/hearthbulter';
+const formlessHref = isZh ? '/zh/projects/formless-zh/' : '/projects/formless/';
+const nailHref = isZh ? '/zh/projects/nail-design-zh/' : '/projects/nail-design/';
+const web3Href = isZh ? '/zh/projects/web3search-zh/' : '/projects/web3search/';
+const hearthHref = isZh ? '/zh/projects/hearthbulter-zh/' : '/projects/hearthbulter/';
 
 const essayBase = isZh ? '/essays' : '/en/essays';
 ---
@@ -99,11 +99,11 @@ const essayBase = isZh ? '/essays' : '/en/essays';
 
     <!-- 3D Floating Artifact Fan (5 Signature Creations) -->
     <div class="fan-stage" id="fan-deck">
-      <a href={`${essayBase}/felix-ai-ambition`} class="fan-card c1" aria-label="AI Ambition 597-Run Study">
-        <img src="/images/essays/card-ambition.jpg" alt="AI Ambition Blueprint Card" loading="eager" />
+      <a href={`${essayBase}/felix-ai-ambition/`} class="fan-card c1" aria-label="AI Ambition 597-Run Study">
+        <img src="/images/essays/card-ambition.jpg" alt="AI Ambition Blueprint Card" width="900" height="1200" loading="eager" />
       </a>
       <a href={formlessHref} class="fan-card c2" aria-label="Formless App">
-        <img src="/images/projects/formless-final.jpg" alt="Formless App Interface" loading="eager" />
+        <img src="/images/projects/formless-final.jpg" alt="Formless App Interface" width="1920" height="1080" loading="eager" />
       </a>
       <a
         href="https://github.com/Hermes-marovole/marovole-skills"
@@ -131,11 +131,11 @@ const essayBase = isZh ? '/essays' : '/en/essays';
           <div class="mono" style="font-size:10px; color:#E55347; letter-spacing:0.08em;">● LIVE SYSTEM ↗</div>
         </div>
       </a>
-      <a href={`${essayBase}/github-for-agent-users`} class="fan-card c4" aria-label="Undo Button Manual">
-        <img src="/images/essays/card-undo.jpg" alt="Undo Button Editorial Card" loading="eager" />
+      <a href={`${essayBase}/github-for-agent-users/`} class="fan-card c4" aria-label="Undo Button Manual">
+        <img src="/images/essays/card-undo.jpg" alt="Undo Button Editorial Card" width="900" height="1200" loading="eager" />
       </a>
-      <a href={`${essayBase}/ui-ux-design-ai`} class="fan-card c5" aria-label="DESIGN.md Anti-AI-Slop">
-        <img src="/images/essays/card-design-md.jpg" alt="DESIGN.md Swiss Card" loading="eager" />
+      <a href={`${essayBase}/ui-ux-design-ai/`} class="fan-card c5" aria-label="DESIGN.md Anti-AI-Slop">
+        <img src="/images/essays/card-design-md.jpg" alt="DESIGN.md Swiss Card" width="900" height="1200" loading="eager" />
       </a>
     </div>
   </section>
@@ -369,7 +369,7 @@ const essayBase = isZh ? '/essays' : '/en/essays';
         const ym = essay.data.date.slice(0, 7).replace('-', '.');
         return (
           <a
-            href={`${essayBase}/${essay.slug}`}
+            href={`${essayBase}/${essay.slug}/`}
             class="essay-row"
             data-cover={essay.data.cover}
           >

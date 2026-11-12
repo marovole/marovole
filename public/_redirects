@@ -1,1 +1,22 @@
-# No redirects - disable i18n auto-routing
+# Domain canonicalization (301 to apex)
+https://www.marovole.com/* https://marovole.com/:splat 301!
+http://www.marovole.com/* https://marovole.com/:splat 301!
+
+# Sitemap & Feed standard aliases
+/sitemap.xml /sitemap-index.xml 301
+/feed.xml /rss.xml 301
+/atom.xml /rss.xml 301
+
+# Consolidate legacy Chinese home path to canonical root
+/zh / 301
+/zh/ / 301
+
+# Retired early project routes -> Curated Works
+/projects/fastskills /en/#works 301
+/projects/fastskills/ /en/#works 301
+/zh/projects/fastskills-zh /#works 301
+/zh/projects/fastskills-zh/ /#works 301
+/projects/ai-storyteller /en/#works 301
+/projects/ai-storyteller/ /en/#works 301
+/zh/projects/ai-storyteller-zh /#works 301
+/zh/projects/ai-storyteller-zh/ /#works 301

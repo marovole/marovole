@@ -8,6 +8,8 @@ categoryEn: "Engineering Aesthetics"
 date: "2026-11-08"
 cover: "/images/essays/card-design-md.jpg"
 order: 4
+takeaways: ["AI 前端「一眼假」源于 9 个高频视觉指纹：默认 #6366f1 蓝紫色、万物皆圆角阴影卡、不分场景默认暗色及伪杂志斜体套路。", "将 Refero Styles 收录的 2,000+ 知名产品 DESIGN.md（锁死色值、字阶与圆角/阴影禁令）放入仓库根目录，可直接约束 Agent 样式边界。", "配合 MIT 开源的 refero-design 工艺规范，免注册即可在本地建立零成本的前端去 AI 味验收台。"]
+takeawaysEn: ["Generic AI UI slop stems from 9 recurring fingerprints: default #6366f1 indigo palettes, cards-everywhere layout, unprompted dark mode, and autopilot serif italics.", "Placing a concrete DESIGN.md token & constraint spec (from 2,000+ real-world product systems) in the repo root gives coding agents enforceable visual boundaries.", "Pairing DESIGN.md with the MIT-licensed anti-ai-slop craft checklist creates a zero-cost local design QA gate."]
 ---
 
 用 Claude Code、Codex 或 Cursor 写前端页面时，很多人都有过同一种挫败感：功能跑通只要五分钟，但打开浏览器一看，满屏都是同一种蓝紫色按钮、带阴影的圆角卡片和千篇一律的三栏排布——哪怕不懂代码的人扫一眼，也能立刻认出「这是 AI 写的网页」。

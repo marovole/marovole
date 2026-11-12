@@ -12,44 +12,79 @@ interface Props {
 const { essay, lang, switchHref } = Astro.props;
 const isZh = lang === 'zh';
 const { Content } = await essay.render();
-const backHref = isZh ? '/#essays' : '/en#essays';
+const backHref = isZh ? '/#essays' : '/en/#essays';
+const findings = isZh ? essay.data.takeaways : essay.data.takeawaysEn;
 ---
 
 <Header lang={lang} switchHref={switchHref} />
 
 <main id="main-content" class="flex-grow pt-28 pb-16">
-  <article class="max-w-3xl mx-auto px-6">
-    <a
-      href={backHref}
-      class="inline-flex items-center gap-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors mb-10 mono"
-    >
-      <span aria-hidden="true">←</span>
-      <span>{isZh ? '返回说明书与判断' : 'Back to Essays'}</span>
-    </a>
+  <article class="max-w-3xl mx-auto px-6" itemscope itemtype="https://schema.org/TechArticle">
+    <div class="flex items-center justify-between gap-4 mb-10">
+      <a
+        href={backHref}
+        class="inline-flex items-center gap-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors mono"
+      >
+        <span aria-hidden="true">←</span>
+        <span>{isZh ? '返回说明书与判断' : 'Back to Essays'}</span>
+      </a>
+
+      <a
+        href={`/essays/${essay.slug}.md`}
+        class="mono text-xs text-[var(--ink-faint)] hover:text-[var(--ink)] border border-[var(--line)] rounded-full px-3 py-1 transition-colors"
+        title={isZh ? '面向 AI 与阅读器的纯 Markdown 源文' : 'Plain Markdown mirror for LLMs & readers'}
+      >
+        Raw .md ↗
+      </a>
+    </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-5 mono text-xs text-[var(--ink-faint)]">
       <span class="px-3 py-1 rounded-full border border-[var(--line-strong)] text-[var(--ink-soft)]">
         {isZh ? essay.data.category : essay.data.categoryEn}
       </span>
-      <span>{essay.data.date}</span>
+      <time datetime={essay.data.date} itemprop="datePublished">{essay.data.date}</time>
       <span class="text-[var(--accent)]">● GROUNDED IN PRIMARY SOURCES</span>
     </div>
 
-    <h1 class="serif text-3xl md:text-5xl font-semibold tracking-tight text-[var(--ink)] mb-5 leading-[1.2]" style="text-wrap: balance;">
+    <h1
+      itemprop="headline"
+      class="serif text-3xl md:text-5xl font-semibold tracking-tight text-[var(--ink)] mb-5 leading-[1.2]"
+      style="text-wrap: balance;"
+    >
       {isZh ? essay.data.title : essay.data.titleEn}
     </h1>
 
-    <p class="text-base md:text-lg text-[var(--ink-soft)] leading-relaxed pb-8 mb-10 border-b border-[var(--line)]">
+    <p itemprop="description" class="text-base md:text-lg text-[var(--ink-soft)] leading-relaxed pb-8 mb-8 border-b border-[var(--line)]">
       {isZh ? essay.data.description : essay.data.descriptionEn}
     </p>
 
+    <!-- GEO Citable Primary Findings Block -->
+    {findings && findings.length > 0 && (
+      <aside
+        aria-label={isZh ? '核心实测与对账结论' : 'Key Verified Findings'}
+        class="mb-10 p-6 rounded-2xl border border-[var(--line-strong)] bg-[var(--bg-elevated)]"
+      >
+        <div class="mono text-[11px] tracking-widest uppercase text-[var(--accent)] mb-3 font-medium">
+          {isZh ? 'KEY VERIFIED FINDINGS // 核心实测与核查结论' : 'KEY VERIFIED FINDINGS // PRIMARY EVIDENCE'}
+        </div>
+        <ul class="space-y-2.5 text-[14.5px] leading-relaxed text-[var(--ink)]">
+          {findings.map((item) => (
+            <li class="flex gap-2.5 items-baseline">
+              <span class="mono text-xs text-[var(--accent)] shrink-0">▸</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
     {!isZh && (
       <div class="mb-8 p-4 rounded-2xl border border-[var(--line)] bg-[var(--pill-bg)] text-sm text-[var(--ink-soft)]">
-        Original full-text field note in Chinese (primary-source links preserved inline).
+        Original full-text field note in Chinese below (all primary-source citations and benchmark tables preserved inline).
       </div>
     )}
 
-    <div class="atelier-prose">
+    <div class="atelier-prose" itemprop="articleBody">
       <Content />
     </div>
   </article>

@@ -8,6 +8,8 @@ categoryEn: "Primary Doc Audit"
 date: "2026-11-11"
 cover: "/images/essays/card-fable52.jpg"
 order: 5
+takeaways: ["Anthropic 官方测试显示：加一句「代码库归你管」虽将合并重复代码比例从 <10% 拉升至约 50%，但输出 Token 增至约 1.5 倍。", "连带副作用显著：除修 Bug 外，每 6–10 次尝试中有 1 次擅自改变现有功能行为，且收尾总结常漏报小改动。", "同篇提示词前面写「禁止无关重构」无法抵消归属声明（仍在约 1/3 尝试中合并代码）；日常局部修改不应常驻挂载该声明。"]
+takeawaysEn: ["Per Anthropic official tests, adding a codebase-ownership clause lifts duplicate-code consolidation from <10% to ~50% but inflates output tokens by ~1.5x.", "Hidden behavioral tax: mutates existing feature behavior in 1 out of every 6–10 runs while omitting smaller edits from final summaries.", "Scope-limiting rules elsewhere in AGENTS.md fail to cancel out ownership clauses (~1/3 runs still refactor unprompted); omit it when surgical diffs are desired."]
 ---
 
 **2026** 年 **11** 月 **11** 日，创作者也无风雨也雾晴（`@t20000622yy`，简介写着开发了 Archify、担任 Kimi Global Ambassador 与 EverMind Ambassador）在 X 上发了一条帖子（[原帖](https://x.com/t20000622yy/status/2120514652308418645)，[接口记录](https://api.fxtwitter.com/t20000622yy/status/2120514652308418645)），摘出了 Anthropic《Prompting Claude Fable **5.2**》官方指南里两组很抓眼球的测试结果：
