@@ -1,3 +1,28 @@
+# marovole.com — Search & Generative AI Crawlers Policy
 User-agent: *
 Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://marovole.com/sitemap-index.xml
+# LLM-friendly index: https://marovole.com/llms.txt
+# Full plain-text corpus: https://marovole.com/llms-full.txt

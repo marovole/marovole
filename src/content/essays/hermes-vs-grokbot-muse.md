@@ -8,6 +8,8 @@ categoryEn: "System Architecture"
 date: "2026-11-07"
 cover: "/images/essays/card-hermes.jpg"
 order: 3
+takeaways: ["持久化认知拆为双层闭环：冻结字符预算的 MEMORY.md / USER.md 保前缀缓存命中，配合本地 SQLite FTS5 约 20ms 零成本召回历史会话。", "所有 SOP 存为兼容开放标准的本地 Markdown 技能（SKILL.md），按需三级渐进披露，不被任何单一云端虚拟机锁死。", "模型与网关完全解耦：支持按定时任务单独锁定模型与推理档位，兼顾纯文本主权与 $/task 成本控制。"]
+takeawaysEn: ["Two-tier cognitive persistence: bounded MEMORY.md / USER.md snapshots preserve prompt-cache hits, backed by ~20ms zero-LLM-cost local SQLite FTS5 recall.", "Plain-Text Sovereignty: workflows live as portable local SKILL.md files with 3-level progressive disclosure instead of locked-in cloud SaaS state.", "Provider-agnostic routing with per-cronjob model pinning across Anthropic, OpenAI, Gemini, DeepSeek, and local inference backends."]
 ---
 
 最近几个月，「全天候在线的个人 Agent」突然成了大厂标配。

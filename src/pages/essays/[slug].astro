@@ -12,6 +12,33 @@ export async function getStaticPaths() {
 }
 
 const { essay } = Astro.props;
+const canonicalUrl = `https://marovole.com/essays/${essay.slug}/`;
+const coverUrl = `https://marovole.com${essay.data.cover}`;
+
+const extraJsonLd = [
+  {
+    '@type': 'TechArticle',
+    '@id': `${canonicalUrl}#article`,
+    headline: essay.data.title,
+    alternativeHeadline: essay.data.titleEn,
+    description: essay.data.description,
+    image: coverUrl,
+    datePublished: `${essay.data.date}T08:00:00+08:00`,
+    inLanguage: 'zh-CN',
+    author: { '@id': 'https://marovole.com/#person' },
+    publisher: { '@id': 'https://marovole.com/#person' },
+    mainEntityOfPage: canonicalUrl,
+    articleSection: essay.data.category,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: 'https://marovole.com/' },
+      { '@type': 'ListItem', position: 2, name: '说明书与判断', item: 'https://marovole.com/#essays' },
+      { '@type': 'ListItem', position: 3, name: essay.data.title, item: canonicalUrl },
+    ],
+  },
+];
 ---
 
 <Layout
@@ -19,7 +46,11 @@ const { essay } = Astro.props;
   description={essay.data.description}
   image={essay.data.cover}
   lang="zh"
-  langPaths={{ zh: `/essays/${essay.slug}`, en: `/en/essays/${essay.slug}` }}
+  ogType="article"
+  publishedTime={`${essay.data.date}T08:00:00+08:00`}
+  markdownAlternate={`/essays/${essay.slug}.md`}
+  langPaths={{ zh: `/essays/${essay.slug}/`, en: `/en/essays/${essay.slug}/` }}
+  extraJsonLd={extraJsonLd}
 >
-  <EssayDetail essay={essay} lang="zh" switchHref={`/en/essays/${essay.slug}`} />
+  <EssayDetail essay={essay} lang="zh" switchHref={`/en/essays/${essay.slug}/`} />
 </Layout>

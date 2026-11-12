@@ -9,8 +9,9 @@ const essays = allEssays.sort((a, b) => a.data.order - b.data.order);
 
 <Layout
   title="翡冷翠 · marovole — 不用学写代码，像产品经理一样指挥 AI"
+  description="翡冷翠 (marovole) · 12 年产品经理与一线 FDE。开源 marovole-skills、AI 的野望 597 次消融实测、《零基础 AI 说明书》与工程审美个人主场。"
   lang="zh"
-  langPaths={{ zh: '/', en: '/en' }}
+  langPaths={{ zh: '/', en: '/en/' }}
 >
-  <HomePage lang="zh" essays={essays} switchHref="/en" />
+  <HomePage lang="zh" essays={essays} switchHref="/en/" />
 </Layout>
