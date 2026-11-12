@@ -1,76 +1,73 @@
 ---
-import LanguageSwitcher from './LanguageSwitcher.astro';
-import { getLangFromUrl, useTranslations, getLocalizedUrl } from '../i18n/utils';
+interface Props {
+  lang?: 'zh' | 'en';
+  switchHref?: string;
+}
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
-const navItems = [
-  { label: t('nav.home'), href: getLocalizedUrl('/', lang) },
-  { label: t('nav.projects'), href: getLocalizedUrl('/#projects', lang) },
-  { label: t('nav.experience'), href: getLocalizedUrl('/#experience', lang) },
-];
+const pathname = Astro.url.pathname;
+const lang: 'zh' | 'en' = Astro.props.lang ?? (pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'zh');
+const homeHref = lang === 'en' ? '/en' : '/';
+const switchHref = Astro.props.switchHref ?? (lang === 'en' ? '/' : '/en');
 ---
 
-<a
-  href="#main-content"
-  class="skip-to-main px-4 py-2 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-mono text-sm outline-none focus:ring-2 focus:ring-[var(--color-secondary)]"
->
-  {t('nav.skip')}
+<a href="#main-content" class="skip-to-main mono text-xs">
+  {lang === 'zh' ? '跳至主要内容' : 'Skip to main content'}
 </a>
-<header class="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg)]/90 backdrop-blur-md border-b border-[var(--color-border)]">
-  <nav
-    class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4"
-    aria-label={t('nav.landmark')}
-  >
-    <a href={getLocalizedUrl('/', lang)} class="text-xl font-semibold tracking-tight group shrink-0">
-      <span class="neon-text-cyan group-hover:animate-pulse-neon">marovole</span>
+
+<header class="topbar">
+  <a href={homeHref} class="logo-pill">
+    <span class="live-beacon" aria-hidden="true"></span>
+    {lang === 'zh' ? (
+      <>
+        <span class="serif" style="font-size:18px;">翡冷翠</span>
+        <span class="mono" style="font-size:12px; opacity:0.55;">marovole</span>
+      </>
+    ) : (
+      <>
+        <span class="serif" style="font-size:19px;">marovole</span>
+        <span class="mono" style="font-size:11.5px; opacity:0.55;">翡冷翠</span>
+      </>
+    )}
+  </a>
+
+  <nav class="nav-dock" aria-label={lang === 'zh' ? '主导航' : 'Primary navigation'}>
+    <a href={`${homeHref}#works`} class="dock-link">
+      {lang === 'zh' ? '造物 Works' : 'Selected Works'}
     </a>
-
-    <div class="hidden md:flex items-center gap-8">
-      <ul class="flex items-center gap-8">
-        {navItems.map(item => (
-          <li>
-            <a
-              href={item.href}
-              class="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors duration-300 hover:neon-text-cyan"
-              >
-              {item.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <LanguageSwitcher currentLang={lang} />
-    </div>
-
-    <details class="relative md:hidden group">
-      <summary
-        class="list-none cursor-pointer p-2 rounded-lg border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors [&::-webkit-details-marker]:hidden flex items-center justify-center min-w-[44px] min-h-[44px]"
-        aria-label={t('nav.menu')}
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </summary>
-      <div
-        class="absolute right-0 top-full mt-2 py-3 w-56 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)] shadow-[var(--shadow-card)] flex flex-col gap-1 z-50"
-      >
-        <ul class="px-2">
-          {navItems.map(item => (
-            <li>
-              <a
-                href={item.href}
-                class="block px-3 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg-card-hover)] rounded-lg transition-colors"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div class="border-t border-[var(--color-border)] pt-2 px-3 mt-1 flex justify-end">
-          <LanguageSwitcher currentLang={lang} />
-        </div>
-      </div>
-    </details>
+    <a href={`${homeHref}#essays`} class="dock-link">
+      {lang === 'zh' ? '思考 Essays' : 'Field Notes'}
+    </a>
+    <a href={`${homeHref}#atelier`} class="dock-link">
+      {lang === 'zh' ? '关于 Atelier' : 'Atelier'}
+    </a>
   </nav>
+
+  <div class="ctrl-group mono">
+    <a href={switchHref} class="icon-pill" aria-label={lang === 'zh' ? 'Switch to English' : '切换中文'}>
+      {lang === 'zh' ? 'EN' : '中文'}
+    </a>
+    <button
+      type="button"
+      class="icon-pill"
+      id="atelier-theme-toggle"
+      aria-label={lang === 'zh' ? '切换亮色与暗色主题' : 'Toggle light and dark theme'}
+    >
+      ◐
+    </button>
+  </div>
 </header>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('atelier-theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      var next = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('marovole-theme', next);
+      } catch (e) {}
+    });
+  })();
+</script>

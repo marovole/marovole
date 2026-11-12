@@ -6,8 +6,8 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
   return projects
-    .filter(p => p.data.lang === 'zh')
-    .map(project => ({
+    .filter((p) => p.data.lang === 'zh')
+    .map((project) => ({
       params: { slug: project.slug },
       props: { project },
     }));
@@ -19,10 +19,16 @@ const enProjectSlug = project.data.otherLocaleSlug ?? project.slug;
 ---
 
 <Layout
-  title={`${project.data.title} | marovole`}
+  title={`${project.data.title} | 翡冷翠 · marovole`}
   description={project.data.description}
   image={project.data.image}
+  lang="zh"
   langPaths={{ en: `/projects/${enProjectSlug}`, zh: `/zh/projects/${zhProjectSlug}` }}
 >
-  <ProjectDetail project={project} lang="zh" backLink="/zh/#projects" />
+  <ProjectDetail
+    project={project}
+    lang="zh"
+    backLink="/#works"
+    switchHref={`/projects/${enProjectSlug}`}
+  />
 </Layout>
