@@ -846,10 +846,23 @@ a {
   margin-top: 1.8em;
   margin-bottom: 0.6em;
 }
-.atelier-prose p,
-.atelier-prose li {
+.atelier-prose ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.atelier-prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.atelier-prose p {
   color: var(--ink-soft);
   margin-bottom: 1.25em;
+}
+.atelier-prose li {
+  color: var(--ink-soft);
+  margin-bottom: 0.55em;
 }
 .atelier-prose strong {
   color: var(--ink);
@@ -925,7 +938,15 @@ a {
   .nav-dock { display: none; }
   .hero-stage { padding: 104px 18px 34px; min-height: auto; }
   .hero-line { white-space: normal; }
-  .fan-stage { height: 225px; transform: scale(0.72); margin-top: 10px; }
+  .fan-stage { height: 215px; margin-top: 14px; }
+  .fan-card { width: 154px; height: 186px; border-radius: 14px; }
+  .fan-card.c1 { --base-tf: translate3d(-148px, 22px, -50px) rotate(-10deg); }
+  .fan-card.c2 { --base-tf: translate3d(-76px, 8px, -20px) rotate(-5deg); }
+  .fan-card.c3 { --base-tf: translate3d(0px, 0px, 20px) rotate(0deg); width: 168px; height: 198px; }
+  .fan-card.c4 { --base-tf: translate3d(76px, 8px, -20px) rotate(5deg); }
+  .fan-card.c5 { --base-tf: translate3d(148px, 22px, -50px) rotate(10deg); }
+  .fan-manifesto-card { padding: 14px; }
+  .fan-manifesto-card .serif { font-size: 24px !important; }
   .lookbook-grid, .closing-card { grid-template-columns: 1fr; }
   .closing-card { padding: 40px 24px; border-radius: 24px; }
   .section-shell { padding: 72px 20px; }
