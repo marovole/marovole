@@ -571,7 +571,7 @@ a {
 
 .lookbook-grid {
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
+  grid-template-columns: 1fr 1fr;
   gap: 26px;
 }
 .work-frame {
@@ -587,10 +587,91 @@ a {
   transition: transform 0.35s var(--ease-out);
 }
 .wf-warm { background: linear-gradient(155deg, #EAE3D5 0%, #DFD5C3 100%); color: #141412; }
-.wf-obsidian { background: linear-gradient(155deg, #171920 0%, #0E1015 100%); color: #F4F1EA; grid-row: span 2; }
+.wf-obsidian { background: linear-gradient(155deg, #171920 0%, #0E1015 100%); color: #F4F1EA; }
+.wf-indigo { background: linear-gradient(155deg, #DFE4EC 0%, #CFD7E4 100%); color: #141412; }
 .wf-sage { background: linear-gradient(155deg, #E3E7E0 0%, #D4DDD2 100%); color: #141412; }
 [data-theme="dark"] .wf-warm { background: linear-gradient(155deg, #1E1C19 0%, #161513 100%); color: #F4F1EA; }
+[data-theme="dark"] .wf-indigo { background: linear-gradient(155deg, #171B24 0%, #11141B 100%); color: #F4F1EA; }
 [data-theme="dark"] .wf-sage { background: linear-gradient(155deg, #181E1B 0%, #121715 100%); color: #F4F1EA; }
+
+/* Sculptural Visual Plates inside Lookbook Cards */
+.sculpt-plate {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(18, 18, 16, 0.08);
+  box-shadow: 0 20px 44px -14px rgba(0, 0, 0, 0.12);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s var(--ease-out);
+}
+[data-theme="dark"] .sculpt-plate {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .work-frame:hover .sculpt-plate { transform: scale(1.02); }
+}
+
+.seal-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border: 1.5px solid #C8372D;
+  color: #C8372D;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background: rgba(200, 55, 45, 0.07);
+}
+
+/* Ultra-subtle Collapsible Early Archive */
+.early-archive {
+  margin-top: 28px;
+  padding-top: 16px;
+}
+.early-archive summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  opacity: 0.62;
+  transition: opacity 0.2s ease;
+  user-select: none;
+}
+.early-archive summary::-webkit-details-marker { display: none; }
+.early-archive summary:hover { opacity: 0.95; }
+.early-archive .caret {
+  display: inline-block;
+  font-size: 10px;
+  transition: transform 0.2s var(--ease-out);
+}
+.early-archive[open] .caret { transform: rotate(90deg); }
+.early-archive-links {
+  margin-top: 10px;
+  padding-left: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  opacity: 0.72;
+}
+.early-archive-links a:hover {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .work-art {
   border-radius: 16px;

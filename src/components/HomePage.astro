@@ -13,12 +13,10 @@ interface Props {
 const { lang, essays, switchHref } = Astro.props;
 const isZh = lang === 'zh';
 
-const fastskillsHref = isZh ? '/zh/projects/fastskills-zh' : '/projects/fastskills';
 const formlessHref = isZh ? '/zh/projects/formless-zh' : '/projects/formless';
 const nailHref = isZh ? '/zh/projects/nail-design-zh' : '/projects/nail-design';
 const web3Href = isZh ? '/zh/projects/web3search-zh' : '/projects/web3search';
 const hearthHref = isZh ? '/zh/projects/hearthbulter-zh' : '/projects/hearthbulter';
-const storyHref = isZh ? '/zh/projects/ai-storyteller-zh' : '/projects/ai-storyteller';
 
 const essayBase = isZh ? '/essays' : '/en/essays';
 ---
@@ -99,10 +97,10 @@ const essayBase = isZh ? '/essays' : '/en/essays';
       </div>
     </div>
 
-    <!-- 3D Floating Artifact Fan -->
+    <!-- 3D Floating Artifact Fan (5 Signature Creations) -->
     <div class="fan-stage" id="fan-deck">
-      <a href={`${essayBase}/github-for-agent-users`} class="fan-card c1" aria-label="AI Field Manual">
-        <img src="/images/essays/card-blueprint.jpg" alt="AI Field Practice Poster" loading="eager" />
+      <a href={`${essayBase}/felix-ai-ambition`} class="fan-card c1" aria-label="AI Ambition 597-Run Study">
+        <img src="/images/essays/card-ambition.jpg" alt="AI Ambition Blueprint Card" loading="eager" />
       </a>
       <a href={formlessHref} class="fan-card c2" aria-label="Formless App">
         <img src="/images/projects/formless-final.jpg" alt="Formless App Interface" loading="eager" />
@@ -127,17 +125,17 @@ const essayBase = isZh ? '/essays' : '/en/essays';
               Precision<br /><span style="color:#E55347; font-style:italic;">&amp;</span> Soul.
             </div>
             <div style="font-size:12.5px; color:#A6A29A; line-height:1.5;">
-              120+ Local Agent Skills<br />24/7 Autonomous Craft
+              120+ Local Agent Skills<br />597-Run Ablation Bench
             </div>
           </div>
           <div class="mono" style="font-size:10px; color:#E55347; letter-spacing:0.08em;">● LIVE SYSTEM ↗</div>
         </div>
       </a>
-      <a href={`${essayBase}/claude-code-ui-motion`} class="fan-card c4" aria-label="UI Motion Craft Essay">
-        <img src="/images/essays/card-ui-motion.jpg" alt="Editorial Poster" loading="eager" />
+      <a href={`${essayBase}/github-for-agent-users`} class="fan-card c4" aria-label="Undo Button Manual">
+        <img src="/images/essays/card-undo.jpg" alt="Undo Button Editorial Card" loading="eager" />
       </a>
-      <a href={nailHref} class="fan-card c5" aria-label="Nail-Designs.ai">
-        <img src="/images/projects/nail-design-final.jpg" alt="Nail-Designs Studio" loading="eager" />
+      <a href={`${essayBase}/ui-ux-design-ai`} class="fan-card c5" aria-label="DESIGN.md Anti-AI-Slop">
+        <img src="/images/essays/card-design-md.jpg" alt="DESIGN.md Swiss Card" loading="eager" />
       </a>
     </div>
   </section>
@@ -155,30 +153,16 @@ const essayBase = isZh ? '/essays' : '/en/essays';
   </div>
 
   <!-- ======================================================================
-       SELECTED WORKS: GALLERY LOOKBOOK
+       SELECTED WORKS: 2x2 GALLERY LOOKBOOK (4 CORE ORIGINAL CREATIONS)
        ====================================================================== -->
   <section class="section-shell" id="works">
     <div class="sec-eyebrow">
       <h2 class="sec-title serif">{isZh ? '精选造物' : 'Selected Works'}</h2>
-      <span class="sec-index mono">01 / CURATED ARCHIVE</span>
+      <span class="sec-index mono">01 / CURATED WORKS</span>
     </div>
 
     <div class="lookbook-grid">
-      <a href={fastskillsHref} class="work-frame wf-warm">
-        <div class="work-art">
-          <img src="/images/projects/fastskills-final.jpg" alt="FastSkills" loading="lazy" />
-        </div>
-        <div class="work-foot">
-          <div>
-            <div class="work-name serif">FastSkills</div>
-            <div class="work-brief">
-              {isZh ? '227+ 专家技能按需意图路由中枢' : 'Context-aware skill orchestration for Claude Code'}
-            </div>
-          </div>
-          <span class="mag-arrow" aria-hidden="true">↗</span>
-        </div>
-      </a>
-
+      <!-- Seat 1: marovole-skills (Flagship Arsenal) -->
       <a
         href="https://github.com/Hermes-marovole/marovole-skills"
         target="_blank"
@@ -189,19 +173,7 @@ const essayBase = isZh ? '/essays' : '/en/essays';
         class="work-frame wf-obsidian"
       >
         <div class="arsenal-sculpture">
-          <div>
-            <div class="mono" style="font-size:11px; color:#E55347; letter-spacing:0.1em; margin-bottom:12px;">
-              OPEN-SOURCE FLAGSHIP
-            </div>
-            <div class="serif" style="font-size:36px; line-height:1.12; margin-bottom:10px;">marovole-skills</div>
-            <div style="font-size:14px; color:#9DA2AE;">
-              {isZh
-                ? '从本机 120+ 技能筛出的 12 条大师级自动化管线。'
-                : '12 production Agent pipelines distilled from 120+ local skills.'}
-            </div>
-          </div>
-
-          <div class="arsenal-nums">
+          <div class="arsenal-nums" style="margin-top:0;">
             <div class="num-tile">
               <div class="big-stat serif">50w+</div>
               <div class="stat-cap">{isZh ? '单篇访谈长图峰值浏览' : 'Peak views per visual post'}</div>
@@ -222,20 +194,136 @@ const essayBase = isZh ? '/essays' : '/en/essays';
 
           <div class="work-foot">
             <div>
-              <div class="work-name serif" style="font-size:20px;">GitHub Repository</div>
-              <div class="work-brief mono">Hermes · Claude Code · Codex</div>
+              <div class="mono" style="font-size:10.5px; color:#E55347; letter-spacing:0.1em; margin-bottom:4px;">
+                01 · OPEN-SOURCE FLAGSHIP
+              </div>
+              <div class="work-name serif">marovole-skills</div>
+              <div class="work-brief">
+                {isZh
+                  ? '从本机 120+ 技能严选出的 12 条带验收护栏生产管线'
+                  : '12 gated production Agent pipelines distilled from 120+ local skills'}
+              </div>
             </div>
             <span class="mag-arrow" aria-hidden="true">↗</span>
           </div>
         </div>
       </a>
 
+      <!-- Seat 2: AI Ambition (597-Run Ablation Benchmark & Skill) -->
+      <a
+        href="https://github.com/marovole/ai-ambition"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="outbound_click"
+        data-track-label="ai_ambition_repo"
+        data-track-location="works_lookbook"
+        class="work-frame wf-warm"
+      >
+        <div class="sculpt-plate">
+          <div class="flex justify-between items-center mono text-[11px] opacity-60">
+            <span>SPEED · ALTITUDE · DEPTH · RANGE</span>
+            <span>5 FRAMEWORKS</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-5 items-end my-auto py-2">
+            <div>
+              <div class="serif text-5xl md:text-6xl leading-none font-semibold tracking-tight">73%</div>
+              <div class="text-xs opacity-75 mt-2">
+                {isZh ? '显式四轴框架双盲胜率 (285:107)' : '4-Axis Skill Blind Win Rate'}
+              </div>
+            </div>
+            <div class="border-l border-current/15 pl-5">
+              <div class="serif text-4xl md:text-5xl leading-none italic text-[#C8372D]">7.3×</div>
+              <div class="text-xs opacity-75 mt-2">
+                {isZh ? '空喊“更有野心”口号反致慢 7 倍' : 'Slower on vague ambition slogans'}
+              </div>
+            </div>
+          </div>
+
+          <div class="mono text-[11px] opacity-55 pt-3 border-t border-current/10 flex justify-between">
+            <span>597 VALID RUNS</span>
+            <span>2,428 PAIRWISE JUDGMENTS</span>
+          </div>
+        </div>
+
+        <div class="work-foot">
+          <div>
+            <div class="mono" style="font-size:10.5px; opacity:0.55; letter-spacing:0.1em; margin-bottom:4px;">
+              02 · ABLATION BENCHMARK &amp; SKILL
+            </div>
+            <div class="work-name serif">{isZh ? 'AI 的野望 · ai-ambition' : 'AI Ambition'}</div>
+            <div class="work-brief">
+              {isZh
+                ? '四轴任务升维可执行框架与 597 次跨框架消融实证'
+                : 'Four-axis task elevation skill backed by a 597-run ablation study'}
+            </div>
+          </div>
+          <span class="mag-arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+
+      <!-- Seat 3: Legal AI Sign-off Workflow (FDE Non-Tech Industry Showcase) -->
+      <a
+        href="https://github.com/marovole/legal-ai-demo"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="outbound_click"
+        data-track-label="legal_ai_repo"
+        data-track-location="works_lookbook"
+        class="work-frame wf-indigo"
+      >
+        <div class="sculpt-plate">
+          <div class="flex justify-between items-center mono text-[11px] opacity-60">
+            <span>PKULAW MCP · MATTER DOSSIER</span>
+            <span>FDE PATTERN</span>
+          </div>
+
+          <div class="flex items-center justify-between gap-2 my-auto py-3">
+            <div class="px-3.5 py-2 rounded-xl border border-current/15 text-xs font-medium">
+              {isZh ? '01 AI 出底稿' : '01 AI Draft'}
+            </div>
+            <span class="mono opacity-40">→</span>
+            <div class="px-3.5 py-2 rounded-xl border border-current/15 text-xs font-medium">
+              {isZh ? '02 法条回执对账' : '02 Citation Receipt'}
+            </div>
+            <span class="mono opacity-40">→</span>
+            <span class="seal-stamp serif">
+              {isZh ? '律师签发' : 'SIGN-OFF'}
+            </span>
+          </div>
+
+          <div class="mono text-[11px] opacity-55 pt-3 border-t border-current/10 flex justify-between">
+            <span>check_receipts.py</span>
+            <span>{isZh ? '无核验人签字禁止导出' : 'NO SIGN-OFF, NO EXPORT'}</span>
+          </div>
+        </div>
+
+        <div class="work-foot">
+          <div>
+            <div class="mono" style="font-size:10.5px; opacity:0.55; letter-spacing:0.1em; margin-bottom:4px;">
+              03 · FDE ENTERPRISE WORKFLOW
+            </div>
+            <div class="work-name serif">{isZh ? '律师 AI 所内可签发工作流' : 'Auditable Legal AI Workflow'}</div>
+            <div class="work-brief">
+              {isZh
+                ? '一线 FDE 行业样板：AI 只出底稿，强制检索回执与人工签发门禁'
+                : 'MCP-grounded legal drafting gated by mandatory citation receipts & human sign-off'}
+            </div>
+          </div>
+          <span class="mag-arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+
+      <!-- Seat 4: Formless (Aesthetics & Calm Computing) -->
       <a href={formlessHref} class="work-frame wf-sage">
         <div class="work-art">
           <img src="/images/projects/formless-final.jpg" alt="Formless 无相" loading="lazy" />
         </div>
         <div class="work-foot">
           <div>
+            <div class="mono" style="font-size:10.5px; opacity:0.55; letter-spacing:0.1em; margin-bottom:4px;">
+              04 · CALM PRODUCT &amp; PHILOSOPHY
+            </div>
             <div class="work-name serif">{isZh ? 'Formless · 无相' : 'Formless'}</div>
             <div class="work-brief">
               {isZh ? '留白与东方哲思的对话疗愈空间' : 'A serene, philosophical dialogue companion'}
@@ -246,21 +334,26 @@ const essayBase = isZh ? '/essays' : '/en/essays';
       </a>
     </div>
 
-    <div class="more-labs-row">
-      <span class="mono text-xs text-[var(--ink-faint)] tracking-wider">
-        {isZh ? 'SHIPPED 0-TO-1 ARCHIVE //' : 'MORE SHIPPED LABS //'}
-      </span>
-      <div class="lab-pills">
-        <a href={nailHref} class="lab-pill">Nail-Designs.ai ↗</a>
-        <a href={web3Href} class="lab-pill">Web3search ↗</a>
-        <a href={hearthHref} class="lab-pill">HearthBulter ↗</a>
-        <a href={storyHref} class="lab-pill">AI Kids Storyteller ↗</a>
+    <!-- Ultra-subtle Gray Collapsible Early Archive -->
+    <details class="early-archive mono">
+      <summary>
+        <span class="caret" aria-hidden="true">▸</span>
+        <span>
+          {isZh
+            ? '早期 0-to-1 实验归档 (2025 – 2026.04)'
+            : 'Early 0-to-1 Experiments Archive (2025 – 2026.04)'}
+        </span>
+      </summary>
+      <div class="early-archive-links">
+        <a href={nailHref}>Nail-Designs.ai ↗</a>
+        <a href={web3Href}>Web3search ↗</a>
+        <a href={hearthHref}>HearthBulter ↗</a>
       </div>
-    </div>
+    </details>
   </section>
 
   <!-- ======================================================================
-       INTERACTIVE HOVER-PREVIEW ESSAY LIST
+       INTERACTIVE HOVER-PREVIEW ESSAY LIST (6 SIGNATURE ESSAYS)
        ====================================================================== -->
   <section class="section-shell relative" id="essays" style="padding-top: 20px;">
     <div class="sec-eyebrow">
@@ -358,7 +451,6 @@ const essayBase = isZh ? '/essays' : '/en/essays';
 
 <script is:inline>
   (function () {
-    // 1. Smooth Cursor Parallax on Prismatic Aura
     var aura = document.getElementById('aura-parallax');
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (aura && !reduceMotion) {
@@ -377,7 +469,6 @@ const essayBase = isZh ? '/essays' : '/en/essays';
       requestAnimationFrame(tick);
     }
 
-    // 2. Essay Hover Poster Preview
     var list = document.getElementById('essay-hover-list');
     var poster = document.getElementById('hover-poster');
     var posterImg = document.getElementById('hover-poster-img');

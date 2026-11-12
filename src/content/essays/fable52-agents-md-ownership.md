@@ -3,11 +3,11 @@ title: "把代码库归 AI 管？拆 Fable 5.2 官方指南里的反直觉代价
 titleEn: "The Hidden Tax of Repo Ownership in Fable 5.2's Official Guide"
 description: "一句代码归属声明把合并重复代码从不到 10% 拉到约 50%，却伴随 1.5 倍 Token、改掉现有功能行为且范围规则无法抵消等连带结果。"
 descriptionEn: "One ownership clause raises duplicate consolidation from <10% to ~50%, at the cost of 1.5x tokens and behavioral mutations scope rules cannot cancel."
-category: "系统卡对账"
-categoryEn: "System Guide Audit"
+category: "多源对账"
+categoryEn: "Primary Doc Audit"
 date: "2026-11-11"
 cover: "/images/essays/card-fable52.jpg"
-order: 3
+order: 5
 ---
 
 **2026** 年 **11** 月 **11** 日，创作者也无风雨也雾晴（`@t20000622yy`，简介写着开发了 Archify、担任 Kimi Global Ambassador 与 EverMind Ambassador）在 X 上发了一条帖子（[原帖](https://x.com/t20000622yy/status/2120514652308418645)，[接口记录](https://api.fxtwitter.com/t20000622yy/status/2120514652308418645)），摘出了 Anthropic《Prompting Claude Fable **5.2**》官方指南里两组很抓眼球的测试结果：
