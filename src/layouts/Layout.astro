@@ -1,28 +1,40 @@
 ---
 import '../styles/global.css';
-import { getLangFromUrl } from '../i18n/utils';
 
 const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 
 interface Props {
   title: string;
   description?: string;
-  /** Relative (/) or absolute image URL for OG / Twitter */
   image?: string;
-  /** Path-only localized URLs for hreflang, e.g. { en: '/projects/foo', zh: '/zh/projects/foo-zh' } */
-  langPaths?: { en: string; zh: string };
+  lang?: 'zh' | 'en';
+  langPaths?: { zh: string; en: string };
 }
 
-const { title, description: desc, image: ogImageProp, langPaths } = Astro.props;
+const {
+  title,
+  description: desc,
+  image: ogImageProp,
+  lang: langProp,
+  langPaths,
+} = Astro.props;
 
-const lang = getLangFromUrl(Astro.url);
-const description = desc || 'AI-First Product Manager & Vibecoder';
+const pathnameRaw = Astro.url.pathname;
+const lang: 'zh' | 'en' = langProp ?? (pathnameRaw === '/en' || pathnameRaw.startsWith('/en/') ? 'en' : 'zh');
+
+const defaultDesc =
+  lang === 'zh'
+    ? '翡冷翠 (marovole) · 12 年产品经理与一线 FDE。不用学写代码，学会像产品经理一样指挥 AI。'
+    : 'marovole · 12y Product Director & Forward Deployed Engineer. Crafting verifiable Agent systems at the intersection of precision and beauty.';
+
+const description = desc || defaultDesc;
 const imagePath = ogImageProp || '/images/og.png';
 
 const site = Astro.site ?? new URL('https://marovole.com/');
-let pathname = Astro.url.pathname;
+let pathname = pathnameRaw;
 if (pathname.length > 1 && pathname.endsWith('/')) pathname = pathname.slice(0, -1);
-const canonicalURL = new URL(pathname || '/', site).href;
+const canonicalPath = pathname === '/zh' ? '/' : pathname;
+const canonicalURL = new URL(canonicalPath || '/', site).href;
 
 function toAbsoluteAsset(href: string): string {
   if (href.startsWith('http://') || href.startsWith('https://')) return href;
@@ -31,29 +43,50 @@ function toAbsoluteAsset(href: string): string {
 }
 
 const ogImage = toAbsoluteAsset(imagePath);
-
 const langAttr = lang === 'zh' ? 'zh-CN' : 'en';
 const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
 const ogLocaleAlternate = lang === 'zh' ? 'en_US' : 'zh_CN';
 
 const hreflangLinks = langPaths
   ? [
-      { hreflang: 'en', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
       { hreflang: 'zh-CN', href: new URL(langPaths.zh.startsWith('/') ? langPaths.zh : `/${langPaths.zh}`, site).href },
-      { hreflang: 'x-default', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
+      { hreflang: 'en', href: new URL(langPaths.en.startsWith('/') ? langPaths.en : `/${langPaths.en}`, site).href },
+      { hreflang: 'x-default', href: new URL(langPaths.zh.startsWith('/') ? langPaths.zh : `/${langPaths.zh}`, site).href },
     ]
   : null;
 ---
 
 <!doctype html>
-<html lang={langAttr}>
+<html lang={langAttr} data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Default Light Mode, only switch to dark if user explicitly saved 'dark' -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('marovole-theme');
+          if (saved === 'dark' || saved === 'light') {
+            document.documentElement.setAttribute('data-theme', saved);
+          } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
 
     <!-- SEO -->
     <title>{title}</title>
@@ -63,7 +96,7 @@ const hreflangLinks = langPaths
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="marovole" />
+    <meta property="og:site_name" content="翡冷翠 · marovole" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:locale:alternate" content={ogLocaleAlternate} />
@@ -73,28 +106,34 @@ const hreflangLinks = langPaths
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@marovole" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        { '@type': 'WebSite', name: 'marovole', url: site.origin },
-        {
-          '@type': 'Person',
-          name: 'marovole',
-          url: site.origin,
-          sameAs: [
-            'https://github.com/marovole',
-            'https://twitter.com/marovole',
-            'https://www.linkedin.com/in/marovole-lu-4866ab245',
-          ],
-        },
-      ],
-    })} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          { '@type': 'WebSite', name: '翡冷翠 · marovole', url: site.origin },
+          {
+            '@type': 'Person',
+            name: '翡冷翠 (marovole)',
+            jobTitle: 'Product Director & Forward Deployed Engineer',
+            url: site.origin,
+            sameAs: [
+              'https://github.com/marovole',
+              'https://x.com/marovole',
+              'https://twitter.com/marovole',
+              'https://www.linkedin.com/in/marovole-lu-4866ab245',
+            ],
+          },
+        ],
+      })}
+    />
 
-    <!-- Cloudflare Web Analytics — set PUBLIC_CF_BEACON_TOKEN env var to enable -->
+    <!-- Cloudflare Web Analytics -->
     {cfBeaconToken && (
       <script
         defer
@@ -109,16 +148,11 @@ const hreflangLinks = langPaths
       // ─── MAR-62 spec: outbound click tracking ──────────────────────────────
       function trackEvent(eventName: string, props: Record<string, string>): void {
         try {
-          // 1. console.debug — always fires, used for browser-side verification
           console.debug('[track]', eventName, props);
-
-          // 2. localStorage persistence — keeps last 200 events, circular overwrite
           const KEY = 'marvole_track_events';
           const list: unknown[] = JSON.parse(localStorage.getItem(KEY) ?? '[]');
           list.push({ ts: Date.now(), event: eventName, ...props });
           localStorage.setItem(KEY, JSON.stringify(list.slice(-200)));
-
-          // 3. Cloudflare Zaraz — no-op if not enabled
           (window as any).zaraz?.track(eventName, props);
         } catch {
           // silent failure — never block link navigation
@@ -127,14 +161,13 @@ const hreflangLinks = langPaths
 
       function initOutboundTracking(): void {
         if (typeof window === 'undefined') return;
-        if ((window as any).__trackInitialized) return; // prevent duplicate binding
+        if ((window as any).__trackInitialized) return;
         (window as any).__trackInitialized = true;
 
         document.addEventListener('click', (e) => {
           const el = (e.target as Element).closest<HTMLAnchorElement>('[data-track]');
           if (!el) return;
 
-          // 300ms dedup: same href within 300ms fires only once
           const key = el.href;
           const now = Date.now();
           const lastClick: Record<string, number> = (window as any).__trackLastClick ?? {};

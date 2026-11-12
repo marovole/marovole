@@ -1,70 +1,398 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Header from './Header.astro';
-import Hero from './Hero.astro';
-import Experience from './Experience.astro';
-import ProjectGrid from './ProjectGrid.astro';
 import Footer from './Footer.astro';
-import { useTranslations } from '../i18n/utils';
 
 interface Props {
-  lang: 'en' | 'zh';
-  featuredProjects: CollectionEntry<'projects'>[];
+  lang: 'zh' | 'en';
+  featuredProjects?: CollectionEntry<'projects'>[];
+  essays: CollectionEntry<'essays'>[];
+  switchHref?: string;
 }
 
-const { lang, featuredProjects } = Astro.props;
-const t = useTranslations(lang);
+const { lang, essays, switchHref } = Astro.props;
+const isZh = lang === 'zh';
+
+const fastskillsHref = isZh ? '/zh/projects/fastskills-zh' : '/projects/fastskills';
+const formlessHref = isZh ? '/zh/projects/formless-zh' : '/projects/formless';
+const nailHref = isZh ? '/zh/projects/nail-design-zh' : '/projects/nail-design';
+const web3Href = isZh ? '/zh/projects/web3search-zh' : '/projects/web3search';
+const hearthHref = isZh ? '/zh/projects/hearthbulter-zh' : '/projects/hearthbulter';
+const storyHref = isZh ? '/zh/projects/ai-storyteller-zh' : '/projects/ai-storyteller';
+
+const essayBase = isZh ? '/essays' : '/en/essays';
 ---
 
-<Header />
-<main id="main-content" class="flex-grow">
-  <Hero />
-  <Experience />
-  <ProjectGrid projects={featuredProjects} />
+<Header lang={lang} switchHref={switchHref} />
 
-  <section id="about" class="py-20 px-6">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-[var(--color-text)] mb-8 text-center font-mono">
-        <span class="gradient-text">{t('about.title')}</span>
-      </h2>
-      <div class="prose prose-lg prose-invert max-w-none mx-auto text-[var(--color-text-muted)]">
-        <p class="mb-6 font-mono text-sm">{t('about.p1')}</p>
-        <p class="mb-6 font-mono text-sm">{t('about.p2')}</p>
-        <p class="font-mono text-sm">{t('about.p3')}</p>
+<main id="main-content" class="flex-grow">
+  <!-- ======================================================================
+       FULL-VIEWPORT KINETIC HERO STAGE
+       ====================================================================== -->
+  <section class="hero-stage" id="hero">
+    <div class="aura-layer" id="aura-parallax" aria-hidden="true">
+      <div class="aura-orb orb-a"></div>
+      <div class="aura-orb orb-b"></div>
+      <div class="aura-orb orb-c"></div>
+    </div>
+
+    <svg class="orbit-svg" viewBox="0 0 1160 1160" fill="none" aria-hidden="true">
+      <g class="orbit-spin-slow">
+        <circle cx="580" cy="580" r="390" stroke="currentColor" stroke-opacity="0.11" stroke-dasharray="3 7" />
+        <circle cx="580" cy="190" r="4" fill="#C8372D" />
+      </g>
+      <g class="orbit-spin-rev">
+        <circle cx="580" cy="580" r="520" stroke="currentColor" stroke-opacity="0.08" />
+        <circle cx="1100" cy="580" r="3.5" fill="currentColor" fill-opacity="0.4" />
+      </g>
+    </svg>
+
+    <div class="hero-center">
+      <div class="eyebrow-tag mono">
+        {isZh
+          ? '12Y PRODUCT DIRECTOR  ·  ENGINEERING AESTHETE'
+          : '12Y PRODUCT DIRECTOR  ·  FORWARD DEPLOYED ENGINEER'}
       </div>
 
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-          <div class="text-3xl font-bold neon-text-cyan mb-2 font-mono">10+</div>
-          <div class="text-sm text-[var(--color-text-muted)] font-mono">{t('about.stats.exp')}</div>
-        </div>
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-          <div class="text-3xl font-bold neon-text-magenta mb-2 font-mono">20+</div>
-          <div class="text-sm text-[var(--color-text-muted)] font-mono">{t('about.stats.projects')}</div>
-        </div>
-        <div class="p-6 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-          <div class="text-3xl font-bold text-[var(--color-accent)] mb-2 font-mono">10+</div>
-          <div class="text-sm text-[var(--color-text-muted)] font-mono">{t('about.stats.opensource')}</div>
-        </div>
+      {isZh ? (
+        <h1 class="hero-display serif">
+          <span class="hero-line l1">不用学写代码</span>
+          <span class="hero-line l2">
+            像产品经理一样
+            <span class="kinetic-pill" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" />
+              </svg>
+            </span>
+            <span class="italic-accent">指挥 AI</span>
+          </span>
+        </h1>
+      ) : (
+        <h1 class="hero-display serif">
+          <span class="hero-line l1">Where product taste</span>
+          <span class="hero-line l2">
+            commands
+            <span class="kinetic-pill" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07" />
+              </svg>
+            </span>
+            <span class="italic-accent">autonomous AI</span>
+          </span>
+        </h1>
+      )}
+
+      <p class="hero-whisper">
+        {isZh
+          ? '在精确与美的交集造物 —— 把复杂的智能体系统，变成人人可用的优雅工具。'
+          : 'Crafting verifiable Agent systems and serene software at the intersection of precision and beauty.'}
+      </p>
+
+      <div class="hero-cta-pair">
+        <a href="#works" class="cta-dark">
+          <span>{isZh ? '探索代表作' : 'Explore Works'}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#atelier" class="cta-glass">
+          <span>{isZh ? '公众号 · 翡冷翠的AI笔记' : 'Connect & Advisory'}</span>
+        </a>
       </div>
     </div>
-  </section>
 
-  <section class="py-20 px-6">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-bold text-[var(--color-text)] mb-4 font-mono">
-        {t('contact.title')}<span class="gradient-text">{t('contact.titleHighlight')}</span>
-      </h2>
-      <p class="text-[var(--color-text-muted)] mb-8 font-mono text-sm">
-        {t('contact.desc')}
-      </p>
+    <!-- 3D Floating Artifact Fan -->
+    <div class="fan-stage" id="fan-deck">
+      <a href={`${essayBase}/github-for-agent-users`} class="fan-card c1" aria-label="AI Field Manual">
+        <img src="/images/essays/card-blueprint.jpg" alt="AI Field Practice Poster" loading="eager" />
+      </a>
+      <a href={formlessHref} class="fan-card c2" aria-label="Formless App">
+        <img src="/images/projects/formless-final.jpg" alt="Formless App Interface" loading="eager" />
+      </a>
       <a
-        href="mailto:marovole@gmail.com"
-        class="inline-block px-8 py-4 rounded-[var(--radius-button)] bg-[var(--color-primary)] text-[var(--color-bg)] font-semibold hover:shadow-[var(--shadow-neon-cyan)] transition-shadow duration-300 btn-neon-fill"
+        href="https://github.com/Hermes-marovole/marovole-skills"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="outbound_click"
+        data-track-label="hero_fan_skills"
+        data-track-location="hero"
+        class="fan-card c3"
+        aria-label="marovole-skills Open Source Repository"
       >
-        {t('contact.cta')}
+        <div class="fan-manifesto-card">
+          <div class="mono" style="font-size:10.5px; opacity:0.65; display:flex; justify-content:space-between;">
+            <span>MAROVOLE OS</span>
+            <span>2026</span>
+          </div>
+          <div>
+            <div class="serif" style="font-size:38px; line-height:1.05; margin-bottom:10px;">
+              Precision<br /><span style="color:#E55347; font-style:italic;">&amp;</span> Soul.
+            </div>
+            <div style="font-size:12.5px; color:#A6A29A; line-height:1.5;">
+              120+ Local Agent Skills<br />24/7 Autonomous Craft
+            </div>
+          </div>
+          <div class="mono" style="font-size:10px; color:#E55347; letter-spacing:0.08em;">● LIVE SYSTEM ↗</div>
+        </div>
+      </a>
+      <a href={`${essayBase}/claude-code-ui-motion`} class="fan-card c4" aria-label="UI Motion Craft Essay">
+        <img src="/images/essays/card-ui-motion.jpg" alt="Editorial Poster" loading="eager" />
+      </a>
+      <a href={nailHref} class="fan-card c5" aria-label="Nail-Designs.ai">
+        <img src="/images/projects/nail-design-final.jpg" alt="Nail-Designs Studio" loading="eager" />
       </a>
     </div>
   </section>
+
+  <!-- KINETIC EDITORIAL MARQUEE -->
+  <div class="marquee-wrap serif" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">
+        <em>精确与美的交集</em> · Generation is cheap, verification is the moat · <em>撤销键与验收台</em> · Plain-Text Sovereignty · <em>先改工作流，再挂模型</em> ·
+      </span>
+      <span class="marquee-item">
+        <em>精确与美的交集</em> · Generation is cheap, verification is the moat · <em>撤销键与验收台</em> · Plain-Text Sovereignty · <em>先改工作流，再挂模型</em> ·
+      </span>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       SELECTED WORKS: GALLERY LOOKBOOK
+       ====================================================================== -->
+  <section class="section-shell" id="works">
+    <div class="sec-eyebrow">
+      <h2 class="sec-title serif">{isZh ? '精选造物' : 'Selected Works'}</h2>
+      <span class="sec-index mono">01 / CURATED ARCHIVE</span>
+    </div>
+
+    <div class="lookbook-grid">
+      <a href={fastskillsHref} class="work-frame wf-warm">
+        <div class="work-art">
+          <img src="/images/projects/fastskills-final.jpg" alt="FastSkills" loading="lazy" />
+        </div>
+        <div class="work-foot">
+          <div>
+            <div class="work-name serif">FastSkills</div>
+            <div class="work-brief">
+              {isZh ? '227+ 专家技能按需意图路由中枢' : 'Context-aware skill orchestration for Claude Code'}
+            </div>
+          </div>
+          <span class="mag-arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+
+      <a
+        href="https://github.com/Hermes-marovole/marovole-skills"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="outbound_click"
+        data-track-label="marovole_skills_repo"
+        data-track-location="works_lookbook"
+        class="work-frame wf-obsidian"
+      >
+        <div class="arsenal-sculpture">
+          <div>
+            <div class="mono" style="font-size:11px; color:#E55347; letter-spacing:0.1em; margin-bottom:12px;">
+              OPEN-SOURCE FLAGSHIP
+            </div>
+            <div class="serif" style="font-size:36px; line-height:1.12; margin-bottom:10px;">marovole-skills</div>
+            <div style="font-size:14px; color:#9DA2AE;">
+              {isZh
+                ? '从本机 120+ 技能筛出的 12 条大师级自动化管线。'
+                : '12 production Agent pipelines distilled from 120+ local skills.'}
+            </div>
+          </div>
+
+          <div class="arsenal-nums">
+            <div class="num-tile">
+              <div class="big-stat serif">50w+</div>
+              <div class="stat-cap">{isZh ? '单篇访谈长图峰值浏览' : 'Peak views per visual post'}</div>
+            </div>
+            <div class="num-tile">
+              <div class="big-stat serif">1,000</div>
+              <div class="stat-cap">{isZh ? '商业调研一手样本底线' : 'Primary samples per report'}</div>
+            </div>
+            <div class="num-tile">
+              <div class="big-stat serif">{isZh ? '12w 字' : '120K'}</div>
+              <div class="stat-cap">{isZh ? '13 阶段全自动成书引擎' : '13-stage book manuscript'}</div>
+            </div>
+            <div class="num-tile">
+              <div class="big-stat serif">0 px</div>
+              <div class="stat-cap">{isZh ? 'AI 短片首尾帧背景漂移' : 'Keyframe background drift'}</div>
+            </div>
+          </div>
+
+          <div class="work-foot">
+            <div>
+              <div class="work-name serif" style="font-size:20px;">GitHub Repository</div>
+              <div class="work-brief mono">Hermes · Claude Code · Codex</div>
+            </div>
+            <span class="mag-arrow" aria-hidden="true">↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href={formlessHref} class="work-frame wf-sage">
+        <div class="work-art">
+          <img src="/images/projects/formless-final.jpg" alt="Formless 无相" loading="lazy" />
+        </div>
+        <div class="work-foot">
+          <div>
+            <div class="work-name serif">{isZh ? 'Formless · 无相' : 'Formless'}</div>
+            <div class="work-brief">
+              {isZh ? '留白与东方哲思的对话疗愈空间' : 'A serene, philosophical dialogue companion'}
+            </div>
+          </div>
+          <span class="mag-arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="more-labs-row">
+      <span class="mono text-xs text-[var(--ink-faint)] tracking-wider">
+        {isZh ? 'SHIPPED 0-TO-1 ARCHIVE //' : 'MORE SHIPPED LABS //'}
+      </span>
+      <div class="lab-pills">
+        <a href={nailHref} class="lab-pill">Nail-Designs.ai ↗</a>
+        <a href={web3Href} class="lab-pill">Web3search ↗</a>
+        <a href={hearthHref} class="lab-pill">HearthBulter ↗</a>
+        <a href={storyHref} class="lab-pill">AI Kids Storyteller ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       INTERACTIVE HOVER-PREVIEW ESSAY LIST
+       ====================================================================== -->
+  <section class="section-shell relative" id="essays" style="padding-top: 20px;">
+    <div class="sec-eyebrow">
+      <h2 class="sec-title serif">{isZh ? '说明书与判断' : 'Essays & Manuals'}</h2>
+      <span class="sec-index mono">02 / HOVER TO PREVIEW</span>
+    </div>
+
+    <div class="essay-list" id="essay-hover-list">
+      {essays.map((essay, idx) => {
+        const num = String(idx + 1).padStart(2, '0');
+        const displayTitle = isZh ? essay.data.title : essay.data.titleEn;
+        const displayCat = isZh ? essay.data.category : essay.data.categoryEn;
+        const ym = essay.data.date.slice(0, 7).replace('-', '.');
+        return (
+          <a
+            href={`${essayBase}/${essay.slug}`}
+            class="essay-row"
+            data-cover={essay.data.cover}
+          >
+            <div class="e-left">
+              <span class="e-num mono">{num}</span>
+              <span class="e-title serif">{displayTitle}</span>
+            </div>
+            <span class="e-tag mono">{displayCat} · {ym}</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="floating-preview" id="hover-poster" aria-hidden="true">
+      <img id="hover-poster-img" src="/images/essays/card-undo.jpg" alt="" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       ATELIER SIGNATURE & CONNECT
+       ====================================================================== -->
+  <section class="section-shell" id="atelier" style="padding-top: 16px;">
+    <div class="closing-card">
+      <div>
+        <div class="mono" style="font-size:11.5px; color:#E55347; letter-spacing:0.12em; margin-bottom:16px;">
+          03 / ATELIER &amp; ADVISORY
+        </div>
+
+        {isZh ? (
+          <h2 class="closing-headline serif">
+            德国工科底色，12 年产品审美。<br />
+            带非技术团队把 AI 真正跑成生产力。
+          </h2>
+        ) : (
+          <h2 class="closing-headline serif">
+            German engineering roots. 12 years in product.<br />
+            Turning AI hype into calm, verifiable leverage.
+          </h2>
+        )}
+
+        <div class="taste-chips mono">
+          <span class="t-chip">M2 Max · 64GB Rig</span>
+          <span class="t-chip">Outer Wilds</span>
+          <span class="t-chip">Death Stranding</span>
+          <span class="t-chip">TUNIC</span>
+          <span class="t-chip">{isZh ? 'FDE 团队实战内训' : 'Embedded FDE Enablement'}</span>
+        </div>
+
+        <a
+          href="mailto:marovole@gmail.com"
+          data-track="outbound_click"
+          data-track-label="mailto_advisory"
+          data-track-location="atelier_cta"
+          class="cta-dark"
+          style="background:#F4F1EA; color:#121210;"
+        >
+          <span>marovole@gmail.com</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="wechat-glass">
+        <div class="mono" style="font-size:11px; color:#9E9A91; letter-spacing:0.08em;">WECHAT OFFICIAL</div>
+        <div class="serif" style="font-size:28px;">翡冷翠的AI笔记</div>
+        <div style="font-size:13.5px; color:#A8A49C; line-height:1.6;">
+          {isZh
+            ? '每周更新《FDE 手记》与《零基础 AI 说明书》。微信搜一搜直达。'
+            : 'Weekly FDE field notes & non-coder Agent manuals on WeChat.'}
+        </div>
+        <div class="mono" style="font-size:11.5px; color:#E55347; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1);">
+          X @marovole  ·  GitHub @marovole
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
-<Footer />
+
+<Footer lang={lang} />
+
+<script is:inline>
+  (function () {
+    // 1. Smooth Cursor Parallax on Prismatic Aura
+    var aura = document.getElementById('aura-parallax');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (aura && !reduceMotion) {
+      var tx = 0, ty = 0, cx = 0, cy = 0;
+      window.addEventListener('pointermove', function (e) {
+        tx = (e.clientX / window.innerWidth - 0.5) * 36;
+        ty = (e.clientY / window.innerHeight - 0.5) * 36;
+      }, { passive: true });
+
+      function tick() {
+        cx += (tx - cx) * 0.06;
+        cy += (ty - cy) * 0.06;
+        aura.style.transform = 'translate3d(' + cx.toFixed(2) + 'px, ' + cy.toFixed(2) + 'px, 0)';
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // 2. Essay Hover Poster Preview
+    var list = document.getElementById('essay-hover-list');
+    var poster = document.getElementById('hover-poster');
+    var posterImg = document.getElementById('hover-poster-img');
+    if (list && poster && posterImg) {
+      var rows = list.querySelectorAll('.essay-row');
+      rows.forEach(function (row) {
+        row.addEventListener('mouseenter', function () {
+          var cover = row.getAttribute('data-cover');
+          if (cover) posterImg.src = cover;
+          poster.classList.add('visible');
+        });
+      });
+      list.addEventListener('mouseleave', function () {
+        poster.classList.remove('visible');
+      });
+    }
+  })();
+</script>

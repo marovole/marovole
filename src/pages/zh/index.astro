@@ -2,17 +2,15 @@
 import Layout from '../../layouts/Layout.astro';
 import HomePage from '../../components/HomePage.astro';
 import { getCollection } from 'astro:content';
-import { useTranslations } from '../../i18n/utils';
 
-const lang = 'zh';
-const t = useTranslations(lang);
-
-const allProjects = await getCollection('projects');
-const featuredProjects = allProjects
-  .filter(project => project.data.featured && project.data.lang === 'zh')
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const allEssays = await getCollection('essays');
+const essays = allEssays.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title={`marovole | ${t('hero.role')}`} langPaths={{ en: '/', zh: '/zh' }}>
-  <HomePage lang="zh" featuredProjects={featuredProjects} />
+<Layout
+  title="翡冷翠 · marovole — 不用学写代码，像产品经理一样指挥 AI"
+  lang="zh"
+  langPaths={{ zh: '/', en: '/en' }}
+>
+  <HomePage lang="zh" essays={essays} switchHref="/en" />
 </Layout>

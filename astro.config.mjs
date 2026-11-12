@@ -10,8 +10,8 @@ export default defineConfig({
   site: 'https://marovole.com',
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'zh'],
+    defaultLocale: 'zh',
+    locales: ['zh', 'en'],
     routing: {
       prefixDefaultLocale: false,
       redirectToDefaultLocale: false
@@ -24,10 +24,10 @@ export default defineConfig({
 
   integrations: [mdx(), sitemap({
     i18n: {
-      defaultLocale: 'en',
+      defaultLocale: 'zh',
       locales: {
-        en: 'en-US',
         zh: 'zh-CN',
+        en: 'en-US',
       }
     }
   })]

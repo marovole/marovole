@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  essay: CollectionEntry<'essays'>;
+  lang: 'zh' | 'en';
+  switchHref: string;
+}
+
+const { essay, lang, switchHref } = Astro.props;
+const isZh = lang === 'zh';
+const { Content } = await essay.render();
+const backHref = isZh ? '/#essays' : '/en#essays';
+---
+
+<Header lang={lang} switchHref={switchHref} />
+
+<main id="main-content" class="flex-grow pt-28 pb-16">
+  <article class="max-w-3xl mx-auto px-6">
+    <a
+      href={backHref}
+      class="inline-flex items-center gap-2 text-sm text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors mb-10 mono"
+    >
+      <span aria-hidden="true">←</span>
+      <span>{isZh ? '返回说明书与判断' : 'Back to Essays'}</span>
+    </a>
+
+    <div class="flex flex-wrap items-center gap-3 mb-5 mono text-xs text-[var(--ink-faint)]">
+      <span class="px-3 py-1 rounded-full border border-[var(--line-strong)] text-[var(--ink-soft)]">
+        {isZh ? essay.data.category : essay.data.categoryEn}
+      </span>
+      <span>{essay.data.date}</span>
+      <span class="text-[var(--accent)]">● GROUNDED IN PRIMARY SOURCES</span>
+    </div>
+
+    <h1 class="serif text-3xl md:text-5xl font-semibold tracking-tight text-[var(--ink)] mb-5 leading-[1.2]" style="text-wrap: balance;">
+      {isZh ? essay.data.title : essay.data.titleEn}
+    </h1>
+
+    <p class="text-base md:text-lg text-[var(--ink-soft)] leading-relaxed pb-8 mb-10 border-b border-[var(--line)]">
+      {isZh ? essay.data.description : essay.data.descriptionEn}
+    </p>
+
+    {!isZh && (
+      <div class="mb-8 p-4 rounded-2xl border border-[var(--line)] bg-[var(--pill-bg)] text-sm text-[var(--ink-soft)]">
+        Original full-text field note in Chinese (primary-source links preserved inline).
+      </div>
+    )}
+
+    <div class="atelier-prose">
+      <Content />
+    </div>
+  </article>
+</main>
+
+<Footer lang={lang} />

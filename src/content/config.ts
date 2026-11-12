@@ -17,6 +17,22 @@ const projects = defineCollection({
   }),
 });
 
+const essays = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    titleEn: z.string(),
+    description: z.string(),
+    descriptionEn: z.string(),
+    category: z.string(),
+    categoryEn: z.string(),
+    date: z.string(),
+    cover: z.string(),
+    order: z.number().default(99),
+  }),
+});
+
 export const collections = {
   projects,
+  essays,
 };
